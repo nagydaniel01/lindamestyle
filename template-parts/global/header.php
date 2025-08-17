@@ -26,22 +26,26 @@
                                 $avatar       = get_avatar( $current_user->ID, 32 );
                                 $display_name = $current_user->display_name;
                             ?>
-                            <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex align-items-center">
+                            <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center">
                                 <?php echo $avatar; ?>
-                                <span class="ms-2"><?php echo esc_html( $display_name ); ?></span>
+                                <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello, %s', TEXT_DOMAIN ), esc_html( $display_name ) ); ?></span>
                             </a>
                         <?php else : ?>
                             <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                                <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                                 <?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?>
                             </button>
                         <?php endif; ?>
 
                         <!-- Mobile Cart Trigger -->
                         <button class="btn btn-outline-secondary position-relative me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
-                            <?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                <?php echo WC()->cart->get_cart_contents_count(); ?>
-                            </span>
+                            <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
+                            <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
+                            <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
+                                <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                    <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                                </div>
+                            <?php endif; ?>
                         </button>
                     <?php endif; ?>
 
@@ -54,7 +58,7 @@
                 <!-- Offcanvas container (mobile right, desktop inline) -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="mainMenu" aria-labelledby="mainMenuLabel">
                     <div class="offcanvas-header d-lg-none">
-                        <h5 class="offcanvas-title" id="mainMenuLabel"><?php echo esc_html( 'Menu', TEXT_DOMAIN ); ?></h5>
+                        <h5 class="offcanvas-title" id="mainMenuLabel"><?php echo esc_html__( 'Menu', TEXT_DOMAIN ); ?></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
                     </div>
 
@@ -73,7 +77,7 @@
                                 ) );
                             ?>
                         <?php else : ?>
-                            <p class="no-menu-assigned"><?php echo esc_html( 'Please assign a menu in Appearance → Menus.', TEXT_DOMAIN ); ?></p>
+                            <p class="no-menu-assigned"><?php echo esc_html__( 'Please assign a menu in Appearance → Menus.', TEXT_DOMAIN ); ?></p>
                         <?php endif; ?>
 
                         <!-- Desktop header actions -->
@@ -87,32 +91,37 @@
                                             $avatar       = get_avatar( $current_user->ID, 32 );
                                             $display_name = $current_user->display_name;
                                         ?>
-                                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex align-items-center">
+                                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center">
                                             <?php echo $avatar; ?>
-                                            <span class="ms-2"><?php echo esc_html( $display_name ); ?></span>
+                                            <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello, %s', TEXT_DOMAIN ), esc_html( $display_name ) ); ?></span>
                                         </a>
                                     <?php else : ?>
-                                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
-                                            <?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?>
+                                        <button type="button" class="btn btn-outline-primary btn-link me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                                            <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
+                                            <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
                                         </button>
                                     <?php endif; ?>
                                 </div>
 
                                 <div class="nav-item ms-lg-3">
                                     <!-- Cart Trigger -->
-                                    <button class="btn btn-outline-secondary position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
-                                        <?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?>
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                            <?php echo WC()->cart->get_cart_contents_count(); ?>
-                                        </span>
+                                    <button class="btn btn-outline-primary btn-link position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                                        <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
+                                        <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
+                                        <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
+                                            <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                                <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                                            </div>
+                                        <?php endif; ?>
                                     </button>
                                 </div>
                             <?php endif; ?>
 
                             <div class="nav-item ms-lg-3">
                                 <!-- Search bar Trigger -->
-                                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                    <?php echo esc_html('Search', TEXT_DOMAIN); ?>
+                                <button class="btn btn-outline-primary btn-link" data-bs-toggle="modal" data-bs-target="#searchModal">
+                                    <svg class="icon icon-magnifying-glass"><use xlink:href="#icon-magnifying-glass"></use></svg>
+                                    <span class="visually-hidden"><?php echo esc_html__('Search', TEXT_DOMAIN); ?></span>
                                 </button>
                             </div>
                         </div>

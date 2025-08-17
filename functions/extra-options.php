@@ -203,7 +203,7 @@
             return $tag;
         }
 
-        add_filter( 'script_loader_tag', 'add_defer_to_scripts', 10, 3 );
+        //add_filter( 'script_loader_tag', 'add_defer_to_scripts', 10, 3 );
     }
 
     if ( ! function_exists( 'remove_jquery_migrate' ) ) {

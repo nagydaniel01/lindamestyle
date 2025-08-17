@@ -1,4 +1,3 @@
-// 1) Base alert style for all notice types
 .woocommerce-message,
 .woocommerce-info,
 .woocommerce-error {
@@ -10,20 +9,17 @@
   align-items: center;
   gap: 0.5rem;
 
-  // Woo often wraps notices in <ul>
   ul {
     margin: 0;
     padding-left: 1.25rem;
     list-style: disc;
   }
 
-  // Buttons inside notices
   .button {
-    margin-left: auto; // push button to right
+    margin-left: auto;
     @extend .btn-sm;
   }
 
-  // Links inside notices
   a {
     font-weight: 500;
     text-decoration: underline;
@@ -33,7 +29,6 @@
   }
 }
 
-// 2) Variants mapping
 .woocommerce-message {
   @extend .alert-success;
 }
@@ -44,14 +39,11 @@
   @extend .alert-danger;
 }
 
-// 3) Dismissible notices
-// WooCommerce doesn’t add close buttons by default,
-// so if you want them, inject with JS or template override.
 .woocommerce-message.is-dismissible,
 .woocommerce-info.is-dismissible,
 .woocommerce-error.is-dismissible {
   @extend .alert-dismissible;
-  padding-right: 3rem; // space for close icon
+  padding-right: 3rem;
 
   .close,
   .btn-close {
@@ -61,17 +53,17 @@
   }
 }
 
-// 4) Optional: add icons to match alert type
-// Uses Bootstrap Icons or FontAwesome — change as needed
+/*
 .woocommerce-message::before,
 .woocommerce-info::before,
 .woocommerce-error::before {
-  font-family: "Bootstrap Icons"; // or Font Awesome
+  font-family: "Bootstrap Icons";
   font-size: 1.25rem;
   display: inline-block;
   margin-right: 0.5rem;
 }
 
-.woocommerce-message::before { content: "\f26b"; } // check-circle
-.woocommerce-info::before    { content: "\f431"; } // info-circle
-.woocommerce-error::before   { content: "\f622"; } // exclamation-triangle
+.woocommerce-message::before { content: "\f26b"; }
+.woocommerce-info::before    { content: "\f431"; }
+.woocommerce-error::before   { content: "\f622"; }
+*/

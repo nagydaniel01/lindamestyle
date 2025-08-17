@@ -1,0 +1,16 @@
+.page.page--archive-product {
+    .woocommerce-tools {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background-color: $gray-100;
+        margin-bottom: 1rem;
+
+        .woocommerce-result-count {
+            margin: 0;
+        }
+    }
+}

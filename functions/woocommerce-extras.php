@@ -61,6 +61,137 @@
         add_action( 'woocommerce_before_quantity_input_field', 'quantity_minus_sign' );
     }
 
+    if ( ! function_exists( 'wc_loop_show_categories_list' ) ) {
+        /**
+         * Display linked product categories under the product title in the loop.
+         *
+         * Uses wc_get_product_category_list() to output a comma-separated list of
+         * linked categories. Placed outside the main product link for valid HTML.
+         *
+         * @return void
+         */
+        function wc_loop_show_categories_list() {
+            global $product;
+
+            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                return;
+            }
+
+            // Get linked categories, comma-separated
+            $cats = wc_get_product_category_list( $product->get_id(), ', ' );
+
+            if ( $cats ) {
+                echo '<div class="woocommerce-loop-product__categories">' . $cats . '</div>';
+            }
+        }
+        add_action( 'woocommerce_after_shop_loop_item', 'wc_loop_show_categories_list', 5 );
+    }
+    
+    if ( ! function_exists( 'show_product_sku_in_loop' ) ) {
+        /**
+         * Display product SKU in the WooCommerce product loop.
+         *
+         * @return void
+         */
+        function show_product_sku_in_loop() {
+            global $product;
+
+            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) return;
+
+            $sku = $product->get_sku();
+            if ( $sku ) {
+                echo '<p class="product-sku"><strong>' . esc_html__( 'SKU:', TEXT_DOMAIN ) . '</strong> ' . esc_html( $sku ) . '</p>';
+            }
+        }
+        add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_sku_in_loop', 15 );
+    }
+
+    if ( ! function_exists( 'show_product_stock_in_loop' ) ) {
+        /**
+         * Display product stock status in the WooCommerce product loop.
+         *
+         * Uses WooCommerce's public get_availability() method.
+         *
+         * @return void
+         */
+        function show_product_stock_in_loop() {
+            global $product;
+
+            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                return;
+            }
+
+            // Get availability array (includes text + CSS class)
+            $availability = $product->get_availability();
+
+            if ( ! empty( $availability['availability'] ) ) {
+                echo '<p class="product-stock">' . esc_html( $availability['availability'] ) . '</p>';
+            }
+        }
+        add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_stock_in_loop', 20 );
+    }
+
+    if ( ! function_exists( 'show_product_attributes_in_loop' ) ) {
+        /**
+         * Display specific product attributes in the WooCommerce product loop.
+         *
+         * This function loops through a predefined list of attribute slugs (without the 'pa_' prefix)
+         * and outputs their values under the product title in the shop/archive loop.
+         * Only attributes marked as "Visible on product page" will be displayed.
+         *
+         * @return void
+         */
+        function show_product_attributes_in_loop() {
+            global $product;
+
+            if ( ! $product || ! is_a( $product, 'WC_Product' ) ) {
+                return;
+            }
+
+            // Attributes to show (slugs without 'pa_' prefix for taxonomy attributes)
+            $attributes_to_show = array( 'meret' ); // Add more slugs as needed
+
+            $product_attributes = $product->get_attributes();
+
+            echo '<div class="woocommerce-loop-product__attributes">';
+
+            foreach ( $attributes_to_show as $slug ) {
+
+                // Attempt with 'pa_' prefix first (for taxonomy attributes)
+                $taxonomy_slug = 'pa_' . $slug;
+
+                if ( isset( $product_attributes[ $taxonomy_slug ] ) ) {
+                    $attribute = $product_attributes[ $taxonomy_slug ];
+                } elseif ( isset( $product_attributes[ $slug ] ) ) { 
+                    $attribute = $product_attributes[ $slug ]; // fallback to custom attribute
+                } else {
+                    continue; // attribute not found
+                }
+
+                // Only show if attribute is visible on the product page
+                if ( ! $attribute->get_visible() ) {
+                    continue;
+                }
+
+                $name = wc_attribute_label( $attribute->get_name() );
+
+                // Get attribute values
+                if ( $attribute->is_taxonomy() ) {
+                    $values = wc_get_product_terms( $product->get_id(), $attribute->get_name(), array( 'fields' => 'names' ) );
+                    $values = implode( ', ', $values );
+                } else {
+                    $values = $attribute->get_options();
+                    $values = implode( ', ', $values );
+                }
+
+                echo '<p class="product-attribute"><strong>' . esc_html( $name ) . ':</strong> ' . esc_html( $values ) . '</p>';
+            }
+
+            echo '</div>';
+        }
+        add_action( 'woocommerce_after_shop_loop_item_title', 'show_product_attributes_in_loop', 25 );
+    }
+
     if ( ! function_exists( 'add_cod_fee_dynamic_translatable' ) ) {
         /**
          * Add a dynamic, translatable COD fee to the cart.

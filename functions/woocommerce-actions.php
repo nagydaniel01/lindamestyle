@@ -95,17 +95,21 @@
         add_action( 'woocommerce_before_main_content', 'custom_breadcrumb_wrapper_end', 20 );
     }
 
-    if (!function_exists('custom_woocommerce_notices_wrapper_start')) {
+    // ---------------------------------------------
+    // Add blocks to shop and product single
+    // ---------------------------------------------
+
+    if (!function_exists('custom_woocommerce_notices_wrapper')) {
         /**
          * Output opening wrapper for WooCommerce notices
          *
          * @return void
          */
-        function custom_woocommerce_notices_wrapper_start() {
+        function custom_woocommerce_notices_wrapper() {
             echo '<div class="container">';
         }
-        //add_action('woocommerce_before_shop_loop', 'custom_woocommerce_notices_wrapper_start', 5);
-        add_action('woocommerce_before_single_product', 'custom_woocommerce_notices_wrapper_start', 5);
+        //add_action('woocommerce_before_shop_loop', 'custom_woocommerce_notices_wrapper', 5);
+        add_action('woocommerce_before_single_product', 'custom_woocommerce_notices_wrapper', 5);
     }
 
     if (!function_exists('custom_woocommerce_notices_wrapper_end')) {
@@ -124,53 +128,147 @@
     add_action('woocommerce_before_shop_loop', 'woocommerce_output_all_notices', 10); // Default notices
     add_action('woocommerce_before_single_product', 'woocommerce_output_all_notices', 10); // Default notices
 
-    if (!function_exists('custom_wrap_woocommerce_catalog_ordering')) {
+    if (!function_exists('custom_woocommerce_catalog_ordering_wrapper')) {
         /**
          * Output opening wrapper for WooCommerce result count and ordering dropdown
          *
          * @return void
          */
-        function custom_wrap_woocommerce_catalog_ordering() {
+        function custom_woocommerce_catalog_ordering_wrapper() {
             echo '<div class="woocommerce-tools">';
         }
-        add_action('woocommerce_before_shop_loop', 'custom_wrap_woocommerce_catalog_ordering', 10);
+        add_action('woocommerce_before_shop_loop', 'custom_woocommerce_catalog_ordering_wrapper', 10);
     }
 
-    if (!function_exists('custom_wrap_woocommerce_catalog_ordering_close')) {
+    if (!function_exists('custom_woocommerce_catalog_ordering_wrapper_end')) {
         /**
          * Output closing wrapper for WooCommerce result count and ordering dropdown
          *
          * @return void
          */
-        function custom_wrap_woocommerce_catalog_ordering_close() {
+        function custom_woocommerce_catalog_ordering_wrapper_end() {
             echo '</div>';
         }
-        add_action('woocommerce_before_shop_loop', 'custom_wrap_woocommerce_catalog_ordering_close', 35);
+        add_action('woocommerce_before_shop_loop', 'custom_woocommerce_catalog_ordering_wrapper_end', 35);
     }
 
-    if (!function_exists('custom_product_wrapper_start')) {
+    // ---------------------------------------------
+    // Add blocks to product card
+    // ---------------------------------------------
+
+    // Product wrapper
+
+    if (!function_exists('custom_product_wrapper')) {
         /**
          * Open a wrapper around each WooCommerce product in the loop
-         *
-         * @return void
          */
-        function custom_product_wrapper_start() {
-            echo '<div class="product__inner">';
+        function custom_product_wrapper() {
+            echo '<div class="woocommerce-loop-product">';
         }
-        add_action('woocommerce_before_shop_loop_item', 'custom_product_wrapper_start', 5);
+        add_action('woocommerce_before_shop_loop_item', 'custom_product_wrapper', 5);
     }
 
     if (!function_exists('custom_product_wrapper_end')) {
         /**
          * Close the wrapper around each WooCommerce product in the loop
-         *
-         * @return void
          */
         function custom_product_wrapper_end() {
             echo '</div>';
         }
-        add_action('woocommerce_after_shop_loop_item', 'custom_product_wrapper_end', 25);
+        add_action('woocommerce_after_shop_loop_item', 'custom_product_wrapper_end', 20);
     }
+
+    // Body wrapper
+
+    if ( ! function_exists( 'custom_woocommerce_loop_body_wrapper' ) ) {
+        /**
+         * Open a wrapper around the WooCommerce product body.
+         */
+        function custom_woocommerce_loop_body_wrapper() {
+            echo '<div class="woocommerce-loop-product__body">';
+        }
+        add_action( 'woocommerce_shop_loop_item_title', 'custom_woocommerce_loop_body_wrapper', 1 );
+    }
+
+    if ( ! function_exists( 'custom_woocommerce_loop_body_wrapper_end' ) ) {
+        /**
+         * Close the wrapper around the WooCommerce product body.
+         */
+        function custom_woocommerce_loop_body_wrapper_end() {
+            echo '</div>';
+        }
+        add_action( 'woocommerce_after_shop_loop_item', 'custom_woocommerce_loop_body_wrapper_end', 1 );
+    }
+
+    // Image wrapper
+
+    if ( ! function_exists( 'custom_woocommerce_loop_image_wrapper' ) ) {
+        /**
+         * Open a wrapper around the WooCommerce product image.
+         */
+        function custom_woocommerce_loop_image_wrapper() {
+            echo '<div class="woocommerce-loop-product__image">';
+        }
+        add_action( 'woocommerce_before_shop_loop_item_title', 'custom_woocommerce_loop_image_wrapper', 1 );
+    }
+
+    if ( ! function_exists( 'custom_woocommerce_loop_image_wrapper_end' ) ) {
+        /**
+         * Close the wrapper around the WooCommerce product image.
+         */
+        function custom_woocommerce_loop_image_wrapper_end() {
+            echo '</div>';
+        }
+        add_action( 'woocommerce_before_shop_loop_item_title', 'custom_woocommerce_loop_image_wrapper_end', 20 );
+    }
+
+    // Rating wrapper
+
+    if ( ! function_exists( 'custom_woocommerce_loop_rating_wrapper' ) ) {
+        /**
+         * Outputs opening wrapper div for rating in WooCommerce product loop.
+         */
+        function custom_woocommerce_loop_rating_wrapper() {
+            echo '<div class="woocommerce-loop-product__rating-wrapper">';
+        }
+        add_action( 'woocommerce_after_shop_loop_item_title', 'custom_woocommerce_loop_rating_wrapper', 4 );
+    }
+
+    if ( ! function_exists( 'custom_woocommerce_loop_rating_wrapper_end' ) ) {
+        /**
+         * Outputs closing wrapper div for rating in WooCommerce product loop.
+         */
+        function custom_woocommerce_loop_rating_wrapper_end() {
+            echo '</div>';
+        }
+        add_action( 'woocommerce_after_shop_loop_item_title', 'custom_woocommerce_loop_rating_wrapper_end', 6 );
+    }
+
+    // Add to cart wrapper
+
+    if ( ! function_exists( 'custom_woocommerce_loop_add_to_cart_wrapper' ) ) {
+        /**
+         * Open a wrapper around the WooCommerce add-to-cart button.
+         */
+        function custom_woocommerce_loop_add_to_cart_wrapper() {
+            echo '<div class="woocommerce-loop-product__add-to-cart-wrapper">';
+        }
+        add_action( 'woocommerce_after_shop_loop_item', 'custom_woocommerce_loop_add_to_cart_wrapper', 9 );
+    }
+
+    if ( ! function_exists( 'custom_woocommerce_loop_add_to_cart_wrapper_end' ) ) {
+        /**
+         * Close the wrapper around the WooCommerce add-to-cart button.
+         */
+        function custom_woocommerce_loop_add_to_cart_wrapper_end() {
+            echo '</div>';
+        }
+        add_action( 'woocommerce_after_shop_loop_item', 'custom_woocommerce_loop_add_to_cart_wrapper_end', 11 );
+    }
+
+    // ---------------------------------------------
+    // Add blocks to product single
+    // ---------------------------------------------
 
     if (!function_exists('custom_woocommerce_single_product_gallery_wrapper')) {
         /**
