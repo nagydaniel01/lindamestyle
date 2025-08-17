@@ -1,0 +1,84 @@
+.card.card--researcher {
+    border-radius: 10px;
+    overflow: hidden;
+
+    &:hover {
+        .card__image {
+            clip-path: inset(0 0 0 0 round 0);
+        }
+        
+        .card__content {
+            background-color: rgba($primary, .8);
+        }
+        
+        .card__title,
+        .card__icon {
+            color: $white;
+        }
+    }
+
+    .card__link {
+        padding: 0;
+    }
+    
+    .card__header {
+        height: 100%;
+    }
+    
+    .card__image {
+        margin-bottom: 0;
+        aspect-ratio: 4 / 5;
+        border-radius: 0;
+        clip-path: inset(15px 15px 75px 15px round 20px);
+    }
+    
+    .card__content {
+        display: flex;
+        justify-content: flex-end;
+        position: absolute;
+        inset: 0 0 0 0;
+        padding: 1rem 1.25rem;
+        transition: $transition-base;
+    }
+    
+    .card__title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        width: 100%;
+        margin-bottom: 0;
+        font-size: 1.375rem;
+        line-height: 0.9;
+        transition: $transition-base;
+    }
+}
+
+.card.card--person {
+    .card__title {
+        @include font-size(1.875rem);
+        font-weight: 800;
+    }
+
+    .card__job-title {
+        @include font-size(1.125rem);
+        margin-bottom: 0;
+    }
+
+    .card__contact {
+        display: flex;
+        flex-direction: column;
+        margin-top: auto;
+        padding-top: 2rem;
+
+        p {
+            @include font-size(1.125rem);
+            margin-bottom: 0.625rem;
+        }
+
+        a {
+            line-height: 1;
+            text-decoration: none;
+        }
+    }
+}

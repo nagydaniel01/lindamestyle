@@ -1,0 +1,142 @@
+.card {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	height: 100%;
+	background-color: $white;
+	border: 1px solid $gray-400;
+	border-radius: 15px;
+
+	.card__link {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		padding: 0.875rem 0.75rem;
+		color: $black;
+		text-decoration: none;
+	}
+
+	.card__button {
+		position: absolute;
+		inset: auto 0.75rem 0.875rem auto;
+
+		.icon {
+			width: 1.5rem;
+			height: 1.5rem;
+		}
+	}
+
+	.card__header {
+		flex: 0 0 auto;
+		position: relative;
+	}
+
+	.card__content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		padding-top: 1.25rem;
+	}
+
+	.card__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		aspect-ratio: 3 / 2;
+		object-fit: cover;
+		border-radius: 20px;
+		transition: $transition-base;
+	}
+
+	.card__title {
+		font-size: 1.5rem;
+		line-height: 0.9;
+		font-weight: 600;
+
+		&:has(.icon) {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+
+			.icon {
+				flex: 0 0 auto;
+				width: 1.5rem;
+				height: 1.5rem;
+			}
+		}
+	}
+
+	.card__lead {
+		margin-top: 0.875rem;
+		color: $black;
+		font-size: 1rem;
+		line-height: 1.2;
+
+		p {
+			display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            color: rgba($black, .5);
+			margin-bottom: 0.75rem;
+		}
+	}
+
+	.card__meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin-top: auto;
+		padding-top: 0.875rem;
+		padding-right: 2rem;
+	}
+
+	.card__categories {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.card__category {
+		display: block;
+		padding: 0 0.625rem;
+		border-radius: 10px;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		background-color: $primary;
+		color: $white;
+	}
+
+	.card__date {
+		color: rgba($black, .4);
+		font-size: 0.875rem;
+		line-height: 1;
+	}
+
+	.card__badge {
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: block;
+        width: 180px;
+        padding: 0.5rem 3rem 0.5rem 1.75rem;
+        background-color: $primary;
+        color: $white;
+        font-size: 1rem;
+		line-height: 1.1;
+		text-align: center;
+        transform-origin: right top;
+        transform: rotate(-34deg) translateX(-25px) translateY(-68px);
+		z-index: 10;
+	}
+}
+
+@include media-breakpoint-only(xl) {
+	.card {
+		.card__meta {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+	}
+}

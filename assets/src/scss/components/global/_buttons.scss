@@ -1,0 +1,71 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  
+  &:not(.btn-link) {
+    justify-content: center;
+  }
+
+  &.btn-link {
+    padding: 0;
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  &.btn-primary {
+    .icon {
+      color: $white;
+    }
+  }
+
+  &.btn-search {
+    padding: $btn-padding-y;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $primary;
+      border-color: $primary;
+  
+      .icon {
+        color: $white;
+      }
+    }
+  }
+
+  &.btn-outline-youtube {
+    &:hover,
+    &:focus,
+    &:active {
+      color: $white;
+
+      .icon {
+        color: $white;
+      }
+    }
+
+    .icon {
+      color: $youtube;
+    }
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: $transition-base;
+
+    &:first-child {
+      margin-right: 1rem;
+    }
+
+    &:last-child {
+      margin-left: 1rem;
+    }
+
+    &:only-child {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+}

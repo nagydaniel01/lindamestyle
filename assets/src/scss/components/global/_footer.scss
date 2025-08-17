@@ -1,0 +1,142 @@
+.footer {
+  background-color: $dark-blue;
+
+  .footer__top {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .footer__bottom {
+    padding-bottom: 2rem;
+  }
+
+  .footer__block {
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__title {
+    margin-bottom: 0.625rem;
+    color: $white;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  .footer__subscribe {
+    .footer__title {
+      margin-bottom: 0.75rem;
+      font-size: 1.75rem;
+    }
+    
+    .form-group {
+      margin-bottom: 0.75rem;
+    }
+    
+    .form-check-label {
+      color: $white;
+      font-size: 0.875rem;
+
+      a {
+        color: inherit;
+      }
+    }
+
+    .btn {
+      width: 100%;
+    }
+
+    .alert {
+      margin-top: 1rem;
+      margin-bottom: 0;
+    }
+
+    .error-message {
+      font-size: 0.75rem;
+      color: $danger;
+    }
+  }
+
+  .footer__contact {
+    color: $white;
+    padding: 2rem 0 1rem;
+    border-top: 1px solid rgba($white, .3);
+
+    .footer__title {
+      margin-bottom: 0;
+    }
+
+    p {
+      font-size: 0.9375rem;
+      line-height: 1.4;
+      font-weight: 400;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      color: inherit;
+    }
+  }
+
+  .footer__contact-item {
+    margin-bottom: 1rem;
+  }
+
+  .footer__logo {
+    margin-top: 0.5rem;
+    padding: 0.75rem 3.125rem;
+    border-radius: 20px;
+    background-color: rgba($white, .15);
+
+    .footer__logoitem {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        display: block;
+        width: auto;
+        max-height: 70px;
+      }
+    }
+  }
+}
+
+.copyright {
+  margin-bottom: 0;
+  color: $gray-700;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+@include media-breakpoint-up(xl) {
+  .footer {
+    .footer__top {
+      padding-top: 4.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .footer__bottom {
+      padding-bottom: 4.5rem;
+    }
+
+    .footer__block {
+      margin-bottom: 0;
+    }
+
+    .footer__title {
+      margin-bottom: 1.75rem;
+      font-size: 2rem;
+    }
+
+    .footer__contact {
+      padding: 2.25rem 0;
+    }
+
+    .footer__contact-item {
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,298 @@
+.section {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  
+  .section__title {
+    font-weight: 800;
+  }
+
+  .section__subtitle-wrapper {
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .section__link {
+    flex: 0 0 auto;
+    margin-left: auto;
+
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-left: 0.625rem;
+    }
+  }
+
+  .section__content {
+    & + .section__title {
+      margin-top: 2.5rem;
+    }
+  }
+
+  .section__toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .section__sidebar {
+    margin-top: 2rem;
+  }
+}
+
+.section.section--archive {
+  padding-top: 0;
+
+  .section__header {
+    margin-bottom: 1.875rem;
+  }
+
+  .section__toolbar {
+    margin-top: 2.5rem;
+  }
+}
+
+.section.section--slider {
+  padding-bottom: 2rem;
+
+  .section__posts {
+    margin-top: 2rem;
+  }
+}
+
+.section.section--wysiwyg {
+  .section__title {
+    text-transform: uppercase;
+  }
+}
+
+.section.section--featured {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+
+  .section__inner {
+    background-color: $primary;
+    border-radius: 20px;
+    padding: 1rem 1.5rem 1.5rem;
+  }
+
+  .row {
+    align-items: center;
+  }
+
+  .section__image {
+    margin: 1.5rem auto 0;
+    border-radius: 15px;
+  }
+
+  .section__title {
+    margin-bottom: 0.5rem;
+  }
+
+  .section__lead {
+    font-size: 1.125rem;
+
+    p {
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .section__button {
+    margin-top: 1.5rem;
+
+    .icon {
+      margin-left: 4rem;
+      color: $white;
+    }
+  }
+}
+
+.section.section--query {
+  &:not(.section--query-slider) {
+    margin-bottom: 2rem;
+    padding: 2rem 1.75rem;
+    border-radius: 25px;
+    
+    &:nth-of-type(n + 1) {
+      background-color: rgba($gray-400, .25);
+    }
+  
+    &:nth-of-type(n + 2) {
+      background-color: rgba($gray-400, .5);
+    }
+  
+    &:nth-of-type(n + 3) {
+      background-color: rgba($gray-400, 1);
+    }
+  }
+}
+
+.section.section--page-headline {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  .section__title {
+    margin-bottom: 1rem;
+  }
+}
+
+.section.section--page-text-with-media {
+  .section__image {
+    display: block;
+    object-fit: cover;
+    aspect-ratio: auto;
+    border-radius: 20px;
+  }
+
+  .section__box {
+    height: 100%;
+    padding: 1rem;
+    border-radius: 25px;
+    background-color: $gray-200;
+
+    ul,
+    ol {
+      padding: 0;
+      list-style-position: inside;
+    }
+  }
+
+  .section__box-title {
+    margin-bottom: 0.75rem;
+  }
+}
+
+.section.section--page-textbox {
+  .section__inner {
+    padding: 2.5rem 1.5rem;
+    border-radius: 25px;
+    background-image: linear-gradient(
+        90deg,
+        rgba($gray-200, 0.45) 0%,
+        rgba($gray-200, 1) 50%
+      ),
+      url("../images/pillars.jpg");
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: 100% auto, auto 100%;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    .section__content {
+      & + .section__title {
+        margin-top: 7.25rem;
+      }
+    }
+
+    .section__toolbar {
+      flex-direction: row;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .section__sidebar {
+      margin-top: 0;
+    }
+  }
+
+  .section.section--archive {
+    .section__header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .section__toolbar {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .section__title {
+      margin-right: auto;
+    }
+  }
+
+  .section.section--slider {
+    padding-bottom: 4rem;
+
+    .section__inner {
+      position: relative;
+      padding-bottom: 3.875rem;
+    }
+
+    .section__posts {
+      position: absolute;
+      inset: auto 2.5rem 0;
+      z-index: 10;
+      width: calc(100% - 5rem);
+    }
+  }
+
+  .section.section--featured {
+    .section__inner {
+      padding: 2rem 0;
+    }
+
+    .section__image {
+      margin: -5.5rem 0;
+    }
+
+    .section__button {
+      margin-top: 2.5rem;
+    }
+  }
+
+  .section.section--page-headline,
+  .section.section--page-text-with-media {
+    .section__title {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .section.section--page-text-with-media {
+    .section__box {
+      padding: 1.875rem 2.5rem;
+    }
+
+    .section__box-title {
+      margin-bottom: 1.25rem;
+    }
+  }
+
+  .section.section--page-textbox {
+    .section__inner {
+      background-image: linear-gradient(
+        90deg,
+        rgba($gray-200, 0.45) 0%,
+        rgba($gray-200, 1) 35%
+      ),
+      url("../images/pillars.jpg");
+    }
+  }
+
+  .section.section--download {
+    padding: 0;
+    margin-bottom: 3.75rem;
+
+    .section__header {
+      margin-bottom: 1.875rem;
+    }
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  .section.section--page-textbox {
+    .section__inner {
+      padding: 3.75rem 7.5rem;
+    }
+  }
+}

@@ -1,0 +1,35 @@
+.table {
+    margin-bottom: 0;
+    background-color: rgba($white, .5);
+    border-radius: 15px;
+
+    th,
+    td {
+        color: $black;
+        font-family: $font-family-base;
+        font-size: 1.125rem;
+
+        &:last-child {
+            text-align: right;
+        }
+
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    thead {
+        th {
+            background-color: rgba($primary, .35);
+
+            &:first-child {
+                border-radius: 15px 0 0 15px;
+            }
+
+            &:last-child {
+                border-radius: 0 15px 15px 0;
+            }
+        }
+    }
+}

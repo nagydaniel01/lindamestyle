@@ -1,0 +1,25 @@
+.card.card--event {
+    .card__related-person {
+        position: absolute;
+        inset: auto auto -10px 24px;
+        z-index: 1;
+        display: flex;
+    
+        .person {
+            &:not(:first-child) {
+                margin-left: -6px;
+                z-index: -1;
+            }
+        }
+    
+        .person__image {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+        }
+    }
+
+    .card__badge {
+        
+    }
+}

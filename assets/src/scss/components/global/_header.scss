@@ -1,0 +1,26 @@
+.header {
+  position: relative;
+  z-index: 100;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 1.875rem;
+    background-color: $gray-200;
+    border-radius: 1.25rem;
+    transition: $transition-base;
+  }
+
+  .navbar {
+    width: 100%;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .header {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+  }
+}

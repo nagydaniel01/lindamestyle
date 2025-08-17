@@ -1,0 +1,221 @@
+// ---------------------------------------------
+// WooCommerce Single Product → Bootstrap Layout
+// ---------------------------------------------
+
+// 1) Main wrapper
+.woocommerce.single-product {
+  padding: 2rem 0;
+}
+
+// 2) Product layout: Image left, details right
+.woocommerce.single-product .product {
+  @extend .row;
+  gap: 1.5rem;
+  margin: 0;
+
+  // Product gallery
+  .woocommerce-product-gallery {
+    @extend .col-12;
+    @extend .col-md-6;
+
+    .woocommerce-product-gallery__image {
+      margin-bottom: 1rem;
+
+      img {
+        @extend .img-fluid;
+        border-radius: 0.5rem;
+        object-fit: cover;
+      }
+    }
+
+    // Thumbnails
+    .flex-control-thumbs {
+      @extend .row;
+      gap: 0.5rem;
+      margin: 0;
+
+      li {
+        @extend .col;
+        flex: 1 1 auto;
+
+        img {
+          @extend .img-fluid;
+          border-radius: 0.375rem;
+          border: 1px solid var(--bs-border-color);
+          cursor: pointer;
+          transition: border-color 0.15s ease;
+
+          &:hover {
+            border-color: var(--bs-primary);
+          }
+        }
+      }
+    }
+  }
+
+  // Summary block
+  .summary {
+    @extend .col-12;
+    @extend .col-md-6;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bs-body-bg);
+  }
+}
+
+// 3) Product title
+.woocommerce.single-product .product_title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+// 4) Rating + review link
+.woocommerce.single-product .woocommerce-product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+
+  .star-rating {
+    color: var(--bs-warning);
+    font-size: 1rem;
+  }
+
+  .woocommerce-review-link {
+    color: var(--bs-secondary);
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+// 5) Price
+.woocommerce.single-product .price {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--bs-primary);
+
+  del {
+    opacity: 0.6;
+    margin-right: 0.5rem;
+  }
+
+  ins {
+    text-decoration: none;
+    color: var(--bs-success);
+  }
+}
+
+// 6) Short description
+.woocommerce.single-product .woocommerce-product-details__short-description {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+// 7) Add-to-cart area
+.woocommerce.single-product form.cart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.375rem;
+    overflow: hidden;
+
+    input.qty {
+      width: 70px;
+      text-align: center;
+      border: none;
+      padding: 0.5rem;
+    }
+  }
+
+  .single_add_to_cart_button {
+    @extend .btn;
+    @extend .btn-primary;
+    flex: 1 1 auto;
+    min-width: 150px;
+  }
+}
+
+// 8) Product meta (SKU, categories, tags)
+.woocommerce.single-product .product_meta {
+  font-size: 0.875rem;
+  color: var(--bs-secondary);
+
+  a {
+    color: var(--bs-primary);
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+// 9) Tabs (description, reviews)
+.woocommerce.single-product .woocommerce-tabs {
+  margin-top: 3rem;
+
+  ul.tabs {
+    @extend .nav;
+    @extend .nav-tabs;
+    margin-bottom: 1.5rem;
+
+    li {
+      @extend .nav-item;
+
+      a {
+        @extend .nav-link;
+      }
+
+      &.active a {
+        @extend .active;
+      }
+    }
+  }
+
+  .woocommerce-Tabs-panel {
+    @extend .tab-content;
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0 0 0.375rem 0.375rem;
+    padding: 1.25rem;
+    background-color: var(--bs-body-bg);
+  }
+}
+
+// 10) Related products
+.woocommerce.single-product .related.products {
+  margin-top: 3rem;
+
+  > h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  ul.products {
+    @extend .row;
+    margin: 0 -0.75rem;
+
+    li.product {
+      @extend .col-12;
+      @extend .col-sm-6;
+      @extend .col-md-4;
+      @extend .col-lg-3;
+      padding: 0.75rem;
+      display: flex;
+    }
+  }
+}

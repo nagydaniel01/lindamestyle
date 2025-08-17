@@ -1,0 +1,46 @@
+.slider.slider--works {
+    padding: 0 3rem;
+
+    .slick-list,
+    .slick-track,
+    .slick-slide,
+    .slick-slide > div {
+        display: flex;
+        flex: 1;
+    }
+
+    .slick-list {
+        overflow: visible;
+        overflow-x: clip;
+    }
+
+    .slick-arrow {
+        position: absolute;
+        top: 0;
+
+        &.slick-prev {
+            left: 0;
+        }
+
+        &.slick-next {
+            right: 0;
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .slider.slider--works {
+        margin-top: 12rem;
+        padding: 0;
+
+        .slick-arrow {
+            &.slick-prev {
+                left: -3rem;
+            }
+    
+            &.slick-next {
+                right: -3rem;
+            }
+        }
+    }
+}
