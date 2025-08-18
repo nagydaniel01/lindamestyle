@@ -4,6 +4,7 @@ import 'bootstrap/js/src/offcanvas';
 import 'bootstrap/js/src/tab';
 import 'bootstrap/js/src/modal';
 
+/*
 import './add-to-calendar-button-init';
 import './filter';
 import './masonry-init';
@@ -15,5 +16,7 @@ import './fancybox-init';
 import './validate-form';
 import './youtube-player';
 import './navigation-home';
+*/
 
-import './quantity';
+import './minicart';
+import './quantity'; 

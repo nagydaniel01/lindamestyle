@@ -125,8 +125,8 @@ $post_type_query = new WP_Query($post_type_args);
         <?php endwhile; ?>
         <?php wp_reset_postdata(); ?>
     </div>
-    <div class="load-more js-load-more" >
-        <?php
+
+    <?php
         // posts to display per page
         $posts_per_page = (int) $post_type_query->query_vars['posts_per_page'];
         // current page
@@ -153,8 +153,8 @@ $post_type_query = new WP_Query($post_type_args);
         if( ( $last_link_in_the_middle - $first_link_in_the_middle ) != $links_in_the_middle_minus_1 ) { $last_link_in_the_middle = $first_link_in_the_middle + $links_in_the_middle_minus_1; }
         if( $last_link_in_the_middle > $max_page ) { $first_link_in_the_middle = $max_page - $links_in_the_middle_minus_1; $last_link_in_the_middle = (int) $max_page; }
         if( $first_link_in_the_middle <= 0 ) $first_link_in_the_middle = 1;
-        ?>
-
+    ?>
+    <div class="load-more js-load-more">
         <nav class="section__pagination pagination js-pagination" role="navigation" data-max-pages="<?php esc_attr_e($post_type_query->max_num_pages); ?>">
             <ul class="page-numbers">
                 <?php if ($current_page != 1) : ?>

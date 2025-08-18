@@ -41,7 +41,7 @@
 
             // Load the Coming Soon template.
             $template_loaded = false;
-            $template_file = locate_template('templates/page-under-construction.php');
+            $template_file = locate_template('under-construction.php');
 
             if ( $template_file ) {
                 load_template($template_file);

@@ -73,6 +73,13 @@
 @keyframes wcspin { to { transform: rotate(360deg); } }
 
 // ---------------------------------------------
+// Breadcrumb
+// ---------------------------------------------
+.woocommerce-breadcrumb-wrapper {
+  margin-bottom: 1rem;
+}
+
+// ---------------------------------------------
 // Columns / Forms
 // ---------------------------------------------
 .woocommerce {
@@ -127,153 +134,137 @@
     }
   }
 
+  // ---------------------------------------------
+  // Product Card
+  // ---------------------------------------------
   .product {
     .woocommerce-loop-product {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background-color: rgba($primary, 0.05);
-      font-family: $headings-font-family;
-      box-shadow: 0 1px 19px 2px rgba($black, 0.17);
+      margin-bottom: 2rem;
+      border: 1px solid $border-color;
+      border-radius: 0.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
 
       .woocommerce-loop-product__link {
-        display: flex;
-        flex-direction: column;
-        color: $primary;
+        color: inherit;
         text-decoration: none;
       }
 
+      // Product Image
       .woocommerce-loop-product__image {
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 0 0 45%;
-        background-color: $white;
+        overflow: hidden;
+        border-bottom: 1px solid $border-color;
 
         img {
-          display: block;
-          width: 100%;
-          max-width: 100%;
-          height: auto;
-          aspect-ratio: 1 / 1;
+          @extend .card-img-top;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover img {
+          transform: scale(1.05);
+        }
+
+        .onsale {
+          @extend .badge, .bg-danger;
+          position: absolute;
+          top: 0.5rem;
+          left: 0.5rem;
+          font-weight: bold;
+          padding: 0.25rem 0.5rem;
+          z-index: 2;
         }
       }
 
-      .woocommerce-loop-product__image-button {
-        position: absolute;
-        inset: auto 0.5rem 0.5rem auto;
-        border-radius: 20px;
-      }
-
+      // Card Body
       .woocommerce-loop-product__body {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        flex: 0 0 55%;
-        padding: 1rem 1rem 2.5rem 0.5rem;
-      }
+        padding: 1rem;
 
-      .star-rating {
-        margin-bottom: 0.75rem;
-      }
-
-      .woocommerce-loop-product__title {
-        margin-bottom: 0.25rem;
-        font-size: 1.125rem;
-        font-weight: 700;
-        line-height: 1;
-        text-wrap: balance;
-        text-transform: uppercase;
-      }
-
-      .woocommerce-loop-product__description {
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        -webkit-line-clamp: 5;
-        margin-bottom: 0.625rem;
-        color: $gray-500;
-        font-size: 0.875rem;
-        line-height: 1.125;
-      }
-
-      .woocommerce-loop-product__rating-wrapper {
-        margin-bottom: 0.75rem;
-        display: flex;
-        flex-direction: column-reverse;
-        margin-top: auto;
-      }
-
-      .price {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: baseline;
-        justify-content: flex-start;
-        gap: 0.5rem;
-        font-size: 1rem;
-        font-weight: 700;
-
-        del {
-          color: $gray-500;
-          font-size: 0.8125rem;
-          font-weight: 400;
+        h2.woocommerce-loop-product__title {
+          @extend .card-title;
+          font-size: 1.25rem;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
         }
 
-        ins {
+        // Ratings
+        .woocommerce-loop-product__rating-wrapper {
+          margin-bottom: 0.5rem;
+        }
+
+        // Price
+        .price {
+          display: flex;
+          align-items: baseline;
+          gap: 0.5rem;
+          margin-bottom: 0.5rem;
+
+          del {
+            color: $black;
+          }
+
+          ins {
+            color: $success;
+            font-weight: bold;
+            text-decoration: none;
+          }
+        }
+
+        // Stock info
+        .product-stock {
+          font-size: 0.875rem;
+          color: $black;
+          margin-bottom: 0.5rem;
+        }
+
+        // Attributes
+        .woocommerce-loop-product__attributes {
+          font-size: 0.875rem;
+          color: $black;
+
+          .product-attribute {
+            margin-bottom: 0.25rem;
+          }
+        }
+      }
+
+      // Categories
+      .woocommerce-loop-product__categories {
+        padding: 0.5rem 1rem;
+
+        a {
+          color: $primary;
           text-decoration: none;
-        }
 
-        .wcsatt-sub-options,
-        .wcsatt-sub-discount,
-        > small {
-          display: none;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
 
-      .woocommerce-loop-product__unit-price {
-        color: $gray-500;
-        font-size: 0.8125rem;
-        font-weight: 500;
-        //letter-spacing: 1.4px;
-      }
-
+      // Add to cart button
       .woocommerce-loop-product__add-to-cart-wrapper {
-        display: flex;
-        position: absolute;
-        inset: auto 0 0 auto;
-        width: calc(55% - 0.5rem);
-      }
+        padding: 0.5rem 1rem 1rem;
 
-      .button,
-      .wc-forward {
-        font-size: 0.75rem;
-        line-height: 1;
-        font-weight: 500;
-        border: none;
-        border-radius: 0;
-        padding: 0.5rem;
-        justify-content: space-between;
-        letter-spacing: 0;
-        text-transform: none;
-        text-decoration: none;
+        .add_to_cart_button {
+          @extend .btn, .btn-primary, .w-100;
+          font-weight: 500;
+          text-align: center;
+          transition: background-color 0.3s ease;
 
-        .icon {
-          width: 0.75rem;
-          height: 0.75rem;
-          color: $white;
+          &:hover {
+            background-color: darken($primary, 10%);
+          }
         }
-      }
 
-      .button {
-        flex: 1;
-        background-color: #27b080;
-        color: $white;
-      }
-
-      .wc-forward {
-        background-color: $black;
-        color: $white !important;
+        .added_to_cart {
+          display: flex;
+          justify-content: center;
+        }
       }
     }
   }

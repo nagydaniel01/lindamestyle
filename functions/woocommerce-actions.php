@@ -17,6 +17,10 @@
     remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
     remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
 
+    // ---------------------------------------------
+    // Add blocks to shop and product single
+    // ---------------------------------------------
+
     if (!function_exists('custom_woocommerce_output_content_wrapper')) {
         /**
          * Output the opening wrapper for WooCommerce content.
@@ -94,10 +98,6 @@
         }
         add_action( 'woocommerce_before_main_content', 'custom_breadcrumb_wrapper_end', 20 );
     }
-
-    // ---------------------------------------------
-    // Add blocks to shop and product single
-    // ---------------------------------------------
 
     if (!function_exists('custom_woocommerce_notices_wrapper')) {
         /**
@@ -277,7 +277,7 @@
          * @return void
          */
         function custom_woocommerce_single_product_gallery_wrapper() {
-            echo '<div class="woocommerce-product-gallery-wrapper">';
+            echo '<div class="gallery entry-gallery">';
         }
         add_action('woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_gallery_wrapper', 6);
     }
@@ -380,4 +380,39 @@
             }
         }
         add_action('woocommerce_after_single_product_summary', 'custom_woocommerce_single_product_sections', 30);
+    }
+    
+    if ( ! function_exists( 'refresh_offcanvas_minicart_fragments' ) ) {
+        /**
+         * Refresh minicart and cart count via AJAX fragments.
+         *
+         * This function ensures that both the minicart contents and the cart item count
+         * are refreshed dynamically after products are added to the cart via AJAX.
+         *
+         * @param array $fragments An array of HTML fragments to refresh with AJAX.
+         * @return array Modified fragments array including cart count and minicart wrapper.
+         */
+        function refresh_offcanvas_minicart_fragments( $fragments ) {
+
+            // Cart count fragment
+            ob_start();
+            ?>
+            <span class="cart_contents_count">
+                <?php echo WC()->cart->get_cart_contents_count(); ?>
+            </span>
+            <?php
+            $fragments['.cart_contents_count'] = ob_get_clean();
+
+            // Minicart wrapper fragment
+            ob_start();
+            ?>
+            <div class="woocommerce-mini-cart__wrapper">
+                <?php woocommerce_mini_cart(); ?>
+            </div>
+            <?php
+            $fragments['.woocommerce-mini-cart__wrapper'] = ob_get_clean();
+
+            return $fragments;
+        }
+        add_filter( 'woocommerce_add_to_cart_fragments', 'refresh_offcanvas_minicart_fragments' );
     }

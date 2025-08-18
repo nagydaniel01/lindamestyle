@@ -9,7 +9,6 @@
                 <div class="modal-body">
                     <div id="wc-login-form">
                     <?php
-                        // Display WooCommerce login form
                         if ( ! is_user_logged_in() ) {
                             echo do_shortcode('[woocommerce_my_account]'); 
                         }

@@ -29,16 +29,6 @@
                 
                 <div class="section__toolbar">
                     <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( '%s keresése', TEXT_DOMAIN ), $post_type_obj->labels->name ) ); ?>" class="filter filter--search form-control js-filter-search">
-    
-                    <?php if (!empty($categories) && is_array($categories)) : ?>
-                        <select id="filter-category" name="category[]" multiple="multiple" class="filter form-select js-filter js-filter-default" data-filter="category" data-placeholder="<?php esc_attr_e('Szűrés kategóriák szerint', TEXT_DOMAIN); ?>">
-                            <?php foreach ($categories as $category) : ?>
-                                <option value="<?php esc_attr_e($category->slug); ?>" <?php selected(get_query_var('category_filter'), $category->slug); ?>>
-                                    <?php esc_html_e($category->name); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    <?php endif; ?>
                 </div>
             </div>
 
@@ -56,7 +46,15 @@
 
                 <div class="col-12 col-lg-4 col-xl-3">
                     <div class="section__sidebar">
-                        <?php get_template_part('template-parts/sidebars/sidebar', 'archive'); ?>
+                        <?php if (!empty($categories) && is_array($categories)) : ?>
+                            <select id="filter-category" name="category[]" multiple="multiple" class="filter form-select js-filter js-filter-default" data-filter="category" data-placeholder="<?php esc_attr_e('Szűrés kategóriák szerint', TEXT_DOMAIN); ?>">
+                                <?php foreach ($categories as $category) : ?>
+                                    <option value="<?php esc_attr_e($category->slug); ?>" <?php selected(get_query_var('category_filter'), $category->slug); ?>>
+                                        <?php esc_html_e($category->name); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

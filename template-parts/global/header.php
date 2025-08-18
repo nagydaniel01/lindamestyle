@@ -41,11 +41,9 @@
                         <button class="btn btn-outline-secondary position-relative me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                             <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
                             <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
-                            <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
-                                <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                    <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
-                                </div>
-                            <?php endif; ?>
+                            <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                            </div>
                         </button>
                     <?php endif; ?>
 
@@ -108,11 +106,9 @@
                                     <button class="btn btn-outline-primary btn-link position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                                         <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
                                         <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
-                                        <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
-                                            <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                                                <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
-                                            </div>
-                                        <?php endif; ?>
+                                        <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                                            <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
+                                        </div>
                                     </button>
                                 </div>
                             <?php endif; ?>
