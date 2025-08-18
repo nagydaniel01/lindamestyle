@@ -416,3 +416,38 @@
         }
         add_filter( 'woocommerce_add_to_cart_fragments', 'refresh_offcanvas_minicart_fragments' );
     }
+
+    if ( ! function_exists( 'custom_cart_item_remove_link' ) ) {
+        /**
+         * Override WooCommerce cart item remove link with custom attributes and SVG icon.
+         *
+         * @param string $link          Original remove link HTML.
+         * @param string $cart_item_key The cart item key.
+         * @return string               Modified remove link HTML.
+         */
+        function custom_cart_item_remove_link( $link, $cart_item_key ) {
+            $cart_item = WC()->cart->get_cart()[$cart_item_key];
+            $product   = $cart_item['data'];
+            $product_id   = $product->get_id();
+            $product_name = $product->get_name();
+            $product_sku  = $product->get_sku();
+
+            // Custom SVG icon
+            $svg_icon = '<svg class="icon icon-trash-can"><use xlink:href="#icon-trash-can"></use></svg>';
+
+            $new_link = sprintf(
+                '<a role="button" href="%s" class="remove remove_from_cart_button custom-remove" aria-label="%s" data-product_id="%s" data-cart_item_key="%s" data-product_sku="%s" data-success_message="%s">%s<span class="visually-hidden">%s</span></a>',
+                esc_url( wc_get_cart_remove_url( $cart_item_key ) ),
+                esc_attr( sprintf( __( 'Remove %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
+                esc_attr( $product_id ),
+                esc_attr( $cart_item_key ),
+                esc_attr( $product_sku ),
+                esc_attr( sprintf( __( '&ldquo;%s&rdquo; has been removed from your cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) ),
+                $svg_icon,
+                esc_attr( sprintf( __( 'Remove %s from cart', 'woocommerce' ), wp_strip_all_tags( $product_name ) ) )
+            );
+
+            return $new_link;
+        }
+        add_filter( 'woocommerce_cart_item_remove_link', 'custom_cart_item_remove_link', 10, 2 );
+    }

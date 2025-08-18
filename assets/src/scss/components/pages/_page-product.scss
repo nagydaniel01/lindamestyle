@@ -10,6 +10,7 @@
   .gallery {
     @extend .col-12;
     @extend .col-md-6;
+    position: relative;
 
     .woocommerce-product-gallery__image {
       margin-bottom: 1rem;
@@ -58,7 +59,7 @@
   }
 
   .product_title {
-    font-size: 1.75rem;
+    font-size: 2.75rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
   }
