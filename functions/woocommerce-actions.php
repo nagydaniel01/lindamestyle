@@ -294,23 +294,6 @@
         add_action('woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_gallery_wrapper_end', 21);
     }
 
-    if (!function_exists('custom_woocommerce_gallery_thumbnail_size')) {
-        /**
-         * Change the WooCommerce gallery thumbnail size to match main image size.
-         *
-         * @param array $size Array of width, height, and crop settings for the gallery thumbnail.
-         * @return array Modified gallery thumbnail size
-         */
-        function custom_woocommerce_gallery_thumbnail_size($size) {
-            return array(
-                'width'  => 600,
-                'height' => 600,
-                'crop'   => 1,
-            );
-        }
-        add_filter('woocommerce_get_image_size_gallery_thumbnail', 'custom_woocommerce_gallery_thumbnail_size');
-    }
-
     if (!function_exists('custom_woocommerce_move_product_tabs')) {
         /**
          * Moves the product tabs into a Bootstrap container.

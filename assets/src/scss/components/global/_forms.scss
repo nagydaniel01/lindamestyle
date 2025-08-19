@@ -40,6 +40,41 @@ label {
   @extend .form-label;
 }
 
+// WooCommerce password field wrapper
+.password-input {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  .show-password-input {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0.25rem;
+    color: rgba($dark, 0.6);
+
+    &::before {
+      content: "\1F441";
+      display: inline-block;
+      margin-right: 0;
+      font-size: 1rem;
+    }
+
+    &:hover {
+      color: rgba($dark, 0.8);
+    }
+  }
+}
+
 .select2-container--bootstrap-5 {
   &.select2-container--focus,
   &.select2-container--open {

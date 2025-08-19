@@ -18,5 +18,6 @@ import './youtube-player';
 import './navigation-home';
 */
 
+import './slick-init';
 import './minicart';
 import './quantity'; 

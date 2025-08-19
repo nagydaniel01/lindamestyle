@@ -1,16 +1,13 @@
-table {
+table,
+.shop_table {
   @extend .table;
   @extend .table-striped;
   @extend .table-bordered;
+  @extend .table-hover;
   margin-bottom: 2rem;
   font-size: 0.95rem;
   border-collapse: separate;
   border-spacing: 0 0.5rem;
-
-  thead th {
-    font-weight: 600;
-    font-size: 1.25rem;
-  }
 
   th, td {
     vertical-align: middle;
@@ -26,19 +23,38 @@ table {
       }
     }
 
+    .product-quantity {
+      font-weight: 600;
+      margin-left: 0.25rem;
+    }
+
     &:first-child {
-      border-top-left-radius: 0.5rem;
-      border-bottom-left-radius: 0.5rem;
+      border-top-left-radius: 0.5rem !important;
+      border-bottom-left-radius: 0.5rem !important;
     }
 
     &:last-child {
-      border-top-right-radius: 0.5rem;
-      border-bottom-right-radius: 0.5rem;
+      border-top-right-radius: 0.5rem !important;
+      border-bottom-right-radius: 0.5rem !important;
     }
   }
 
   th {
     background-color: var(--bs-light);
     font-weight: 600;
+  }
+
+  thead {
+    @extend .table-light;
+    th {
+      font-weight: 600;
+    }
+  }
+
+  tfoot {
+    th, td {
+      background: $gray-100;
+      font-size: 0.95rem;
+    }
   }
 }

@@ -2,7 +2,7 @@
     <div class="offcanvas offcanvas-end" id="minicartCanvas" tabindex="-1" aria-labelledby="minicartCanvasLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="minicartCanvasLabel">
-                <?php echo esc_html( 'Your Cart', TEXT_DOMAIN ); ?>
+                <?php echo esc_html( 'Your cart', TEXT_DOMAIN ); ?>
                 <?php if ( WC()->cart->get_cart_contents_count() > 0 ) : ?>
                     <span class="cart_contents_count"><?php echo WC()->cart->get_cart_contents_count(); ?></span>
                     <?php echo _n( 'item', 'items', WC()->cart->get_cart_contents_count(), TEXT_DOMAIN ); ?>

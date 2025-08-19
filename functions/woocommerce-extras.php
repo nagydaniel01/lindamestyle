@@ -1,4 +1,65 @@
 <?php
+    if ( ! function_exists( 'custom_hu_address_format' ) ) {
+        /**
+         * Modify the WooCommerce address format for Hungary (HU) 
+         * to display the company name first.
+         *
+         * @param array $formats Associative array of country address formats.
+         * @return array Modified address formats with HU customized.
+         */
+        function custom_hu_address_format( $formats ) {
+            // Set Hungarian address format with company first
+            $formats['HU'] = "{company}\n{name}\n{postcode} {city}\n{address_1} {address_2}\n{country}";
+            return $formats;
+        }
+        add_filter( 'woocommerce_localisation_address_formats', 'custom_hu_address_format' );
+    }
+
+    // Change WooCommerce image sizes programmatically
+    if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
+        /**
+         * Customize WooCommerce product image sizes via filters.
+         *
+         * This snippet adjusts the dimensions for:
+         * - Gallery thumbnails (below main product image)
+         * - Single product main image
+         * - Shop/category thumbnails
+         *
+         * After making changes, remember to regenerate thumbnails so the new sizes take effect.
+         */
+        function custom_woocommerce_image_sizes() {
+
+            // Shop/category thumbnails
+            add_filter( 'woocommerce_get_image_size_thumbnail', function( $size ) {
+                return array(
+                    'width'  => 400,
+                    'height' => 400,
+                    'crop'   => 1,
+                );
+            });
+            
+            // Single product main image
+            add_filter( 'woocommerce_get_image_size_single', function( $size ) {
+                return array(
+                    'width'  => 800,
+                    'height' => 800,
+                    'crop'   => 1,
+                );
+            });
+
+            // Gallery thumbnails (below main image)
+            add_filter( 'woocommerce_get_image_size_gallery_thumbnail', function( $size ) {
+                return array(
+                    'width'  => 600,
+                    'height' => 600,
+                    'crop'   => 1,
+                );
+            });
+
+        }
+        add_action( 'after_setup_theme', 'custom_woocommerce_image_sizes' );
+    }
+
     if ( ! function_exists( 'quantity_plus_sign' ) ) {
         /**
          * Output the plus button after the quantity input field.
