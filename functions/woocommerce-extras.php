@@ -1,20 +1,4 @@
 <?php
-    if ( ! function_exists( 'custom_hu_address_format' ) ) {
-        /**
-         * Modify the WooCommerce address format for Hungary (HU) 
-         * to display the company name first.
-         *
-         * @param array $formats Associative array of country address formats.
-         * @return array Modified address formats with HU customized.
-         */
-        function custom_hu_address_format( $formats ) {
-            // Set Hungarian address format with company first
-            $formats['HU'] = "{company}\n{name}\n{postcode} {city}\n{address_1} {address_2}\n{country}";
-            return $formats;
-        }
-        add_filter( 'woocommerce_localisation_address_formats', 'custom_hu_address_format' );
-    }
-
     // Change WooCommerce image sizes programmatically
     if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
         /**
@@ -57,7 +41,23 @@
             });
 
         }
-        add_action( 'after_setup_theme', 'custom_woocommerce_image_sizes' );
+        add_action( 'after_setup_theme', 'custom_woocommerce_image_sizes', 10 );
+    }
+
+    if ( ! function_exists( 'custom_hu_address_format' ) ) {
+        /**
+         * Modify the WooCommerce address format for Hungary (HU) 
+         * to display the company name first.
+         *
+         * @param array $formats Associative array of country address formats.
+         * @return array Modified address formats with HU customized.
+         */
+        function custom_hu_address_format( $formats ) {
+            // Set Hungarian address format with company first
+            $formats['HU'] = "{company}\n{name}\n{postcode} {city}\n{address_1} {address_2}\n{country}";
+            return $formats;
+        }
+        add_filter( 'woocommerce_localisation_address_formats', 'custom_hu_address_format' );
     }
 
     if ( ! function_exists( 'quantity_plus_sign' ) ) {
@@ -292,4 +292,46 @@
             }
         }
         add_action( 'woocommerce_cart_calculate_fees', 'add_cod_fee_dynamic_translatable' );
+    }
+
+    if ( ! function_exists( 'change_related_products_heading' ) ) {
+        /**
+         * Change the "Related products" heading text.
+         *
+         * @return string Custom heading text.
+         */
+        function change_related_products_heading() {
+            return __( 'You will definitely like', TEXT_DOMAIN );
+        }
+        add_filter( 'woocommerce_product_related_products_heading', 'change_related_products_heading' );
+    }
+
+    if ( ! function_exists( 'change_cross_sells_heading' ) ) {
+        /**
+         * Change the "You may be interested in…" cross-sells heading text.
+         *
+         * @return string Custom heading text.
+         */
+        function change_cross_sells_heading() {
+            return __( 'Customers also bought', TEXT_DOMAIN );
+        }
+        add_filter( 'woocommerce_product_cross_sells_products_heading', 'change_cross_sells_heading' );
+    }
+
+    if ( ! function_exists( 'change_upsells_heading' ) ) {
+        /**
+         * Change the "You may also like…" upsells heading text.
+         *
+         * @return string Custom heading text.
+         */
+        function change_upsells_heading() {
+            return __( 'Handpicked for you', TEXT_DOMAIN );
+        }
+        add_filter( 'woocommerce_product_upsells_products_heading', 'change_upsells_heading' );
+    }
+
+    add_action( 'woocommerce_after_single_product_summary', 'my_sticky_product_block', 5 );
+
+    function my_sticky_product_block() {
+        get_template_part('template-parts/blocks/block', 'product');
     }

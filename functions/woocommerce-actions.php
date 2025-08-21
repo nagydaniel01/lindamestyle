@@ -279,7 +279,7 @@
         function custom_woocommerce_single_product_gallery_wrapper() {
             echo '<div class="gallery entry-gallery">';
         }
-        add_action('woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_gallery_wrapper', 6);
+        add_action('woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_gallery_wrapper', 5);
     }
 
     if (!function_exists('custom_woocommerce_single_product_gallery_wrapper_end')) {
@@ -291,36 +291,117 @@
         function custom_woocommerce_single_product_gallery_wrapper_end() {
             echo '</div>';
         }
-        add_action('woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_gallery_wrapper_end', 21);
+        add_action('woocommerce_before_single_product_summary', 'custom_woocommerce_single_product_gallery_wrapper_end', 20);
     }
 
     if (!function_exists('custom_woocommerce_move_product_tabs')) {
         /**
-         * Moves the product tabs into a Bootstrap container.
-         * Checks if WooCommerce tabs function exists before removing/re-adding.
+         * Setup function for moving WooCommerce product tabs.
+         *
+         * Removes the default tabs output and re-adds them wrapped in a container.
+         *
+         * @return void
          */
         function custom_woocommerce_move_product_tabs() {
             if (function_exists('woocommerce_output_product_data_tabs')) {
-                // Remove default WooCommerce tabs output
                 remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_product_data_tabs', 10);
-
-                // Re-add tabs wrapped in a container
                 add_action('woocommerce_after_single_product_summary', 'custom_woocommerce_move_product_tabs_inner', 10);
             }
         }
 
-        /**
-         * Inner function to output WooCommerce tabs inside a container.
-         */
         if (!function_exists('custom_woocommerce_move_product_tabs_inner')) {
+            /**
+             * Outputs WooCommerce product tabs inside a Bootstrap container.
+             *
+             * @return void
+             */
             function custom_woocommerce_move_product_tabs_inner() {
                 echo '<section class="section section--product-tabs"><div class="container">';
                 woocommerce_output_product_data_tabs();
                 echo '</div></section>';
             }
         }
+        add_action('after_setup_theme', 'custom_woocommerce_move_product_tabs', 15);
+    }
 
-        add_action('after_setup_theme', 'custom_woocommerce_move_product_tabs', 11);
+    if (!function_exists('custom_woocommerce_move_upsells')) {
+        /**
+         * Setup function for moving WooCommerce upsell products.
+         *
+         * Removes the default upsells output and re-adds them wrapped
+         * in a Bootstrap container.
+         *
+         * @return void
+         */
+        function custom_woocommerce_move_upsells() {
+            if (function_exists('woocommerce_upsell_display')) {
+                remove_action('woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15);
+                add_action('woocommerce_after_single_product_summary', 'custom_woocommerce_move_upsells_inner', 15);
+            }
+        }
+
+        if (!function_exists('custom_woocommerce_move_upsells_inner')) {
+            /**
+             * Outputs WooCommerce upsell products inside a Bootstrap container.
+             *
+             * @return void
+             */
+            function custom_woocommerce_move_upsells_inner() {
+                global $product;
+
+                if (!$product) {
+                    return;
+                }
+
+                $upsells = $product->get_upsell_ids();
+
+                if (!empty($upsells)) {
+                    echo '<section class="section section--upsells"><div class="container">';
+                    woocommerce_upsell_display();
+                    echo '</div></section>';
+                }
+            }
+        }
+        add_action('after_setup_theme', 'custom_woocommerce_move_upsells', 15);
+    }
+
+    if (!function_exists('custom_woocommerce_move_related_products')) {
+        /**
+         * Setup function for moving WooCommerce related products.
+         *
+         * Removes the default related products output and re-adds them wrapped
+         * in a Bootstrap container.
+         *
+         * @return void
+         */
+        function custom_woocommerce_move_related_products() {
+            if (function_exists('woocommerce_output_related_products')) {
+                remove_action('woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+                add_action('woocommerce_after_single_product_summary', 'custom_woocommerce_move_related_products_inner', 20);
+            }
+        }
+
+        if (!function_exists('custom_woocommerce_move_related_products_inner')) {
+            /**
+             * Outputs WooCommerce related products inside a Bootstrap container.
+             *
+             * @return void
+             */
+            function custom_woocommerce_move_related_products_inner() {
+                // Capture the output of WooCommerce function
+                ob_start();
+                woocommerce_output_related_products();
+                $content = trim(ob_get_clean());
+
+                // Only render wrapper if WooCommerce actually produced HTML
+                if (!empty($content)) {
+                    echo '<section class="section section--related-products"><div class="container">';
+                    echo $content;
+                    echo '</div></section>';
+                }
+            }
+        }
+        add_action('after_setup_theme', 'custom_woocommerce_move_related_products', 15);
     }
 
     if (!function_exists('custom_woocommerce_pagination_icons')) {
@@ -339,27 +420,77 @@
         add_filter('woocommerce_comment_pagination_args', 'custom_woocommerce_pagination_icons');
     }
 
-    if (!function_exists('custom_woocommerce_single_product_sections')) {
+    if ( ! function_exists('custom_woocommerce_single_product_sections') ) {
         /**
          * Displays flexible content sections on the single product page.
          * Checks for ACF 'sections' field for the current product,
-         * then falls back to 'product_page_sections' options field.
+         * then falls back to 'product_page_sections_section' options field.
          */
         function custom_woocommerce_single_product_sections() {
-            if (function_exists('have_rows')) {
-                if (have_rows('sections')) {
-                    while (have_rows('sections')) {
-                        the_row();
-                        get_template_part('template-parts/sections/section-' . get_row_layout());
-                    }
-                } elseif (have_rows('product_page_sections', 'option')) {
-                    while (have_rows('product_page_sections', 'option')) {
-                        the_row();
-                        get_template_part('template-parts/sections/section-' . get_row_layout());
-                    }
-                } else {
-                    the_content();
+            try {
+                $page_id = get_the_ID();
+
+                if ( empty($page_id) || !is_numeric($page_id) ) {
+                    throw new Exception( __('Az oldalazonosító hiányzik vagy érvénytelen.', TEXT_DOMAIN) );
                 }
+
+                // Define the base directory for template section files
+                $template_dir = trailingslashit(get_template_directory()) . 'template-parts/sections/';
+                if ( ! is_dir($template_dir) ) {
+                    throw new Exception( sprintf( __('A szükséges sablonkönyvtár nem létezik: %s', TEXT_DOMAIN), $template_dir ) );
+                }
+
+                // Check for ACF
+                if ( ! function_exists('get_field') ) {
+                    throw new Exception( __('Az Advanced Custom Fields bővítmény nincs aktiválva. Telepítse vagy aktiválja az ACF-et a szekciók használatához.', TEXT_DOMAIN) );
+                }
+
+                // First try product-specific sections
+                $sections = get_field('sections', $page_id);
+
+                // Fallback: get option page sections
+                if ( empty($sections) || !is_array($sections) ) {
+                    $sections = get_field('product_single_sections', 'option');
+                }
+
+                // Process sections
+                if ( ! empty($sections) && is_array($sections) ) {
+                    $section_num = 0;
+
+                    foreach ( $sections as $index => $section ) {
+                        $section_num++;
+
+                        if ( ! is_array($section) || empty($section['acf_fc_layout']) ) {
+                            printf(
+                                '<div class="alert alert-warning" role="alert">%s</div>',
+                                esc_html( sprintf( __('A(z) #%d szekció hibásan van formázva és nem jeleníthető meg.', TEXT_DOMAIN), $section_num ) )
+                            );
+                            continue;
+                        }
+
+                        $section_name = sanitize_file_name($section['acf_fc_layout']);
+                        $section_file = $template_dir . 'section-' . $section_name . '.php';
+
+                        if ( file_exists($section_file) ) {
+                            require $section_file;
+                        } else {
+                            printf(
+                                '<div class="alert alert-danger" role="alert">%s</div>',
+                                sprintf(
+                                    __('A(z) <code>%s</code> szekció sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>', TEXT_DOMAIN),
+                                    esc_html($section_name),
+                                    esc_html($section_file)
+                                )
+                            );
+                        }
+                    }
+                }
+
+            } catch ( Exception $e ) {
+                printf(
+                    '<div class="alert alert-danger" role="alert">%s</div>',
+                    esc_html( $e->getMessage() )
+                );
             }
         }
         add_action('woocommerce_after_single_product_summary', 'custom_woocommerce_single_product_sections', 30);

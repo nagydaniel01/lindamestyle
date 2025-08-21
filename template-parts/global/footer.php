@@ -6,23 +6,34 @@
 ?>
 
 <footer class="footer">
-    <div class="container">
-        <div class="footer__inner">
+    <div class="footer__top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3 class="footer__title"><?php echo esc_html('Iratkozz fel legújabb híreinkért!', TEXT_DOMAIN); ?></h3>
+                    <p><?php echo esc_html('Iratkozz fel személyre szabott a stílus tippekért.', TEXT_DOMAIN); ?></p>
+                </div>
+                <div class="col-lg-6">
+                    <?php get_template_part('template-parts/blocks/block', 'subscribe'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <div class="container">
             <div class="row pt-4">
-                <div class="col-2">
+                <div class="col-12 col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if ($footer_logo) : ?>
                             <div class="logo logo--footer">
                                 <a href="<?php echo esc_url(home_url('/')); ?>" class="logo__link">
                                     <?php
                                         $logo_args = array(
-                                            'width'     => 227,
-                                            'height'    => 85,
                                             'class'     => 'logo__image',
                                             'alt'       => get_bloginfo('name'),
                                         );
                                         
-                                        echo wp_get_attachment_image($footer_logo['ID'], 'full', false, $logo_args);
+                                        echo wp_get_attachment_image($footer_logo['ID'], array(80, 80), false, $logo_args);
                                     ?>
                                 </a>
                             </div>
@@ -30,10 +41,10 @@
                     </div>
                 </div>
         
-                <div class="col-2">
+                <div class="col-12 col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if (!empty($social) && is_array($social)) : ?>
-                            <h3 class="footer__title"><?php esc_html_e('Közösségi média', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html('Közösségi média', TEXT_DOMAIN); ?></h3>
                             <?php
                                 $custom_names = [
                                     'linkedin'     => 'LinkedIn',
@@ -58,7 +69,7 @@
                                             <li class="nav__item">
                                                 <a href="<?php echo esc_url($social_url); ?>" target="<?php echo esc_attr($social_target); ?>" class="nav__link">
                                                     <svg class="icon icon-<?php esc_attr_e($base); ?>"><use xlink:href="#icon-<?php esc_attr_e($base); ?>"></use></svg>
-                                                    <span><?php esc_html_e($social_name); ?></span>
+                                                    <span><?php echo esc_html($social_name); ?></span>
                                                 </a>
                                             </li>
                                         <?php endif; ?>
@@ -69,7 +80,7 @@
                     </div>
                 </div>
         
-                <div class="col-2">
+                <div class="col-12 col-md-6 col-xl">
                     <div class="footer__block">
                         <?php 
                         $theme_location = 'footer_menu_1';
@@ -79,32 +90,80 @@
                                 $menu = wp_get_nav_menu_object($menu_id);
                             ?>
                             <?php if ( is_object($menu) && isset($menu->name) ) : ?>
-                                <h3 class="footer__title"><?php esc_html_e($menu->name); ?></h3>
+                                <h3 class="footer__title"><?php echo esc_html($menu->name); ?></h3>
                             <?php endif; ?>
                             <nav class="footer__nav nav nav--footer">
-                            <?php
-                                $nav_args = array(
-                                    'theme_location'    => $theme_location,
-                                    'container'         => false,
-                                    'menu_class'        => 'nav__list level0',
-                                    'walker'            => new Default_Menu_Walker()
-                                );
-                                wp_nav_menu($nav_args);
-                            ?>
+                                <?php
+                                    wp_nav_menu(array(
+                                        'theme_location'    => $theme_location,
+                                        'container'         => false,
+                                        'menu_class'        => 'nav__list level0',
+                                        'walker'            => new Default_Menu_Walker()
+                                    ));
+                                ?>
                             </nav>
                         <?php endif; ?>
                     </div>
                 </div>
         
-                <div class="col-4 offset-1">
-                    <h3 class="footer__title"><?php esc_html_e('Iratkozzon fel legújabb híreinkért!', TEXT_DOMAIN); ?></h3>
-                    <?php get_template_part('template-parts/blocks/block', 'subscribe'); ?>
+                <div class="col-12 col-md-6 col-xl">
+                    <?php
+                    $categories = get_terms(array(
+                        'taxonomy'   => 'category',
+                        'hide_empty' => false,
+                    ));
+
+                    if (!empty($categories) && !is_wp_error($categories)) : ?>
+                        <div class="footer__block">
+                            <h3 class="footer__title"><?php echo esc_html('Cikkeink', TEXT_DOMAIN); ?></h3>
+                            <nav class="footer__nav nav nav--footer">
+                                <ul class="nav__list">
+                                    <?php
+                                        wp_list_categories(array(
+                                            'title_li'   => '',
+                                            'orderby'    => 'name',
+                                            'order'      => 'ASC',
+                                            'show_count' => false,
+                                            'hide_empty' => true,
+                                        ));
+                                    ?>
+                                </ul>
+                            </nav>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl">
+                    <?php
+                    $categories = get_terms(array(
+                        'taxonomy'   => 'knowledge_base_cat',
+                        'hide_empty' => false,
+                    ));
+
+                    if (!empty($categories) && !is_wp_error($categories)) : ?>
+                        <div class="footer__block">
+                            <h3 class="footer__title"><?php echo esc_html('Tudástár', TEXT_DOMAIN); ?></h3>
+                            <nav class="footer__nav nav nav--footer">
+                                <ul class="nav__list">
+                                    <?php
+                                        wp_list_categories(array(
+                                            'taxonomy'   => 'knowledge_base_cat',
+                                            'title_li'   => '',
+                                            'orderby'    => 'name',
+                                            'order'      => 'ASC',
+                                            'show_count' => false,
+                                            'hide_empty' => true,
+                                        ));
+                                    ?>
+                                </ul>
+                            </nav>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
-    
-            <div class="d-flex justify-content-between py-4 mt-4 border-top">
-                <?php echo wpautop( wp_kses_post( $copyright ) ); ?>
-            </div>
         </div>
+    </div>
+    <div class="d-flex justify-content-center py-4 mt-4 border-top">
+        <?php echo wpautop( wp_kses_post( $copyright ) ); ?>
     </div>
 </footer>

@@ -1,3 +1,6 @@
+/* ------------------------- */
+/* Preserve Custom Classes    */
+/* ------------------------- */
 body {
   &.is-nav-open,
   &.is-modal-open {
@@ -5,6 +8,9 @@ body {
   }
 }
 
+/* ------------------------- */
+/* Utilities & Helpers       */
+/* ------------------------- */
 .grecaptcha-badge {
   visibility: hidden;
 }
@@ -18,6 +24,9 @@ body {
   transition: $transition-base;
 }
 
+/* ------------------------- */
+/* Media Elements            */
+/* ------------------------- */
 video,
 iframe {
   display: block;
@@ -40,15 +49,11 @@ img {
   }
 }
 
-table {
-  tr {
-    th,
-    td {
-      font-family: $headings-font-family;
-      font-size: 1rem;
-      line-height: 1.5rem;
-    }
-  }
+/* ------------------------- */
+/* WordPress & Gutenberg     */
+/* ------------------------- */
+.wp-block {
+  margin-bottom: 1.5rem;
 }
 
 .wp-block-image {
@@ -64,6 +69,94 @@ table {
   }
 }
 
+.wp-block-button {
+  .wp-block-button__link {
+    @extend .btn;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.wp-block-quote {
+  border-left: 4px solid $primary;
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: $gray-800;
+  margin: 2rem 0;
+}
+
+.wp-block-gallery {
+  display: grid;
+  grid-gap: 1rem;
+
+  .blocks-gallery-item {
+    figure {
+      margin: 0;
+    }
+  }
+}
+
+.wp-block-cover {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 300px;
+  background-size: cover;
+  background-position: center center;
+  color: $white;
+
+  .wp-block-cover__inner-container {
+    padding: 2rem;
+  }
+}
+
+.wp-block-columns {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+
+  .wp-block-column {
+    flex: 1 1 0;
+    min-width: 200px;
+  }
+}
+
+.wp-block-separator {
+  border: 0;
+  border-top: 1px solid $gray-300;
+  margin: 2rem auto;
+
+  &.is-style-wide {
+    max-width: 100%;
+  }
+
+  &.is-style-dots {
+    border: none;
+    text-align: center;
+
+    &::before {
+      content: "•••";
+      font-size: 1.5rem;
+      color: $gray-400;
+    }
+  }
+}
+
+.wp-block-embed {
+  margin: 2rem 0;
+
+  iframe {
+    max-width: 100%;
+  }
+}
+
+/* ------------------------- */
+/* Text Collapse Component   */
+/* ------------------------- */
 .text-collapse {
   .text-collapse__text {
     position: relative;
@@ -138,8 +231,6 @@ table {
 
   &.is-truncated {
     .text-collapse__text {
-      position: relative;
-
       &::after {
         opacity: 1;
       }
@@ -147,6 +238,9 @@ table {
   }
 }
 
+/* ------------------------- */
+/* Breadcrumbs & Address     */
+/* ------------------------- */
 .rank-math-breadcrumb {
   p {
     font-size: 0.875rem;
@@ -173,11 +267,39 @@ address {
   }
 }
 
+/* ------------------------- */
+/* Markup Overrides          */
+/* ------------------------- */
 mark, .mark {
   padding: 0;
   background-color: transparent;
 }
 
+/* ------------------------- */
+/* Default WordPress Elements */
+/* ------------------------- */
+blockquote {
+  margin: 2rem 0;
+  padding-left: 1.5rem;
+  border-left: 4px solid $gray-300;
+  font-style: italic;
+  color: $gray-700;
+}
+
+figure {
+  margin: 0 0 1.5rem;
+}
+
+figcaption {
+  font-size: 0.875rem;
+  color: $gray-600;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ------------------------- */
+/* WooCommerce Responsive    */
+/* ------------------------- */
 @include media-breakpoint-down(lg) {
   .woocommerce {
     .col2-set {
@@ -186,6 +308,16 @@ mark, .mark {
         float: none;
         width: 100%;
       }
+    }
+
+    .wp-block-columns {
+      flex-direction: column;
+    }
+
+    img.alignleft, img.alignright {
+      float: none;
+      margin: 0 auto 1.5rem;
+      max-width: 100%;
     }
   }
 }

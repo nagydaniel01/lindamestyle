@@ -1,9 +1,9 @@
 .footer {
-  background-color: $dark-blue;
+  background-color: $primary-light;
 
   .footer__top {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .footer__bottom {
@@ -114,12 +114,12 @@
 @include media-breakpoint-up(xl) {
   .footer {
     .footer__top {
-      padding-top: 4.5rem;
-      padding-bottom: 2.5rem;
+      padding-top: 6rem;
+      padding-bottom: 6rem;
     }
 
     .footer__bottom {
-      padding-bottom: 4.5rem;
+      padding-bottom: 2rem;
     }
 
     .footer__block {

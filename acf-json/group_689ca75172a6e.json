@@ -175,6 +175,41 @@
             ]
         },
         {
+            "key": "field_68a4836391691",
+            "label": "Fejléc",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_68a4837391692",
+            "label": "Call to Action gomb",
+            "name": "call_to_action",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "allow_in_bindings": 0
+        },
+        {
             "key": "field_689ede6e64140",
             "label": "Lábléc",
             "name": "",
@@ -214,6 +249,24 @@
             "append": ""
         },
         {
+            "key": "field_68a483f7488f0",
+            "label": "Egyéb beállítások",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
             "key": "field_689ca8c5009bf",
             "label": "Bejegyzések",
             "name": "",
@@ -247,6 +300,28 @@
             },
             "clone": [
                 "group_689ed97a6ecdb"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
+        },
+        {
+            "key": "field_68a48620d1c90",
+            "label": "Bejegyzés szekciók",
+            "name": "post_single",
+            "aria-label": "",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_68a4803434de3"
             ],
             "display": "seamless",
             "layout": "block",
@@ -294,8 +369,30 @@
             "prefix_name": 1
         },
         {
+            "key": "field_68a485ddd1c8f",
+            "label": "Szolgáltatás szekciók",
+            "name": "service_single",
+            "aria-label": "",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_68a4803434de3"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
+        },
+        {
             "key": "field_689f3b6e84700",
-            "label": "Termékoldal",
+            "label": "Termékek",
             "name": "",
             "aria-label": "",
             "type": "tab",
@@ -310,6 +407,28 @@
             "placement": "top",
             "endpoint": 0,
             "selected": 0
+        },
+        {
+            "key": "field_68a482c41d654",
+            "label": "Termék szekciók",
+            "name": "product_single",
+            "aria-label": "",
+            "type": "clone",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "clone": [
+                "group_68a4803434de3"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 1
         }
     ],
     "location": [
@@ -330,5 +449,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1755265927
+    "modified": 1755615823
 }

@@ -6,7 +6,6 @@ import 'bootstrap/js/src/modal';
 
 /*
 import './add-to-calendar-button-init';
-import './filter';
 import './masonry-init';
 import './moment-init';
 import './podcast-player';
@@ -18,6 +17,10 @@ import './youtube-player';
 import './navigation-home';
 */
 
+import './filter';
+//import './fancybox-init';
 import './slick-init';
+import './select2-init';
+import './youtube-player';
 import './minicart';
 import './quantity'; 

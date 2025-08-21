@@ -10,11 +10,21 @@
     padding: 0;
     color: inherit;
     text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      background-color: transparent;
+      color: $black;
+      
+      .icon {
+        color: $black;
+      }
+    }
   }
 
   &.btn-primary {
     .icon {
-      color: $white;
+      color: inherit;
     }
   }
 
@@ -24,8 +34,6 @@
     }
   }
 
-  
-
   .icon {
     width: 1.5rem;
     height: 1.5rem;
@@ -33,6 +41,10 @@
 
     &:first-child {
       margin-right: 1rem;
+
+      &:has(+ .visually-hidden) {
+        margin-right: 0;
+      }
     }
 
     &:last-child {

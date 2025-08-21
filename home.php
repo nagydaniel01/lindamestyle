@@ -24,13 +24,13 @@
 <main class="page page--archive page--archive-<?php esc_attr_e(get_post_type()); ?>">
     <section class="section section--archive section--archive-<?php esc_attr_e(get_post_type()); ?>" data-post-type="<?php esc_attr_e($post_type); ?>" data-posts-per-page="<?php esc_attr_e($posts_per_page); ?>">
         <div class="container">
-            <div class="section__header">
+            <header class="section__header">
                 <h1 class="section__title"><?php esc_html_e($page_title); ?></h1>
                 
                 <div class="section__toolbar">
                     <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( '%s keresése', TEXT_DOMAIN ), $post_type_obj->labels->name ) ); ?>" class="filter filter--search form-control js-filter-search">
                 </div>
-            </div>
+            </header>
 
             <div class="row flex-row-reverse">
                 <div class="col-12 col-lg-8 col-xl-9">

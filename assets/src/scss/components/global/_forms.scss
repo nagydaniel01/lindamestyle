@@ -103,12 +103,6 @@ label {
         flex-wrap: wrap;
         gap: 0.625rem;
 
-        &:not(:empty) {
-          & + .select2-search {
-            width: auto;
-          }
-        }
-
         .select2-selection__choice {
           display: flex;
           flex-direction: row-reverse;
@@ -118,7 +112,7 @@ label {
           padding: 0 0.5rem;
           border: none;
           border-radius: 5px;
-          background-color: rgba($light-blue, 0.32);
+          background-color: rgba($primary, 0.32);
 
           .select2-selection__choice__remove {
             display: block;
@@ -130,10 +124,9 @@ label {
           }
         }
       }
-
-      .select2-search {
-        display: block;
-        height: 100%;
+      
+      textarea {
+        min-height: auto;
       }
     }
   }

@@ -1,5 +1,5 @@
 <?php
-    $logo                         = get_field('logo', 'option');
+    $logo                         = get_field('site_logo', 'option');
     $header_partner_logo_repeater = get_field('header_partner_logo_repeater', 'option');
 ?>
 
@@ -10,7 +10,7 @@
                 <!-- Brand -->
                 <a class="navbar-brand" href="<?php echo esc_url(home_url('/')); ?>">
                     <?php if ($logo) : ?>
-                        <img src="<?php echo esc_url($logo['url']); ?>" alt="<?php echo esc_attr($logo['alt']); ?>">
+                        <?php echo wp_get_attachment_image($logo['ID'], array(60, 60), false, array('alt' => esc_attr($logo['alt'] ?: get_bloginfo('name')))); ?>
                     <?php else : ?>
                         <?php bloginfo('name'); ?>
                     <?php endif; ?>
@@ -33,7 +33,7 @@
                         <?php else : ?>
                             <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
                                 <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
-                                <?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?>
+                                <span><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
                             </button>
                         <?php endif; ?>
 
@@ -94,7 +94,7 @@
                                             <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello, %s', TEXT_DOMAIN ), esc_html( $display_name ) ); ?></span>
                                         </a>
                                     <?php else : ?>
-                                        <button type="button" class="btn btn-outline-primary btn-link me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                                        <button type="button" class="btn btn-outline-primary btn-link" data-bs-toggle="modal" data-bs-target="#login_formModal">
                                             <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                                             <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
                                         </button>

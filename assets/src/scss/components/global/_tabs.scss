@@ -1,21 +1,11 @@
-.nav.nav-tabs {
-  align-items: center;
+.nav.nav-tabs,
+.nav.nav-pills {
   justify-content: center;
+  align-items: center;
   gap: 1rem 2rem;
   margin-top: 2rem;
 
   .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.625rem;
-    margin: 0;
-    padding: 0;
-    color: $gray-900;
-    background-color: transparent;
-    font-family: $headings-font-family;
-    font-size: 1.25rem;
-    line-height: 1.25;
-
     .icon {
       width: 1.5rem;
       height: 1.5rem;
@@ -23,8 +13,6 @@
     }
 
     &.active {
-      color: $primary;
-
       .icon {
         color: $primary;
       }
@@ -37,8 +25,9 @@
 }
 
 @include media-breakpoint-up(lg) {
-  .nav.nav-tabs {
-    justify-content: space-between;
+  .nav.nav-tabs,
+  .nav.nav-pills {
+    justify-content: flex-start;
     gap: 1rem;
   }
 }

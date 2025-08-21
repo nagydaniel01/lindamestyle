@@ -178,7 +178,7 @@
     
             foreach ( $patterns as $pattern ) {
                 if ( preg_match( $pattern, $input, $matches ) ) {
-                    return $matches[1];
+                    return $matches[1] ?? '';
                 }
             }
     
@@ -211,7 +211,7 @@
 
             foreach ($patterns as $pattern) {
                 if (preg_match($pattern, $url, $matches)) {
-                    return 'https://www.youtube.com/watch?v=' . $matches[1];
+                    return 'https://www.youtube.com/watch?v=' . $matches[1] ?? '';
                 }
             }
 

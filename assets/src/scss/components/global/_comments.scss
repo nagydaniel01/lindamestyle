@@ -1,0 +1,67 @@
+  .commentlist {
+    @extend .list-unstyled;
+
+    .review {
+      .comment_container {
+        @extend .card;
+        @extend .shadow-lg;
+        @extend .border-0;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        background: $white;
+        border-radius: 1rem;
+        transition: transform .2s ease, box-shadow .2s ease;
+
+        .avatar {
+          @extend .rounded-circle;
+          @extend .border;
+          flex-shrink: 0;
+          width: 64px;
+          height: 64px;
+          object-fit: cover;
+        }
+
+        .comment-text {
+          flex: 1;
+
+          .meta {
+            @extend .d-flex;
+            @extend .align-items-center;
+            @extend .gap-2;
+            @extend .mb-2;
+            font-size: 0.875rem;
+            color: $gray-600;
+
+            .woocommerce-review__author {
+              @extend .fw-bold;
+              color: $gray-900;
+            }
+
+            .woocommerce-review__verified {
+              @extend .badge;
+              @extend .bg-success-subtle;
+              @extend .text-success;
+              font-style: normal;
+              font-weight: 500;
+            }
+
+            .woocommerce-review__dash {
+              color: $gray-400;
+            }
+          }
+
+          .description {
+            p {
+              @extend .mb-0;
+              font-size: 1rem;
+              line-height: 1.5;
+              color: $gray-800;
+            }
+          }
+        }
+      }
+    }
+}

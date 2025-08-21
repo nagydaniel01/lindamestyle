@@ -121,6 +121,128 @@
 		}
 	
 		add_action( 'init', 'register_service_cat_taxonomy', 0 );
-	}	
+	}
+
+	if ( ! function_exists( 'register_knowledge_base_cat_taxonomy' ) ) {
+		/**
+		 * Registers a hierarchical taxonomy 'knowledge_base_cat' for knowledge base.
+		 * 
+		 * This taxonomy is used for organizing knowledge base articles into categories.
+		 * It has a default term and hierarchical structure.
+		 */
+		function register_knowledge_base_cat_taxonomy() {
+
+			$labels = array(
+				'name'                       => _x( 'Tudásbázis kategóriák', 'Taxonomy General Name', TEXT_DOMAIN ),
+				'singular_name'              => _x( 'Tudásbázis kategória', 'Taxonomy Singular Name', TEXT_DOMAIN ),
+				'menu_name'                  => __( 'Tudásbázis kategóriák', TEXT_DOMAIN ),
+				'all_items'                  => __( 'Összes kategória', TEXT_DOMAIN ),
+				'parent_item'                => __( 'Szülő kategória', TEXT_DOMAIN ),
+				'parent_item_colon'          => __( 'Szülő kategória:', TEXT_DOMAIN ),
+				'new_item_name'              => __( 'Új kategória neve', TEXT_DOMAIN ),
+				'add_new_item'               => __( 'Új kategória hozzáadása', TEXT_DOMAIN ),
+				'edit_item'                  => __( 'Kategória szerkesztése', TEXT_DOMAIN ),
+				'update_item'                => __( 'Kategória frissítése', TEXT_DOMAIN ),
+				'view_item'                  => __( 'Kategória megtekintése', TEXT_DOMAIN ),
+				'separate_items_with_commas' => __( 'Kategóriákat vesszővel válasszon el', TEXT_DOMAIN ),
+				'add_or_remove_items'        => __( 'Kategóriák hozzáadása vagy eltávolítása', TEXT_DOMAIN ),
+				'choose_from_most_used'      => __( 'A leggyakrabban használtak közül válasszon', TEXT_DOMAIN ),
+				'popular_items'              => __( 'Népszerű kategóriák', TEXT_DOMAIN ),
+				'search_items'               => __( 'Kategóriák keresése', TEXT_DOMAIN ),
+				'not_found'                  => __( 'Nem található', TEXT_DOMAIN ),
+				'no_terms'                   => __( 'Nincs kategória', TEXT_DOMAIN ),
+				'items_list'                 => __( 'Kategóriák listája', TEXT_DOMAIN ),
+				'items_list_navigation'      => __( 'Kategóriák listájának navigációja', TEXT_DOMAIN ),
+			);
+
+			$rewrite = array(
+				'slug'                       => 'knowledge-base-category',
+				'with_front'                 => true,
+				'hierarchical'               => true,
+			);
+
+			$default_term = array(
+				'name'                       => 'Egyéb',
+				'slug'                       => 'egyeb',
+				'description'                => '',
+			);
+
+			$args = array(
+				'labels'                     => $labels,
+				'hierarchical'               => true,
+				'public'                     => true,
+				'show_ui'                    => true,
+				'show_admin_column'          => true,
+				'show_in_nav_menus'          => true,
+				'show_tagcloud'              => true,
+				'rewrite'                    => $rewrite,
+				'default_term'               => $default_term
+			);
+
+			register_taxonomy( 'knowledge_base_cat', array( 'knowledge_base' ), $args );
+		}
+
+		add_action( 'init', 'register_knowledge_base_cat_taxonomy', 0 );
+	}
 	
-	
+	if ( ! function_exists( 'register_event_cat_taxonomy' ) ) {
+		/**
+		 * Registers a hierarchical taxonomy 'event_cat' for events.
+		 * 
+		 * This taxonomy is used for organizing events into categories.
+		 * It has a default term and hierarchical structure.
+		 */
+		function register_event_cat_taxonomy() {
+
+			$labels = array(
+				'name'                       => _x( 'Esemény kategóriák', 'Taxonomy General Name', TEXT_DOMAIN ),
+				'singular_name'              => _x( 'Esemény kategória', 'Taxonomy Singular Name', TEXT_DOMAIN ),
+				'menu_name'                  => __( 'Esemény kategóriák', TEXT_DOMAIN ),
+				'all_items'                  => __( 'Összes kategória', TEXT_DOMAIN ),
+				'parent_item'                => __( 'Szülő kategória', TEXT_DOMAIN ),
+				'parent_item_colon'          => __( 'Szülő kategória:', TEXT_DOMAIN ),
+				'new_item_name'              => __( 'Új kategória neve', TEXT_DOMAIN ),
+				'add_new_item'               => __( 'Új kategória hozzáadása', TEXT_DOMAIN ),
+				'edit_item'                  => __( 'Kategória szerkesztése', TEXT_DOMAIN ),
+				'update_item'                => __( 'Kategória frissítése', TEXT_DOMAIN ),
+				'view_item'                  => __( 'Kategória megtekintése', TEXT_DOMAIN ),
+				'separate_items_with_commas' => __( 'Kategóriákat vesszővel válasszon el', TEXT_DOMAIN ),
+				'add_or_remove_items'        => __( 'Kategóriák hozzáadása vagy eltávolítása', TEXT_DOMAIN ),
+				'choose_from_most_used'      => __( 'A leggyakrabban használtak közül válasszon', TEXT_DOMAIN ),
+				'popular_items'              => __( 'Népszerű kategóriák', TEXT_DOMAIN ),
+				'search_items'               => __( 'Kategóriák keresése', TEXT_DOMAIN ),
+				'not_found'                  => __( 'Nem található', TEXT_DOMAIN ),
+				'no_terms'                   => __( 'Nincs kategória', TEXT_DOMAIN ),
+				'items_list'                 => __( 'Kategóriák listája', TEXT_DOMAIN ),
+				'items_list_navigation'      => __( 'Kategóriák listájának navigációja', TEXT_DOMAIN ),
+			);
+
+			$rewrite = array(
+				'slug'                       => 'event-category',
+				'with_front'                 => true,
+				'hierarchical'               => true,
+			);
+
+			$default_term = array(
+				'name'                       => 'Egyéb',
+				'slug'                       => 'egyeb',
+				'description'                => '',
+			);
+
+			$args = array(
+				'labels'                     => $labels,
+				'hierarchical'               => true,
+				'public'                     => true,
+				'show_ui'                    => true,
+				'show_admin_column'          => true,
+				'show_in_nav_menus'          => true,
+				'show_tagcloud'              => true,
+				'rewrite'                    => $rewrite,
+				'default_term'               => $default_term
+			);
+
+			register_taxonomy( 'event_cat', array( 'event' ), $args );
+		}
+
+		add_action( 'init', 'register_event_cat_taxonomy', 0 );
+	}
