@@ -386,6 +386,8 @@ var filter = {
         $(document).on('click', '.js-pagination-link.next', (event) => handlePaginationClick(event, 'next'));
         $(document).on('click', '.js-pagination-link.prev', (event) => handlePaginationClick(event, 'prev'));
         $(document).on('click', '.js-pagination-link.number', (event) => handlePaginationClick(event));
+        $(document).on('click', '.js-pagination-link.first', (event) => handlePaginationClick(event));
+        $(document).on('click', '.js-pagination-link.last', (event) => handlePaginationClick(event));
     },
 
     /**

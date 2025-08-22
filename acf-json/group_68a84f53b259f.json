@@ -1,13 +1,13 @@
 {
-    "key": "group_689ed97a6ecdb",
-    "title": "Archive",
+    "key": "group_68a84f53b259f",
+    "title": "Post",
     "fields": [
         {
-            "key": "field_689ed97ab2589",
-            "label": "Leírás",
-            "name": "description",
+            "key": "field_68a84f5311746",
+            "label": "Bevezető",
+            "name": "post_lead",
             "aria-label": "",
-            "type": "wysiwyg",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -17,11 +17,11 @@
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
             "allow_in_bindings": 0,
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
+            "rows": "",
+            "placeholder": "",
+            "new_lines": "wpautop"
         }
     ],
     "location": [
@@ -39,8 +39,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1755860809
+    "modified": 1755860867
 }

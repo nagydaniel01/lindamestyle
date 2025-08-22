@@ -9,8 +9,8 @@
 
     .slick-list {
         flex: 1;
-        margin-left: calc($grid-gutter-width * -0.5);
         margin-right: calc($grid-gutter-width * -0.5);
+        margin-left: calc($grid-gutter-width * -0.5);
     }
 
     .slick-track {
@@ -18,8 +18,10 @@
     }
 
     .slick-slide {
-        padding-left: calc($grid-gutter-width * 0.5);
-        padding-right: calc($grid-gutter-width * 0.5);
+        padding-top: calc($grid-gutter-width * .5);
+        padding-right: calc($grid-gutter-width * .625);
+        padding-bottom: calc($grid-gutter-width * .75);
+        padding-left: calc($grid-gutter-width * .625);
     }
 
     .slick-slide > div {

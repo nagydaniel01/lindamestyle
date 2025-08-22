@@ -128,11 +128,16 @@ label {
       textarea {
         min-height: auto;
       }
+
+      .select2-search {
+        width: auto;
+      }
     }
   }
 
   .select2-dropdown {
-    &.select2-dropdown--below {
+    &.select2-dropdown--below,
+    &.select2-dropdown--above {
       transform: translateY(32px); // fix production site
     }
 

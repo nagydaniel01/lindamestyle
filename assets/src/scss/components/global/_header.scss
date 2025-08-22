@@ -1,16 +1,8 @@
 .header {
   position: relative;
   z-index: 100;
-  background-color: $gray-200;
+  background-color: $white;
   margin-bottom: 2rem;
-
-  .header__inner {
-    display: flex;
-    align-items: center;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    transition: $transition-base;
-  }
 
   .navbar {
     width: 100%;
@@ -36,6 +28,6 @@
 
 @include media-breakpoint-up(lg) {
   .header {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
 }

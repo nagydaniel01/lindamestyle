@@ -104,3 +104,56 @@
         }
         add_action( 'admin_bar_menu', 'add_theme_settings_link', 999 );
     }
+
+    if ( ! function_exists( 'add_post_to_relationship_field' ) ) {
+        /**
+         * Add a related post ID to an ACF relationship field.
+         *
+         * @param int    $post_id         The ID of the post containing the relationship field.
+         * @param string $field_key       The field key or field name of the relationship field.
+         * @param int    $related_post_id The ID of the related post to add.
+         *
+         * @return void
+         */
+        function add_post_to_relationship_field( $post_id, $field_key, $related_post_id ) {
+            $current_value = get_field( $field_key, $post_id );
+
+            if ( ! is_array( $current_value ) ) {
+                $current_value = array();
+            }
+
+            if ( ! in_array( $related_post_id, $current_value ) ) {
+                $current_value[] = $related_post_id;
+            }
+
+            update_field( $field_key, $current_value, $post_id );
+        }
+    }
+
+    if ( ! function_exists( 'remove_post_from_relationship_field' ) ) {
+        /**
+         * Remove a related post ID from an ACF relationship field.
+         *
+         * @param int    $post_id         The ID of the post containing the relationship field.
+         * @param string $field_key       The field key or field name of the relationship field.
+         * @param int    $related_post_id The ID of the related post to remove.
+         *
+         * @return void
+         */
+        function remove_post_from_relationship_field( $post_id, $field_key, $related_post_id ) {
+            $current_value = get_field( $field_key, $post_id );
+
+            if ( is_array( $current_value ) ) {
+                $key = array_search( $related_post_id, $current_value );
+
+                if ( $key !== false ) {
+                    unset( $current_value[ $key ] );
+
+                    // Reindex array after removal
+                    $current_value = array_values( $current_value );
+
+                    update_field( $field_key, $current_value, $post_id );
+                }
+            }
+        }
+    }

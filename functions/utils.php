@@ -1,4 +1,30 @@
 <?php
+    if ( ! function_exists( 'get_current_url' ) ) {
+        /**
+         * Get the current URL of the page.
+         * 
+         * @return string Current URL.
+         */
+        function get_current_url() {
+            global $wp;
+
+            return home_url( add_query_arg( array(), $wp->request ) );
+        }
+    }
+
+    if ( ! function_exists( 'get_current_slug' ) ) {
+        /**
+         * Get the current page slug.
+         * 
+         * @return string Current page slug.
+         */
+        function get_current_slug() {
+            global $wp;
+
+            return add_query_arg( array(), $wp->request );
+        }
+    }
+
     if ( ! function_exists( 'get_template_id' ) ) {
         /**
          * Retrieves the ID of the first page using a specified page template.
@@ -91,6 +117,34 @@
         }
     }
 
+    if ( ! function_exists( 'get_post_id_by_meta' ) ) {
+        /**
+         * Get a post ID by a specific post meta key and value.
+         *
+         * @param string $key   The meta key to search for.
+         * @param string $value The meta value to match.
+         *
+         * @return int|null Post ID if found, null otherwise.
+         */
+        function get_post_id_by_meta( $key, $value ) {
+            global $wpdb;
+
+            $query = $wpdb->prepare(
+                "SELECT post_id 
+                FROM {$wpdb->postmeta} 
+                WHERE meta_key = %s 
+                AND meta_value = %s 
+                LIMIT 1",
+                $key,
+                $value
+            );
+
+            $post_id = $wpdb->get_var( $query );
+
+            return $post_id ? (int) $post_id : null;
+        }
+    }
+
     if ( ! function_exists( 'wp_safe_format_date' ) ) {
         /**
          * Safely format a date string into WordPress date format.
@@ -151,6 +205,23 @@
             $site_url_host = parse_url( $site_url, PHP_URL_HOST );
 
             return $url_host && $site_url_host && strcasecmp( $url_host, $site_url_host ) !== 0;
+        }
+    }
+
+    if ( ! function_exists( 'get_estimated_reading_time' ) ) {
+        /**
+         * Estimate the reading time for content.
+         *
+         * @param string $content Content to analyze.
+         * @param int    $wpm     Words per minute reading speed. Default is 300.
+         *
+         * @return int Estimated reading time in minutes.
+         */
+        function get_estimated_reading_time( $content = '', $wpm = 300 ) {
+            $clean_content = strip_tags( strip_shortcodes( $content ) );
+            $word_count    = str_word_count( $clean_content );
+
+            return ceil( $word_count / $wpm );
         }
     }
 
@@ -306,138 +377,3 @@
         }
     }
     
-    if ( ! function_exists( 'format_file_size' ) ) {
-        /**
-         * Format bytes into a human-readable file size string.
-         *
-         * @param int $bytes    The file size in bytes.
-         * @param int $decimals The number of decimal places to include (default is 0).
-         * @return string       The formatted file size string (e.g., "2 MB").
-         */
-        function format_file_size($bytes, $decimals = 0) {
-            $size = ['B','KB','MB','GB','TB'];
-            $factor = floor((strlen($bytes) - 1) / 3);
-            return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . $size[$factor];
-        }
-    }
-
-    if ( ! function_exists( 'format_file_type' ) ) {
-        /**
-         * Format a MIME subtype into a common file extension.
-         *
-         * @param string $subtype The MIME subtype (e.g., 'vnd.ms-excel').
-         * @return string         The corresponding file extension in uppercase (e.g., 'XLS').
-         */
-        function format_file_type($subtype) {
-            $map = [
-                // Excel
-                'vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'XLSX',
-                'vnd.ms-excel' => 'XLS',
-                'vnd.ms-excel.sheet.macroenabled.12' => 'XLSM',
-                'vnd.ms-excel.sheet.binary.macroenabled.12' => 'XLSB',
-
-                // Word
-                'msword' => 'DOC',
-                'vnd.openxmlformats-officedocument.wordprocessingml.document' => 'DOCX',
-                'vnd.ms-word.document.macroenabled.12' => 'DOCM',
-
-                // PowerPoint
-                'vnd.ms-powerpoint' => 'PPT',
-                'vnd.openxmlformats-officedocument.presentationml.presentation' => 'PPTX',
-                'vnd.ms-powerpoint.presentation.macroenabled.12' => 'PPTM',
-
-                // OneNote
-                'onenote' => 'ONE',
-
-                // Visio
-                'vnd.visio' => 'VSD',
-                'vnd.ms-visio.drawing' => 'VSDX',
-
-                // Other common formats
-                'pdf' => 'PDF',
-                'jpeg' => 'JPG',
-                'png' => 'PNG',
-                'zip' => 'ZIP',
-                'plain' => 'TXT',
-                'csv' => 'CSV',
-            ];
-
-            if (isset($map[$subtype])) {
-                return $map[$subtype];
-            }
-
-            // Fallback: extract last part after a dot or slash and uppercase it
-            if (strpos($subtype, '.') !== false) {
-                $parts = explode('.', $subtype);
-                return strtoupper(end($parts));
-            }
-
-            return strtoupper($subtype);
-        }
-    }
-
-    if ( ! function_exists( 'hu_article_helper' ) ) {
-        /**
-         * Determines the correct Hungarian article ("a" or "az") for a given word or phrase.
-         *
-         * Rules:
-         * - "az" precedes vowels (including accented)
-         * - "a" precedes consonants
-         * - Handles leading/trailing spaces, punctuation, and UTF-8 characters
-         *
-         * @param string $phrase The word or phrase to analyze.
-         * @return string "a" or "az"
-         */
-        function hu_article_helper(string $phrase): string {
-            // Normalize and sanitize input
-            $phrase = mb_strtolower(trim($phrase), 'UTF-8');
-
-            if ($phrase === '') {
-                return 'a';
-            }
-
-            // Remove leading non-letters (punctuation, dashes, quotes, etc.)
-            $phrase = preg_replace('/^[^a-záéíóöőúüű]+/iu', '', $phrase);
-
-            if ($phrase === '') {
-                return 'a';
-            }
-
-            // Extract first meaningful word
-            $firstWord = preg_split('/\s+/u', $phrase)[0] ?? '';
-
-            if ($firstWord === '') {
-                return 'a';
-            }
-
-            // Hungarian vowels (including accented forms)
-            static $vowels = ['a', 'á', 'e', 'é', 'i', 'í', 'o', 'ó', 'ö', 'ő', 'u', 'ú', 'ü', 'ű'];
-
-            // Get first letter
-            $firstLetter = mb_substr($firstWord, 0, 1, 'UTF-8');
-
-            return in_array($firstLetter, $vowels, true) ? 'az' : 'a';
-        }
-    }
-
-    if ( ! function_exists( 'hu_article_word_helper' ) ) {
-        /**
-         * Returns the Hungarian article ("a" or "az") combined with the given word
-         * only if the current site locale is Hungarian. Otherwise returns the word as-is.
-         *
-         * Example: alma -> "az alma" (if Hungarian locale)
-         *          kert -> "a kert" (if Hungarian locale)
-         *          apple -> "apple" (if not Hungarian locale)
-         *
-         * @param string $word Word or phrase to prepend with correct article if Hungarian.
-         * @return string
-         */
-        function hu_article_word_helper(string $word): string {
-            // Check if locale is Hungarian
-            if (function_exists('get_locale') && strpos(get_locale(), 'hu') === 0) {
-                return hu_article_helper($word) . ' ' . mb_strtolower(trim($word), 'UTF-8');
-            }
-
-            return $word;
-        }
-    }

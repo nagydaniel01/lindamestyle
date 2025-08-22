@@ -1,13 +1,13 @@
 {
-    "key": "group_689ed97a6ecdb",
-    "title": "Archive",
+    "key": "group_68a866a6aa801",
+    "title": "Filters",
     "fields": [
         {
-            "key": "field_689ed97ab2589",
-            "label": "Leírás",
-            "name": "description",
+            "key": "field_68a866a78a65e",
+            "label": "Színtípus",
+            "name": "szintipus",
             "aria-label": "",
-            "type": "wysiwyg",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,12 +16,22 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "choices": {
+                "tavasz": "Tavasz",
+                "nyar": "Nyár",
+                "osz": "Ősz",
+                "tel": "Tél"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "multiple": 1,
+            "allow_null": 0,
             "allow_in_bindings": 0,
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
-            "delay": 0
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         }
     ],
     "location": [
@@ -39,8 +49,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": false,
+    "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1755860809
+    "modified": 1755892858
 }

@@ -67,8 +67,8 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <div class="slider__controls"></div>
             </div>
-            <div class="slider__controls"></div>
         </div>
     </section>
 <?php endif; ?>

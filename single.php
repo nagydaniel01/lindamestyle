@@ -4,39 +4,152 @@
     <?php while (have_posts()) : the_post(); ?>
 
     <?php 
-        $extra_classes   = '';
-        $categories_list = get_the_category_list(', ');
-        $tags_list       = get_the_tag_list('', ', ');
-        $author_id       = get_the_author_meta('ID');
-        $author_bio      = get_the_author_meta('description', $author_id);
+        $posts_per_page  = get_option('posts_per_page');
 
-        if ( is_singular() ) {
-            $post_type = get_post_type();
-            $extra_classes .= esc_attr( $post_type );
+        $post_type       = get_post_type();
+        $categories_list = get_the_category_list(', ');
+        $post_lead       = get_field('post_lead');
+        
+        $estimated_reading_time = get_estimated_reading_time( get_the_content() );
+
+        // Related posts
+        $related_posts = new WP_Query(array(
+            'post_status'    => 'publish',
+            'posts_per_page' => $posts_per_page,
+            'category__in'   => wp_get_post_categories(get_the_ID()),
+            'post__not_in'   => array(get_the_ID()),
+        ));
+
+        // Recently viewed posts
+        $recently_viewed_posts_ids = get_recently_viewed();
+
+        if ( empty($recently_viewed_posts_ids) ) {
+            $recently_viewed_posts_ids = array(0);
+        }
+
+        $recently_viewed_posts = new WP_Query(array(
+            'post_type'      => $post_type,
+            'post_status'    => 'publish',
+            'posts_per_page' => $posts_per_page,
+            'post__in'       => $recently_viewed_posts_ids,
+            'post__not_in'   => array(get_the_ID()),
+            'orderby'        => 'post__in',
+        ));
+
+        // Most popular posts
+        $most_popular_posts = new WP_Query(array(
+            'post_type'         => $post_type,
+            'post_status'       => 'publish',
+            'posts_per_page'    => $posts_per_page,
+            'date_query' => array(
+                array(
+                    'after'     => date('Y-m-d', strtotime('-14 days')),
+                    'before'    => date('Y-m-d'),
+                    'inclusive' => true,
+                ),
+            ),
+            'meta_query' => array(
+                array(
+                    'key'       => '_post_views_count',
+                    'value'     => 1,
+                    'compare'   => '>=',
+                    'type'      => 'NUMERIC'
+                ),
+            ),
+            'meta_key'          => '_post_views_count',
+            'orderby'           => 'meta_value_num',
+            'order'             => 'DESC'
+        ));
+
+        // Define taxonomy dynamically based on post type
+        switch ( $post_type ) {
+            case 'product':
+                $taxonomy = 'product_cat';
+                break;
+
+            case 'service':
+                $taxonomy = 'service_cat';
+                break;
+
+            case 'knowledge_base':
+                $taxonomy = 'knowledge_base_cat';
+                break;
+
+            case 'event':
+                $taxonomy = 'event_cat';
+                break;
+
+            default:
+                $taxonomy = 'category';
+                break;
         }
     ?>
 
-    <main class="page page--single page--single-<?php echo esc_attr($extra_classes); ?>">
-        <section class="section section--single section--single-<?php echo esc_attr($extra_classes); ?>">
+    <main class="page page--single page--single-<?php echo esc_attr( $post_type ); ?>">
+        <section class="section section--single section--single-<?php echo esc_attr( $post_type ); ?>">
             <div class="container container--narrow">
                 <header class="section__header">
+                    <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
+
                     <h1 class="section__title"><?php the_title(); ?></h1>
-                    
-                    <div class="post-meta">
-                        <span class="post-date">
+
+                    <?php if ( $post_lead ) : ?>
+                        <div class="section__lead"><?php echo wp_kses_post( $post_lead ); ?></div>
+                    <?php endif; ?>
+
+                    <div class="section__meta">
+                        <span class="section__date">
                             <?php
-                            printf(
-                                /* translators: %s: Post date */
-                                __('Published on %s', TEXT_DOMAIN),
-                                get_the_date()
-                            );
+                                $published = get_the_date();
+                                $modified  = get_the_modified_date();
+
+                                if ( $published !== $modified ) {
+                                    // Show last modified date if different
+                                    printf(
+                                        /* translators: %s: Post modified date */
+                                        __('Updated on %s', TEXT_DOMAIN),
+                                        esc_html( $modified )
+                                    );
+                                } else {
+                                    // Otherwise show published date
+                                    printf(
+                                        /* translators: %s: Post date */
+                                        __('Published on %s', TEXT_DOMAIN),
+                                        esc_html( $published )
+                                    );
+                                }
                             ?>
                         </span>
+                        <?php if ( $estimated_reading_time ) : ?>
+                            <span class="section__reading-time">
+                                <?php
+                                    /* translators: %s: Estimated reading time in minutes */
+                                    printf(
+                                        _n(
+                                            '%s minute reading',   // singular
+                                            '%s minutes reading',  // plural
+                                            $estimated_reading_time,
+                                            TEXT_DOMAIN
+                                        ),
+                                        esc_html( $estimated_reading_time )
+                                    );
+                                ?>
+                            </span>
+                        <?php endif; ?>
                     </div>
 
                     <?php if ( has_post_thumbnail() ) : ?>
-                        <div class="post-thumbnail">
-                            <?php the_post_thumbnail('full'); ?>
+                        <div class="section__image-wrapper">
+                            <?php
+                                $thumbnail_id = get_post_thumbnail_id( get_the_ID() );
+                                $alt_text = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
+
+                                the_post_thumbnail('full', [
+                                    'class' => 'section__image',
+                                    'alt'   => $alt_text ?: get_the_title(),
+                                    'loading' => 'lazy'
+                                ]);
+                            ?>
                         </div>
                     <?php endif; ?>
                 </header>
@@ -56,59 +169,127 @@
                 </div>
 
                 <footer class="section__footer">
-                    <?php if ( get_the_author_meta('ID') ) : 
-                        $author_id = get_the_author_meta('ID');
-                    ?>
-                        <div class="card card--author">
-                            <?php echo get_avatar( $author_id, 512, '', get_the_author_meta('display_name', $author_id), ['class' => 'card-img-top'] ); ?>
-                            <div class="card-body">
-                                <div>
-                                    <h5 class="card-title mb-2"><?php echo esc_html( get_the_author_meta('display_name', $author_id) ); ?></h5>
-
-                                    <?php if ( $author_bio ) : ?>
-                                        <?php echo wpautop( wp_kses_post( $author_bio ) ); ?>
-                                    <?php endif; ?>
-
-                                    <address class="mb-0">
-                                        <p class="mb-1">
-                                            <strong><?php _e('Email:', TEXT_DOMAIN); ?></strong> 
-                                            <?php echo esc_html( get_the_author_meta('user_email', $author_id) ); ?>
-                                        </p>
-
-                                        <p class="mb-0">
-                                            <strong><?php _e('Website:', TEXT_DOMAIN); ?></strong> 
-                                            <a href="<?php echo esc_url( get_the_author_meta('user_url', $author_id) ); ?>" target="_blank">
-                                                <?php echo esc_html( get_the_author_meta('user_url', $author_id) ); ?>
-                                            </a>
-                                        </p>
-                                    </address>
+                    <?php if ( $taxonomy ) : ?>
+                        <?php 
+                            $taxonomy_obj   = get_taxonomy( $taxonomy ); 
+                            $taxonomy_label = $taxonomy_obj ? $taxonomy_obj->labels->name : __('Categories', TEXT_DOMAIN);
+                        ?>
+                        <span class="section__categories category">
+                            <div class="category__container">
+                                <strong class="visually-hidden"><?php echo esc_html( $taxonomy_label ) . ':'; ?></strong>
+                                <div class="category__wrapper">
+                                    <?php 
+                                        // Categories
+                                        wp_list_categories( array(
+                                            'current_category'     => 0,
+                                            'depth'                => 0,
+                                            'echo'                 => true,
+                                            'exclude'              => '',
+                                            'exclude_tree'         => '',
+                                            'feed'                 => '',
+                                            'feed_image'           => '',
+                                            'feed_type'            => '',
+                                            'hide_title_if_empty'  => false,
+                                            'separator'            => '',
+                                            'show_count'           => 0,
+                                            'show_option_all'      => '',
+                                            'show_option_none'     => '',
+                                            'style'                => '',
+                                            'taxonomy'             => $taxonomy,
+                                            'title_li'             => '',
+                                            'use_desc_for_title'   => 0,
+                                            'walker'               => '',
+                                        ) ); 
+                                    ?>
                                 </div>
+                            </div>
+                        </span>
+                    <?php endif; ?>
+
+                    <?php 
+                        if ( get_the_author_meta('ID') ) {
+                            $template_args = array('author_id' => esc_attr(get_the_author_meta('ID')));
+                            get_template_part('template-parts/cards/card', 'author', $template_args);
+                        }
+                    ?>
+
+                    <?php if ( $related_posts->have_posts() ) : ?>
+                        <?php
+                            $template_args = array('post_type' => esc_attr($post_type));
+                            $template      = locate_template("template-parts/cards/card-related.php");
+                        ?>
+                        <div class="section__related-posts">
+                            <h2 class="section__title"><?php _e('You may also be interested in', TEXT_DOMAIN); ?></h2>
+                            <div class="slider slider--related" id="related-posts-slider">
+                                <div class="slider__list">
+                                    <?php while ( $related_posts->have_posts() ) : $related_posts->the_post(); ?>
+                                        <div class="slider__item">
+                                            <?php
+                                                if ( ! empty( $template ) ) {
+                                                    get_template_part('template-parts/cards/card', 'related', $template_args);
+                                                } else {
+                                                    get_template_part('template-parts/cards/card', 'default', $template_args);
+                                                }
+                                            ?>
+                                        </div>
+                                    <?php endwhile; wp_reset_postdata(); ?>
+                                </div>
+                                <div class="slider__controls"></div>
                             </div>
                         </div>
                     <?php endif; ?>
 
-                    <?php if ( $categories_list ) : ?>
-                        <span class="post-categories">
-                            <?php
-                                /* translators: %s: List of categories */
-                                printf(__('Categories: %s', TEXT_DOMAIN), $categories_list);
-                            ?>
-                        </span>
+                    <?php if ( $recently_viewed_posts->have_posts() ) : ?>
+                        <?php
+                            $template_args = array('post_type' => esc_attr($post_type));
+                            $template      = locate_template("template-parts/cards/card-related.php");
+                        ?>
+                        <div class="section__recently-viewed-posts">
+                            <h2 class="section__title"><?php _e('Recently viewed', TEXT_DOMAIN); ?></h2>
+                            <div class="slider slider--related" id="recently-viewed-posts-slider">
+                                <div class="slider__list">
+                                    <?php while ( $recently_viewed_posts->have_posts() ) : $recently_viewed_posts->the_post(); ?>
+                                        <div class="slider__item">
+                                            <?php
+                                                if ( ! empty( $template ) ) {
+                                                    get_template_part('template-parts/cards/card', 'related', $template_args);
+                                                } else {
+                                                    get_template_part('template-parts/cards/card', 'default', $template_args);
+                                                }
+                                            ?>
+                                        </div>
+                                    <?php endwhile; wp_reset_postdata(); ?>
+                                </div>
+                                <div class="slider__controls"></div>
+                            </div>
+                        </div>
                     <?php endif; ?>
 
-                    <?php if ( $tags_list ) : ?>
-                        <span class="post-tags">
-                            <?php
-                                /* translators: %s: List of tags */
-                                printf(__('Tags: %s', TEXT_DOMAIN), $tags_list);
-                            ?>
-                        </span>
+                    <?php if ( $most_popular_posts->have_posts() ) : ?>
+                        <?php
+                            $template_args = array('post_type' => esc_attr($post_type));
+                            $template      = locate_template("template-parts/cards/card-related.php");
+                        ?>
+                        <div class="section__popular-posts">
+                            <h2 class="section__title"><?php _e('Most popular on Blog', TEXT_DOMAIN); ?></h2>
+                            <div class="slider slider--related" id="popular-post-slider">
+                                <div class="slider__list">
+                                    <?php while ( $most_popular_posts->have_posts() ) : $most_popular_posts->the_post(); ?>
+                                        <div class="slider__item">
+                                            <?php
+                                                if ( ! empty( $template ) ) {
+                                                    get_template_part('template-parts/cards/card', 'related', $template_args);
+                                                } else {
+                                                    get_template_part('template-parts/cards/card', 'default', $template_args);
+                                                }
+                                            ?>
+                                        </div>
+                                    <?php endwhile; wp_reset_postdata(); ?>
+                                </div>
+                                <div class="slider__controls"></div>
+                            </div>
+                        </div>
                     <?php endif; ?>
-
-                    - Recent posts
-                    - Most read posts
-                    - Related posts
-                    - Upsell posts (a cikk közepére)
                 </footer>
 
                 <?php

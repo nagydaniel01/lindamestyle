@@ -55,6 +55,37 @@ $('.slider--main').each(function() {
     }
 });
 
+// Select all post sliders
+$('.slider--related').each(function() {
+    const $slider = $(this).find('.slider__list');
+    const $controls = $(this).find('.slider__controls');
+
+    if ($slider.length) {
+
+        // Remove any existing arrows inside the controls
+        $controls.empty();
+
+        $slider.slick({
+            mobileFirst: true,
+            infinite: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg></button>',
+            appendArrows: $controls,
+            responsive: [
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 2,
+                        arrows: true
+                    }
+                }
+            ]
+        });
+    }
+});
 
 // Select all gallery sliders
 $('.slider--gallery').each(function() {

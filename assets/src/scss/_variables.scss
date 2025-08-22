@@ -91,7 +91,7 @@ $container-max-widths: (
 $grid-gutter-width: 2rem;
 
 // Body
-$body-bg: $white;
+$body-bg: $gray-200;
 $body-color: $black;
 
 // Components
@@ -100,6 +100,7 @@ $border-color: $gray-300;
 $border-radius: 0.625rem;
 $border-radius-sm: 0.3125rem;
 $border-radius-lg: 0.9375rem;
+$border-radius-xl: 1.5rem;
 
 // Typography
 @import url('https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&family=Wix+Madefor+Display:wght@400..800&display=swap');

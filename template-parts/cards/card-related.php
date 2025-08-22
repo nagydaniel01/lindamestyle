@@ -40,11 +40,11 @@
     }
 ?>
 
-<article class="card <?php esc_attr_e($extra_classes); ?>">
+<article class="card card--related <?php esc_attr_e($extra_classes); ?>">
     <a href="<?php the_permalink(); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">
-                <?php echo wp_get_attachment_image($image_id, 'medium', false, ['alt' => esc_attr($alt_text), 'class' => 'card__image', 'loading' => 'lazy']); ?>
+                <?php echo wp_get_attachment_image($image_id, 'thumbnail', false, ['alt' => esc_attr($alt_text), 'class' => 'card__image', 'loading' => 'lazy']); ?>
             </div>
         <?php endif; ?>
 
@@ -52,8 +52,6 @@
             <h3 class="card__title">
                 <?php the_title(); ?>
             </h3>
-            
-            <div class="card__lead"><?php the_excerpt(); ?></div>
 
             <div class="card__meta">
                 <?php if (!empty($categories) && is_array($categories)) : ?>
