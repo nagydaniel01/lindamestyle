@@ -21,17 +21,17 @@
     //$post_tag       = get_terms(['taxonomy' => 'post_tag', 'hide_empty' => true]);
 
     // Get authors (only those who have published posts)
-    $authors = get_users(['who' => 'authors', 'has_published_posts' => ['post'], 'orderby'  => 'display_name', 'order'    => 'ASC']);
+    $authors = get_users(['who' => 'authors', 'has_published_posts' => ['post'], 'orderby' => 'display_name', 'order' => 'ASC']);
 ?>
 
-<main class="page page--archive page--archive-<?php esc_attr_e(get_post_type()); ?>">
-    <section class="section section--archive section--archive-<?php esc_attr_e(get_post_type()); ?>" data-post-type="<?php esc_attr_e($post_type); ?>" data-posts-per-page="<?php esc_attr_e($posts_per_page); ?>">
+<main class="page page--archive page--archive-<?php echo esc_attr(get_post_type()); ?>">
+    <section class="section section--archive section--archive-<?php echo esc_attr(get_post_type()); ?>" data-post-type="<?php echo esc_attr($post_type); ?>" data-posts-per-page="<?php echo esc_attr($posts_per_page); ?>">
         <div class="container">
             <header class="section__header">
                 <h1 class="section__title"><?php esc_html_e($page_title); ?></h1>
                 
                 <div class="section__toolbar">
-                    <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( '%s keresése', TEXT_DOMAIN ), $post_type_obj->labels->name ) ); ?>" class="filter filter--search form-control js-filter-search">
+                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('%s keresése', TEXT_DOMAIN), $post_type_obj->labels->name)); ?>" >
                 </div>
             </header>
 
@@ -49,23 +49,53 @@
 
                 <div class="col-12 col-lg-4 col-xl-3">
                     <div class="section__sidebar">
+                        <?php //if (!empty($categories) && is_array($categories)) : ?>
+                            <!--
+                            <div class="mb-3">
+                                <select id="filter-category" name="category[]" multiple="multiple" class="form-select filter js-filter js-filter-default" data-filter="category" data-placeholder="<?php //echo esc_attr('Szűrés kategóriák szerint', TEXT_DOMAIN); ?>">
+                                    <?php //foreach ($categories as $category) : ?>
+                                        <option value="<?php //echo esc_attr($category->slug); ?>" <?php //selected(get_query_var('category_filter'), $category->slug); ?>>
+                                            <?php //esc_html_e($category->name); ?>
+                                        </option>
+                                    <?php //endforeach; ?>
+                                </select>
+                            </div>
+                            -->
+                        <?php //endif; ?>
+
                         <?php if (!empty($categories) && is_array($categories)) : ?>
                             <div class="mb-3">
-                                <select id="filter-category" name="category[]" multiple="multiple" class="filter form-select js-filter js-filter-default" data-filter="category" data-placeholder="<?php esc_attr_e('Szűrés kategóriák szerint', TEXT_DOMAIN); ?>">
+                                <fieldset id="filter-categories">
+                                    <legend>
+                                        <?php 
+                                            $filter_label = __('Categories', TEXT_DOMAIN);
+                                            echo esc_html(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label)));
+                                        ?>
+                                    </legend>
+
+                                    <?php 
+                                        // Get current selected categories (array, since multiple can be checked)
+                                        $selected_categories = (array) get_query_var('category_filter');
+                                    ?>
+
                                     <?php foreach ($categories as $category) : ?>
-                                        <option value="<?php esc_attr_e($category->slug); ?>" <?php selected(get_query_var('category_filter'), $category->slug); ?>>
-                                            <?php esc_html_e($category->name); ?>
-                                        </option>
+                                        <div class="form-check">
+                                            <input type="checkbox" name="category[]" value="<?php echo esc_attr($category->slug); ?>" id="category-<?php echo esc_attr($category->slug); ?>" class="form-check-input filter js-filter js-filter-default" data-filter="category" <?php checked(in_array($category->slug, $selected_categories, true)); ?>>
+                                            <label class="form-check-label" for="category-<?php echo esc_attr($category->slug); ?>">
+                                                <?php echo esc_html($category->name); ?>
+                                            </label>
+                                        </div>
                                     <?php endforeach; ?>
-                                </select>
+                                </fieldset>
                             </div>
                         <?php endif; ?>
 
                         <?php if (!empty($authors)) : ?>
                             <div class="mb-3">
-                                <select id="filter-author" name="author[]" multiple="multiple" class="filter form-select js-filter js-filter-default" data-filter="author" data-placeholder="<?php esc_attr_e('Szűrés szerzők szerint', TEXT_DOMAIN); ?>">
+                                <?php $filter_label = __('Authors', TEXT_DOMAIN); ?>
+                                <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))); ?>">
                                     <?php foreach ($authors as $author) : ?>
-                                        <option value="<?php esc_attr_e($author->ID); ?>" <?php selected(get_query_var('author_filter'), $author->ID); ?>>
+                                        <option value="<?php echo esc_attr($author->ID); ?>" <?php selected(get_query_var('author_filter'), $author->ID); ?>>
                                             <?php echo esc_html($author->display_name); ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -74,67 +104,72 @@
                         <?php endif; ?>
 
                         <?php
-                        $post_filter_group_id = 'group_68a866a6aa801';
-                        $fields               = acf_get_fields($post_filter_group_id);
+                            $post_filter_group_id = 'group_68a866a6aa801';
+                            $fields               = acf_get_fields($post_filter_group_id);
 
-                        if (!empty($fields) && is_array($fields)) :
+                            if (!empty($fields) && is_array($fields)) :
 
-                            foreach ($fields as $field) :
-                                $filter_label   = $field['label'];
-                                $filter_name    = $field['name'];
-                                $filter_type    = $field['type'];
-                                $filter_options = $field['choices'] ?? [];
+                                foreach ($fields as $field) :
+                                    $filter_label   = $field['label'];
+                                    $filter_name    = $field['name'];
+                                    $filter_type    = $field['type'];
+                                    $filter_options = $field['choices'] ?? [];
 
-                                // Get current selected values (from GET query vars)
-                                $selected_values = !empty($_GET[$filter_name]) ? (array) $_GET[$filter_name] : [];
+                                    // Get current selected values (from GET query vars)
+                                    $selected_values = !empty($_GET[$filter_name]) ? (array) $_GET[$filter_name] : [];
 
-                                echo '<div class="mb-3 filter-group">';
-                                echo '<label class="form-label" for="filter-' . esc_attr($filter_name) . '">' . esc_html($filter_label) . '</label>';
+                                    echo '<div class="mb-3 filter-group">';
 
-                                switch ($filter_type) {
-                                    case 'checkbox':
-                                    case 'radio':
-                                        // Show each choice as individual checkbox/radio
-                                        foreach ($filter_options as $value => $label) :
-                                            $input_type = ($filter_type === 'checkbox') ? 'checkbox' : 'radio';
-                                            $checked = in_array($value, $selected_values) ? 'checked' : '';
-                                            echo '<div class="form-check">';
-                                            echo '<input type="' . $input_type . '" name="' . esc_attr($filter_name) . ($input_type === 'checkbox' ? '[]' : '') . '" value="' . esc_attr($value) . '" id="' . esc_attr($filter_name . '-' . $value) . '" class="form-check-input filter js-filter js-filter-default" ' . $checked . '>';
-                                            echo '<label class="form-check-label" for="' . esc_attr($filter_name . '-' . $value) . '">' . esc_html($label) . '</label>';
-                                            echo '</div>';
-                                        endforeach;
-                                        break;
+                                    // For checkbox/radio, label is replaced by fieldset legend
+                                    if (!in_array($filter_type, ['checkbox', 'radio'])) {
+                                        //echo '<label class="form-label" for="filter-' . esc_attr($filter_name) . '">' . esc_html($filter_label) . '</label>';
+                                    }
 
-                                    case 'select':
-                                        echo '<select name="' . esc_attr($filter_name) . ($field['multiple'] ? '[]' : '') . '" ' . ($field['multiple'] ? 'multiple' : '') . ' id="filter-' . esc_attr($filter_name) . '" class="form-select filter js-filter js-filter-default" data-filter="' . esc_attr($filter_name) . '" data-placeholder="' . esc_attr($filter_label) . '">';
+                                    switch ($filter_type) {
+                                        case 'checkbox':
+                                        case 'radio':
+                                            echo '<fieldset class="filter-' . esc_attr($filter_name) . ' mb-3">';
+                                            echo '<legend class="fw-bold mb-2">' . esc_html($filter_label) . '</legend>';
 
-                                        if (!$field['multiple']) {
-                                            echo '<option value="" disabled selected hidden>' . esc_html($filter_label) . '</option>';
-                                        }
+                                            foreach ($filter_options as $value => $label) :
+                                                $input_type = ($filter_type === 'checkbox') ? 'checkbox' : 'radio';
+                                                $checked = in_array($value, $selected_values) ? 'checked' : '';
+                                                echo '<div class="form-check">';
+                                                echo '<input type="' . $input_type . '" name="' . esc_attr($filter_name) . ($input_type === 'checkbox' ? '[]' : '') . '" value="' . esc_attr($value) . '" id="' . esc_attr($filter_name . '-' . $value) . '" class="form-check-input filter js-filter js-filter-default" data-filter="' . esc_attr($filter_name) . '" ' . $checked . '>';
+                                                echo '<label class="form-check-label" for="' . esc_attr($filter_name . '-' . $value) . '">' . esc_html($label) . '</label>';
+                                                echo '</div>';
+                                            endforeach;
 
-                                        foreach ($filter_options as $value => $label) :
-                                            $selected = in_array($value, $selected_values) ? 'selected' : '';
-                                            echo '<option value="' . esc_attr($value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
-                                        endforeach;
+                                            echo '</fieldset>';
+                                            break;
 
-                                        echo '</select>';
-                                        break;
+                                        case 'select':
+                                            echo '<select name="' . esc_attr($filter_name) . ($field['multiple'] ? '[]' : '') . '" ' . ($field['multiple'] ? 'multiple' : '') . ' id="filter-' . esc_attr($filter_name) . '" class="form-select filter js-filter js-filter-default" data-filter="' . esc_attr($filter_name) . '" data-placeholder="' . esc_attr(sprintf('Filter by %s', strtolower($filter_label))) . '">';
 
-                                    case 'text':
-                                        $value = $selected_values[0] ?? '';
-                                        echo '<input type="text" class="form-control filter js-filter js-filter-default" 
-                                                    name="' . esc_attr($filter_name) . '" 
-                                                    value="' . esc_attr($value) . '" 
-                                                    placeholder="' . esc_attr($filter_label) . '">';
-                                        break;
+                                            if (!$field['multiple']) {
+                                                echo '<option value="" disabled selected hidden>' . esc_html($filter_label) . '</option>';
+                                            }
 
-                                    // Add more ACF types here if needed (number, date picker, etc.)
-                                }
+                                            foreach ($filter_options as $value => $label) :
+                                                $selected = in_array($value, $selected_values) ? 'selected' : '';
+                                                echo '<option value="' . esc_attr($value) . '" ' . $selected . '>' . esc_html($label) . '</option>';
+                                            endforeach;
 
-                                echo '</div>';
-                            endforeach;
+                                            echo '</select>';
+                                            break;
 
-                        endif;
+                                        case 'text':
+                                            $value = $selected_values[0] ?? '';
+                                            echo '<input type="text" name="' . esc_attr($filter_name) . '" value="' . esc_attr($value) . '" class="form-control filter js-filter js-filter-default" data-filter="' . esc_attr($filter_name) . '" placeholder="' . esc_attr($filter_label) . '">';
+                                            break;
+
+                                        // Add more ACF types here if needed (number, date picker, etc.)
+                                    }
+
+                                    echo '</div>';
+                                endforeach;
+
+                            endif;
                         ?>
                     </div>
                 </div>

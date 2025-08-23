@@ -40,6 +40,17 @@ label {
   @extend .form-label;
 }
 
+fieldset {
+  @extend .form-group;
+}
+
+legend {
+  @extend .form-label;
+  font-size: 1.125rem;
+  font-weight: 600;
+  width: auto;
+}
+
 // WooCommerce password field wrapper
 .password-input {
   position: relative;
@@ -130,7 +141,7 @@ label {
       }
 
       .select2-search {
-        width: auto;
+        //width: auto;
       }
     }
   }
@@ -138,7 +149,7 @@ label {
   .select2-dropdown {
     &.select2-dropdown--below,
     &.select2-dropdown--above {
-      transform: translateY(32px); // fix production site
+      //transform: translateY(32px); // fix production site
     }
 
     &.select2-dropdown--grid {

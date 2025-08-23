@@ -178,7 +178,7 @@ $post_type_query = new WP_Query($post_type_args);
         if( $first_link_in_the_middle <= 0 ) $first_link_in_the_middle = 1;
     ?>
     <div class="load-more js-load-more">
-        <nav class="section__pagination pagination js-pagination" role="navigation" data-max-pages="<?php esc_attr_e($post_type_query->max_num_pages); ?>">
+        <nav class="section__pagination pagination js-pagination" role="navigation" data-max-pages="<?php echo esc_attr($post_type_query->max_num_pages); ?>">
             <ul class="page-numbers">
                 <?php if ($current_page > 1) : ?>
                     <li>
@@ -213,11 +213,11 @@ $post_type_query = new WP_Query($post_type_args);
                 <?php for ($i = $first_link_in_the_middle; $i <= $last_link_in_the_middle; $i++) : ?>
                     <?php if ($i == $current_page) : ?>
                         <li>
-                            <span aria-current="page" class="page-numbers current"><?php esc_html_e($i); ?></span>
+                            <span aria-current="page" class="page-numbers current"><?php echo esc_html($i); ?></span>
                         </li>
                     <?php else : ?>
                         <li>
-                            <a href="" data-number="<?php esc_attr_e($i); ?>" class="page-numbers number js-pagination-link"><?php esc_html_e($i); ?></a>
+                            <a href="" data-number="<?php echo esc_attr($i); ?>" class="page-numbers number js-pagination-link"><?php echo esc_html($i); ?></a>
                         </li>
                     <?php endif; ?>
                 <?php endfor; ?>
@@ -230,7 +230,7 @@ $post_type_query = new WP_Query($post_type_args);
                     <?php endif; ?>
                     
                     <li>
-                        <a href="" data-number="<?php esc_attr_e($max_page); ?>" class="page-numbers number js-pagination-link"><?php esc_html_e($max_page); ?></a>
+                        <a href="" data-number="<?php echo esc_attr($max_page); ?>" class="page-numbers number js-pagination-link"><?php echo esc_html($max_page); ?></a>
                     </li>
                 <?php endif; ?>
                 
@@ -255,5 +255,5 @@ $post_type_query = new WP_Query($post_type_args);
         </nav>
     </div>
 <?php else : ?>
-    <p class="no-result"><?php esc_html_e('Sajnáljuk, de a megadott feltételek alapján nem találtunk eredményeket.', TEXT_DOMAIN); ?></p>
+    <p class="no-result"><?php echo esc_html('Sorry, no posts matched your criteria.', TEXT_DOMAIN); ?></p>
 <?php endif; ?>

@@ -38,6 +38,32 @@ var filter = {
             event.preventDefault();
         });
 
+        // Handle radio filters
+        $(document).on('change', 'input[type="radio"].js-filter', function (event) {
+            event.stopPropagation();
+            self.setFilterObjectByFilterAttributes(self.filterObject, $(this));
+            self.updateBrowserUrl(self.filterObject);
+            self.ajaxPostCall(self.filterObject, self.postType, function() {
+                self.checkMorePosts();
+                self.initMasonry();
+                self.initSlider();
+            });
+            event.preventDefault();
+        });
+
+        // Handle checkbox filters
+        $(document).on('change', 'input[type="checkbox"].js-filter', function (event) {
+            event.stopPropagation();
+            self.setFilterObjectByFilterAttributes(self.filterObject, $(this));
+            self.updateBrowserUrl(self.filterObject);
+            self.ajaxPostCall(self.filterObject, self.postType, function() {
+                self.checkMorePosts();
+                self.initMasonry();
+                self.initSlider();
+            });
+            event.preventDefault();
+        });
+
         $(document).on('click', 'li.js-filter', function (event) {
             event.stopPropagation();
 
@@ -123,6 +149,7 @@ var filter = {
      * @param filterObject
      * @param elem
      */
+    /*
     setFilterObjectByFilterAttributes: function (filterObject, elem, shouldRemove = false) {
         var obj = filterObject;
         var filterName = elem.attr('data-filter');
@@ -132,6 +159,56 @@ var filter = {
             delete obj[filterName];
         } else {
             obj[filterName] = selectedValues;
+        }
+
+        this.filterObject = obj;
+        this.filterObject['per_page'] = parseInt($('.section').attr('data-posts-per-page'));
+        this.filterObject['offset'] = 0;
+        this.filterObject['current_page'] = 1;
+        this.hasMorePosts = true;
+    },
+    */
+
+    setFilterObjectByFilterAttributes: function (filterObject, elem, shouldRemove = false) {
+        var obj = filterObject;
+        var filterName = elem.attr('data-filter');
+        var inputType = elem.attr('type');
+        var selectedValues;
+
+        if (shouldRemove) {
+            delete obj[filterName];
+        } else {
+            if (inputType === 'checkbox') {
+                // collect all checked checkboxes for this filter group
+                selectedValues = [];
+                $('input[type="checkbox"][data-filter="' + filterName + '"]:checked').each(function () {
+                    selectedValues.push($(this).val());
+                });
+
+                if (selectedValues.length > 0) {
+                    obj[filterName] = selectedValues;
+                } else {
+                    delete obj[filterName];
+                }
+
+            } else if (inputType === 'radio') {
+                // only one value can be set
+                if (elem.is(':checked')) {
+                    obj[filterName] = elem.val();
+                } else {
+                    delete obj[filterName];
+                }
+
+            } else {
+                // fallback (select, li.js-filter, etc.)
+                selectedValues = elem.attr('data-value') !== undefined ? elem.attr('data-value') : elem.val();
+
+                if (!selectedValues || selectedValues.length === 0) {
+                    delete obj[filterName];
+                } else {
+                    obj[filterName] = selectedValues;
+                }
+            }
         }
 
         this.filterObject = obj;
