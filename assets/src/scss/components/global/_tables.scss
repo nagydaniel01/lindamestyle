@@ -1,35 +1,82 @@
-.table {
-    margin-bottom: 0;
-    background-color: rgba($white, .5);
-    border-radius: 15px;
+table,
+.table,
+.shop_table {
+  @extend .table;
+  @extend .table-striped;
+  @extend .table-bordered;
+  @extend .table-hover;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  background-color: transparent;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
 
-    th,
-    td {
-        color: $black;
-        font-family: $font-family-base;
-        font-size: 1.125rem;
+  th, td {
+    vertical-align: middle;
+    background-color: $white;
+    padding: 0.75rem 1rem;
+    border: none;
 
-        &:last-child {
-            text-align: right;
-        }
-
-        .icon {
-            width: 1.5rem;
-            height: 1.5rem;
-        }
+    p {
+      margin: 0;
     }
 
-    thead {
-        th {
-            background-color: rgba($primary, .35);
+    a:not(.button) {
+      color: var(--bs-primary);
+      text-decoration: underline;
 
-            &:first-child {
-                border-radius: 15px 0 0 15px;
-            }
-
-            &:last-child {
-                border-radius: 0 15px 15px 0;
-            }
-        }
+      &:hover {
+        text-decoration: none;
+      }
     }
+
+    .product-quantity {
+      font-weight: 600;
+      margin-left: 0.25rem;
+    }
+
+    &:first-child {
+      border-top-left-radius: 0.5rem !important;
+      border-bottom-left-radius: 0.5rem !important;
+    }
+
+    &:last-child {
+      border-top-right-radius: 0.5rem !important;
+      border-bottom-right-radius: 0.5rem !important;
+    }
+  }
+
+  th {
+    background-color: var(--bs-light);
+    font-weight: 600;
+  }
+
+  td {
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  thead {
+    @extend .table-light;
+    th {
+      font-weight: 600;
+      background-color: $primary-light;
+
+      &:first-child {
+          border-radius: 15px 0 0 15px;
+      }
+
+      &:last-child {
+          border-radius: 0 15px 15px 0;
+      }
+    }
+  }
+
+  tfoot {
+    th, td {
+      background: $gray-100;
+      font-size: 0.95rem;
+    }
+  }
 }

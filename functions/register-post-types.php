@@ -2,18 +2,9 @@
     if ( ! function_exists( 'custom_post_type' ) ) {
         /**
          * Registers custom post types for the theme.
-         *
-         * This function registers multiple custom post types including:
-         * - Services
-         * - Events
-         * - Attendees
-         * - FAQs
-         * - Testimonials
-         *
          * It should be hooked to 'init' action.
          */
         function custom_post_type() {
-
             $labels = array(
                 'name'                  => _x( 'Bejegyzéstípusok', 'Post Type General Name', TEXT_DOMAIN ),
                 'singular_name'         => _x( 'Bejegyzéstípus', 'Post Type Singular Name', TEXT_DOMAIN ),
@@ -43,6 +34,7 @@
                 'items_list_navigation' => __( 'Elemlista navigáció', TEXT_DOMAIN ),
                 'filter_items_list'     => __( 'Elemlista szűrése', TEXT_DOMAIN ),
             );
+
             $args = array(
                 'label'                 => __( 'Bejegyzéstípus', TEXT_DOMAIN ),
                 'description'           => __( 'Bejegyzéstípus leírása', TEXT_DOMAIN ),
@@ -50,6 +42,7 @@
                 'supports'              => array( 'title', 'editor' ),
                 'taxonomies'            => array( 'category', 'post_tag' ),
                 'hierarchical'          => false,
+                'show_in_rest'          => true, // enables Gutenberg + REST API
                 'public'                => true,
                 'show_ui'               => true,
                 'show_in_menu'          => true,
@@ -63,8 +56,89 @@
                 'capability_type'       => 'post',
             );
             //register_post_type( 'post_type_name', $args );
+        }
+        add_action( 'init', 'custom_post_type', 0 );
+    }
+    
+    if ( ! function_exists( 'register_knowledge_base_post_type' ) ) {
+        /**
+         * Registers the "Tudásbázis" (Knowledge Base) custom post type.
+         *
+         * Slug: knowledge_base
+         * Icon: dashicons-book-alt
+         *
+         * @return void
+         */
+        function register_knowledge_base_post_type() {
+            $labels = array(
+                'name'                  => _x( 'Tudásbázis', 'Post Type General Name', TEXT_DOMAIN ),
+                'singular_name'         => _x( 'Bejegyzés', 'Post Type Singular Name', TEXT_DOMAIN ),
+                'menu_name'             => __( 'Tudásbázis', TEXT_DOMAIN ),
+                'name_admin_bar'        => __( 'Bejegyzés', TEXT_DOMAIN ),
+                'archives'              => __( 'Tudásbázis archívum', TEXT_DOMAIN ),
+                'attributes'            => __( 'Bejegyzés attribútumok', TEXT_DOMAIN ),
+                'parent_item_colon'     => __( 'Szülő bejegyzés:', TEXT_DOMAIN ),
+                'all_items'             => __( 'Összes bejegyzés', TEXT_DOMAIN ),
+                'add_new_item'          => __( 'Új bejegyzés hozzáadása', TEXT_DOMAIN ),
+                'add_new'               => __( 'Új', TEXT_DOMAIN ),
+                'new_item'              => __( 'Új bejegyzés', TEXT_DOMAIN ),
+                'edit_item'             => __( 'Bejegyzés szerkesztése', TEXT_DOMAIN ),
+                'update_item'           => __( 'Bejegyzés frissítése', TEXT_DOMAIN ),
+                'view_item'             => __( 'Bejegyzés megtekintése', TEXT_DOMAIN ),
+                'view_items'            => __( 'Bejegyzések megtekintése', TEXT_DOMAIN ),
+                'search_items'          => __( 'Bejegyzés keresése', TEXT_DOMAIN ),
+                'not_found'             => __( 'Nem található', TEXT_DOMAIN ),
+                'not_found_in_trash'    => __( 'Nem található a kukában', TEXT_DOMAIN ),
+                'featured_image'        => __( 'Kiemelt kép', TEXT_DOMAIN ),
+                'set_featured_image'    => __( 'Kiemelt kép beállítása', TEXT_DOMAIN ),
+                'remove_featured_image' => __( 'Kiemelt kép eltávolítása', TEXT_DOMAIN ),
+                'use_featured_image'    => __( 'Kiemelt képként használ', TEXT_DOMAIN ),
+                'insert_into_item'      => __( 'Beszúrás a bejegyzésbe', TEXT_DOMAIN ),
+                'uploaded_to_this_item' => __( 'Feltöltve ehhez a bejegyzéshez', TEXT_DOMAIN ),
+                'items_list'            => __( 'Bejegyzések listája', TEXT_DOMAIN ),
+                'items_list_navigation' => __( 'Bejegyzések listájának navigációja', TEXT_DOMAIN ),
+                'filter_items_list'     => __( 'Bejegyzések listájának szűrése', TEXT_DOMAIN ),
+            );
 
-            $serviceLabels = array(
+            $args = array(
+                'label'                 => __( 'Bejegyzés', TEXT_DOMAIN ),
+                'description'           => __( 'Tudásbázis bejegyzések', TEXT_DOMAIN ),
+                'labels'                => $labels,
+                'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+                'taxonomies'            => array( 'post_tag', 'knowledge_base_cat' ),
+                'hierarchical'          => false,
+                'show_in_rest'          => true, // enables Gutenberg + REST API
+                'public'                => true,
+                'show_ui'               => true,
+                'show_in_menu'          => true,
+                'menu_position'         => 5,
+                'show_in_admin_bar'     => true,
+                'show_in_nav_menus'     => true,
+                'can_export'            => true,
+                'has_archive'           => true,
+                'exclude_from_search'   => false,
+                'publicly_queryable'    => true,
+                'capability_type'       => 'post',
+                'rewrite'               => array( 'slug' => 'tudasbazis' ),
+                'menu_icon'             => 'dashicons-welcome-learn-more',
+            );
+
+            register_post_type( 'knowledge_base', $args );
+        }
+        add_action( 'init', 'register_knowledge_base_post_type' );
+    }
+
+    if ( ! function_exists( 'register_service_post_type' ) ) {
+        /**
+         * Registers the "Szolgáltatások" custom post type.
+         *
+         * Slug: szolgaltatasok
+         * Icon: dashicons-store
+         *
+         * @return void
+         */
+        function register_service_post_type() {
+            $labels = array(
                 'name'                  => _x( 'Szolgáltatások', 'Általános név', TEXT_DOMAIN ),
                 'singular_name'         => _x( 'Szolgáltatás', 'Egyes számú név', TEXT_DOMAIN ),
                 'menu_name'             => __( 'Szolgáltatások', TEXT_DOMAIN ),
@@ -93,17 +167,19 @@
                 'items_list_navigation' => __( 'Szolgáltatások listájának navigációja', TEXT_DOMAIN ),
                 'filter_items_list'     => __( 'Szolgáltatások listájának szűrése', TEXT_DOMAIN ),
             );
-            $serviceArgs = array(
+
+            $args = array(
                 'label'                 => __( 'Szolgáltatás', TEXT_DOMAIN ),
                 'description'           => __( 'A cég által kínált szolgáltatások', TEXT_DOMAIN ),
-                'labels'                => $serviceLabels,
+                'labels'                => $labels,
                 'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
                 'taxonomies'            => array( 'service_cat' ),
                 'hierarchical'          => false,
+                'show_in_rest'          => true, // enables Gutenberg + REST API
                 'public'                => true,
                 'show_ui'               => true,
                 'show_in_menu'          => true,
-                'menu_position'         => 5,
+                'menu_position'         => 10,
                 'show_in_admin_bar'     => true,
                 'show_in_nav_menus'     => true,
                 'can_export'            => true,
@@ -114,65 +190,23 @@
                 'rewrite'               => array( 'slug' => 'szolgaltatasok' ),
                 'menu_icon'             => 'dashicons-store',
             );
-            register_post_type( 'service', $serviceArgs );
 
-            $kbLabels = array(
-                'name'                  => _x( 'Tudásbázis', 'Általános név', TEXT_DOMAIN ),
-                'singular_name'         => _x( 'Cikk', 'Egyes számú név', TEXT_DOMAIN ),
-                'menu_name'             => __( 'Tudásbázis', TEXT_DOMAIN ),
-                'name_admin_bar'        => __( 'Cikk', TEXT_DOMAIN ),
-                'archives'              => __( 'Tudásbázis archívum', TEXT_DOMAIN ),
-                'attributes'            => __( 'Cikk attribútumok', TEXT_DOMAIN ),
-                'parent_item_colon'     => __( 'Szülő cikk:', TEXT_DOMAIN ),
-                'all_items'             => __( 'Összes cikk', TEXT_DOMAIN ),
-                'add_new_item'          => __( 'Új cikk hozzáadása', TEXT_DOMAIN ),
-                'add_new'               => __( 'Új', TEXT_DOMAIN ),
-                'new_item'              => __( 'Új cikk', TEXT_DOMAIN ),
-                'edit_item'             => __( 'Cikk szerkesztése', TEXT_DOMAIN ),
-                'update_item'           => __( 'Cikk frissítése', TEXT_DOMAIN ),
-                'view_item'             => __( 'Cikk megtekintése', TEXT_DOMAIN ),
-                'view_items'            => __( 'Cikkek megtekintése', TEXT_DOMAIN ),
-                'search_items'          => __( 'Cikk keresése', TEXT_DOMAIN ),
-                'not_found'             => __( 'Nem található', TEXT_DOMAIN ),
-                'not_found_in_trash'    => __( 'Nem található a kukában', TEXT_DOMAIN ),
-                'featured_image'        => __( 'Kiemelt kép', TEXT_DOMAIN ),
-                'set_featured_image'    => __( 'Kiemelt kép beállítása', TEXT_DOMAIN ),
-                'remove_featured_image' => __( 'Kiemelt kép eltávolítása', TEXT_DOMAIN ),
-                'use_featured_image'    => __( 'Kiemelt képként használ', TEXT_DOMAIN ),
-                'insert_into_item'      => __( 'Beszúrás a cikkbe', TEXT_DOMAIN ),
-                'uploaded_to_this_item' => __( 'Feltöltve ehhez a cikkhez', TEXT_DOMAIN ),
-                'items_list'            => __( 'Cikkek listája', TEXT_DOMAIN ),
-                'items_list_navigation' => __( 'Cikkek listájának navigációja', TEXT_DOMAIN ),
-                'filter_items_list'     => __( 'Cikkek listájának szűrése', TEXT_DOMAIN ),
-            );
+            register_post_type( 'service', $args );
+        }
+        add_action( 'init', 'register_service_post_type', 0 );
+    }
 
-            // Knowledge Base Arguments
-            $kbArgs = array(
-                'label'                 => __( 'Cikk', TEXT_DOMAIN ),
-                'description'           => __( 'Tudásbázis cikkek', TEXT_DOMAIN ),
-                'labels'                => $kbLabels,
-                'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
-                'taxonomies'            => array( 'post_tag', 'knowledge_base_cat' ),
-                'hierarchical'          => false,
-                'public'                => true,
-                'show_ui'               => true,
-                'show_in_menu'          => true,
-                'menu_position'         => 6,
-                'show_in_admin_bar'     => true,
-                'show_in_nav_menus'     => true,
-                'can_export'            => true,
-                'has_archive'           => true,
-                'exclude_from_search'   => false,
-                'publicly_queryable'    => true,
-                'capability_type'       => 'post',
-                'rewrite'               => array( 'slug' => 'tudasbazis' ),
-                'menu_icon'             => 'dashicons-welcome-learn-more',
-            );
-
-            register_post_type( 'knowledge_base', $kbArgs );
-
-
-            $eventLabels = array(
+    if ( ! function_exists( 'register_event_post_type' ) ) {
+        /**
+         * Registers the "Események" custom post type.
+         *
+         * Slug: esemenyek
+         * Icon: dashicons-calendar-alt
+         *
+         * @return void
+         */
+        function register_event_post_type() {
+            $labels = array(
                 'name'                  => _x( 'Események', 'Post Type General Name', TEXT_DOMAIN ),
                 'singular_name'         => _x( 'Esemény', 'Post Type Singular Name', TEXT_DOMAIN ),
                 'menu_name'             => __( 'Események', TEXT_DOMAIN ),
@@ -202,17 +236,18 @@
                 'filter_items_list'     => __( 'Események szűrése', TEXT_DOMAIN ),
             );
 
-            $eventArgs = array(
+            $args = array(
                 'label'                 => __( 'Esemény', TEXT_DOMAIN ),
                 'description'           => __( 'Esemény leírása', TEXT_DOMAIN ),
-                'labels'                => $eventLabels,
+                'labels'                => $labels,
                 'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
                 'taxonomies'            => array( 'post_tag', 'event_cat' ),
                 'hierarchical'          => false,
+                'show_in_rest'          => true, // enables Gutenberg + REST API
                 'public'                => true,
                 'show_ui'               => true,
                 'show_in_menu'          => true,
-                'menu_position'         => 5,
+                'menu_position'         => 10,
                 'show_in_admin_bar'     => true,
                 'show_in_nav_menus'     => true,
                 'can_export'            => true,
@@ -223,13 +258,30 @@
                 'rewrite'               => array( 'slug' => 'esemenyek' ),
                 'menu_icon'             => 'dashicons-calendar-alt',
             );
-            register_post_type('event', $eventArgs);
 
-            $attendeeLabels = array(
+            register_post_type( 'event', $args );
+        }
+        add_action( 'init', 'register_event_post_type', 0 );
+    }
+
+    if ( ! function_exists( 'register_attendee_post_type' ) ) {
+        /**
+         * Registers the "Résztvevők" custom post type.
+         *
+         * Slug: attendee
+         * Icon: dashicons-tickets
+         *
+         * This post type is used to store attendee information.
+         * It is private (not publicly queryable), but available in the admin UI.
+         *
+         * @return void
+         */
+        function register_attendee_post_type() {
+            $labels = array(
                 'name'                  => _x( 'Résztvevők', 'Post type general name', TEXT_DOMAIN ),
                 'singular_name'         => _x( 'Résztvevő', 'Post type singular name', TEXT_DOMAIN ),
-                'menu_name'             => __( 'Résztvevők', 'Admin Menu text', TEXT_DOMAIN ),
-                'name_admin_bar'        => __( 'Résztvevő', 'Add New on Toolbar', TEXT_DOMAIN ),
+                'menu_name'             => __( 'Résztvevők', TEXT_DOMAIN ),
+                'name_admin_bar'        => __( 'Résztvevő', TEXT_DOMAIN ),
                 'add_new'               => __( 'Új résztvevő hozzáadása', TEXT_DOMAIN ),
                 'add_new_item'          => __( 'Új résztvevő hozzáadása', TEXT_DOMAIN ),
                 'new_item'              => __( 'Új résztvevő', TEXT_DOMAIN ),
@@ -242,17 +294,17 @@
                 'not_found_in_trash'    => __( 'Nincs résztvevő a kukában.', TEXT_DOMAIN ),
             );
 
-            $attendeeArgs = array(
+            $args = array(
                 'label'                 => __( 'Résztvevő', TEXT_DOMAIN ),
                 'description'           => __( 'Résztvevő leírása', TEXT_DOMAIN ),
-                'labels'                => $attendeeLabels,
+                'labels'                => $labels,
                 'supports'              => array( 'title' ),
                 'taxonomies'            => array(),
                 'hierarchical'          => false,
                 'public'                => false,
                 'show_ui'               => true,
                 'show_in_menu'          => true,
-                'menu_position'         => 5,
+                'menu_position'         => 10,
                 'show_in_admin_bar'     => true,
                 'show_in_nav_menus'     => true,
                 'can_export'            => true,
@@ -263,10 +315,26 @@
                 'rewrite'               => array(),
                 'menu_icon'             => 'dashicons-tickets',
             );
-        
-            register_post_type('attendee', $attendeeArgs);
 
-            $faqLabels = array(
+            register_post_type( 'attendee', $args );
+        }
+        add_action( 'init', 'register_attendee_post_type', 0 );
+    }
+
+    if ( ! function_exists( 'register_faq_post_type' ) ) {
+        /**
+         * Registers the "Gyakori kérdések" custom post type.
+         *
+         * Slug: faq
+         * Icon: dashicons-editor-help
+         *
+         * This post type is used for Frequently Asked Questions.
+         * It is private (not publicly queryable), but available in the admin UI.
+         *
+         * @return void
+         */
+        function register_faq_post_type() {
+            $labels = array(
                 'name'                  => _x( 'Gyakori kérdések', 'Post Type General Name', TEXT_DOMAIN ),
                 'singular_name'         => _x( 'Gyakori kérdés', 'Post Type Singular Name', TEXT_DOMAIN ),
                 'menu_name'             => __( 'Gyakori kérdések', TEXT_DOMAIN ),
@@ -296,17 +364,17 @@
                 'filter_items_list'     => __( 'Gyakori kérdések lista szűrése', TEXT_DOMAIN ),
             );
 
-            $faqArgs = array(
+            $args = array(
                 'label'                 => __( 'Gyakori kérdés', TEXT_DOMAIN ),
                 'description'           => __( 'Gyakori kérdés leírása', TEXT_DOMAIN ),
-                'labels'                => $faqLabels,
+                'labels'                => $labels,
                 'supports'              => array( 'title', 'editor' ),
                 'taxonomies'            => array(),
                 'hierarchical'          => false,
                 'public'                => false,
                 'show_ui'               => true,
                 'show_in_menu'          => true,
-                'menu_position'         => 5,
+                'menu_position'         => 15,
                 'show_in_admin_bar'     => true,
                 'show_in_nav_menus'     => true,
                 'can_export'            => true,
@@ -317,9 +385,8 @@
                 'rewrite'               => array(),
                 'menu_icon'             => 'dashicons-editor-help',
             );
-            register_post_type( 'faq', $faqArgs );
 
+            register_post_type( 'faq', $args );
         }
-        add_action( 'init', 'custom_post_type', 0 );
+        add_action( 'init', 'register_faq_post_type', 0 );
     }
-    

@@ -31,7 +31,7 @@
                 <h1 class="section__title"><?php esc_html_e($page_title); ?></h1>
                 
                 <div class="section__toolbar">
-                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('%s keresése', TEXT_DOMAIN), $post_type_obj->labels->name)); ?>" >
+                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', TEXT_DOMAIN), strtolower($post_type_obj->labels->name))); ?>" >
                 </div>
             </header>
 

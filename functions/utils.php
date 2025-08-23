@@ -33,14 +33,14 @@
          * @return int|null ID of the page if found, null otherwise.
          */
         function get_template_id( $template_name ) {
-            $page = get_pages(
-                array(
-                    'hierarchical' => false,
-                    'meta_key'     => '_wp_page_template',
-                    'meta_value'   => $template_name,
-                )
-            );
-            if ( $page ) {
+            $page = get_pages( array(
+                'hierarchical' => false,
+                'meta_key'     => '_wp_page_template',
+                'meta_value'   => $template_name,
+                'number'       => 1,
+            ) );
+            
+            if ( ! empty( $page ) && isset( $page[0]->ID ) ) {
                 $page_id = $page[0]->ID;
                 return $page_id;
             }
@@ -56,17 +56,18 @@
          * @return string|null Permalink of the page if found, null otherwise.
          */
         function get_template_url( $template_name ) {
-            $page = get_pages(
-                array(
-                    'hierarchical' => false,
-                    'meta_key'     => '_wp_page_template',
-                    'meta_value'   => $template_name,
-                )
-            );
-            if ( $page ) {
-                $page_id = $page[0]->ID;
-                return get_permalink( $page_id );
+            $page = get_pages( array(
+                'hierarchical' => false,
+                'meta_key'     => '_wp_page_template',
+                'meta_value'   => $template_name,
+                'number'       => 1,
+            ) );
+
+            if ( ! empty( $page ) && isset( $page[0]->ID ) ) {
+                $permalink = get_permalink( $page[0]->ID );
+                return $permalink ? $permalink : null; // ensure null instead of false
             }
+
             return null;
         }
     }

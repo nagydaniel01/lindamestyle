@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h3 class="footer__title"><?php echo esc_html('Iratkozz fel legújabb híreinkért!', TEXT_DOMAIN); ?></h3>
-                    <p><?php echo esc_html('Iratkozz fel személyre szabott a stílus tippekért.', TEXT_DOMAIN); ?></p>
+                    <p><?php echo esc_html('Stílustippek egyenesen a postaládádba.', TEXT_DOMAIN); ?></p>
                 </div>
                 <div class="col-lg-6">
                     <?php get_template_part('template-parts/blocks/block', 'subscribe'); ?>

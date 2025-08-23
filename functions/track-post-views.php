@@ -7,7 +7,9 @@
      */
 
     // Prevent prefetching to keep counts accurate
-    remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
+    if (has_action('wp_head', 'adjacent_posts_rel_link_wp_head')) {
+        remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);
+    }
 
     if ( ! function_exists( 'wp_set_post_views' ) ) {
         /**

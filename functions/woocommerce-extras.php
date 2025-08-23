@@ -330,8 +330,58 @@
         add_filter( 'woocommerce_product_upsells_products_heading', 'change_upsells_heading' );
     }
 
-    add_action( 'woocommerce_after_single_product_summary', 'my_sticky_product_block', 5 );
+    if ( ! function_exists( 'my_sticky_product_block' ) ) {
+        /**
+         * Display sticky product block after the single product summary.
+         * This function loads the template part located at 'template-parts/blocks/block-product.php' and outputs it on single product pages.
+         * 
+         * @return void
+         */
+        function my_sticky_product_block() {
+            get_template_part( 'template-parts/blocks/block', 'product' );
+        }
+        add_action( 'woocommerce_after_single_product_summary', 'my_sticky_product_block', 5 );
+    }
 
-    function my_sticky_product_block() {
-        get_template_part('template-parts/blocks/block', 'product');
+    if ( ! function_exists( 'my_custom_login_redirect' ) ) {
+        /**
+         * Redirect WooCommerce customers to a specific page after login.
+         *
+         * This filter hooks into the WooCommerce login process and redirects
+         * users with the 'customer' or 'subscriber' role to a custom page
+         * based on the assigned page template.
+         *
+         * @param string  $redirect The default redirect URL.
+         * @param WP_User $user     The logged-in user object.
+         *
+         * @return string The new redirect URL.
+         */
+        function my_custom_login_redirect( $redirect, $user ) {
+            if ( ! ( $user instanceof WP_User ) ) {
+                return $redirect;
+            }
+
+            $roles_to_redirect = [ 'customer', 'subscriber' ];
+            $template_name     = 'templates/page-dashboard.php';
+
+            if ( ! empty( $user->roles ) && array_intersect( $roles_to_redirect, (array) $user->roles ) ) {
+                $target_url = get_template_url( $template_name );
+
+                // If valid permalink found, redirect there
+                if ( ! empty( $target_url ) && filter_var( $target_url, FILTER_VALIDATE_URL ) ) {
+                    return $target_url;
+                }
+
+                // Fallback: redirect to My Account if template not found
+                $myaccount_url = wc_get_page_permalink( 'myaccount' );
+                if ( $myaccount_url ) {
+                    return $myaccount_url;
+                }
+
+                return home_url();
+            }
+
+            return $redirect;
+        }
+        add_filter( 'woocommerce_login_redirect', 'my_custom_login_redirect', 10, 2 );
     }

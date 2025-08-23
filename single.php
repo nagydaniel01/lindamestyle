@@ -13,12 +13,12 @@
         $estimated_reading_time = get_estimated_reading_time( get_the_content() );
 
         // Related posts
-        $related_posts = new WP_Query(array(
+        $related_posts = new WP_Query([
             'post_status'    => 'publish',
             'posts_per_page' => $posts_per_page,
             'category__in'   => wp_get_post_categories(get_the_ID()),
-            'post__not_in'   => array(get_the_ID()),
-        ));
+            'post__not_in'   => [get_the_ID()],
+        ]);
 
         // Recently viewed posts
         $recently_viewed_posts_ids = get_recently_viewed();
@@ -27,39 +27,39 @@
             $recently_viewed_posts_ids = array(0);
         }
 
-        $recently_viewed_posts = new WP_Query(array(
+        $recently_viewed_posts = new WP_Query([
             'post_type'      => $post_type,
             'post_status'    => 'publish',
             'posts_per_page' => $posts_per_page,
             'post__in'       => $recently_viewed_posts_ids,
-            'post__not_in'   => array(get_the_ID()),
+            'post__not_in'   => [get_the_ID()],
             'orderby'        => 'post__in',
-        ));
+        ]);
 
         // Most popular posts
-        $most_popular_posts = new WP_Query(array(
+        $most_popular_posts = new WP_Query([
             'post_type'         => $post_type,
             'post_status'       => 'publish',
             'posts_per_page'    => $posts_per_page,
-            'date_query' => array(
-                array(
+            'date_query' => [
+                [
                     'after'     => date('Y-m-d', strtotime('-14 days')),
                     'before'    => date('Y-m-d'),
                     'inclusive' => true,
-                ),
-            ),
-            'meta_query' => array(
-                array(
+                ],
+            ],
+            'meta_query' => [
+                [
                     'key'       => '_post_views_count',
                     'value'     => 1,
                     'compare'   => '>=',
                     'type'      => 'NUMERIC'
-                ),
-            ),
+                ],
+            ],
             'meta_key'          => '_post_views_count',
             'orderby'           => 'meta_value_num',
             'order'             => 'DESC'
-        ));
+        ]);
 
         // Define taxonomy dynamically based on post type
         switch ( $post_type ) {
