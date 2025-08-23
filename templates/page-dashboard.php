@@ -180,7 +180,7 @@
         <main class="page page--default">
             <div class="container">
                 <div class="page__header">
-                    <h1 class="page__title"><?php printf(esc_html__('Welcome, %s!', TEXT_DOMAIN), esc_html($user_name)); ?></h1>
+                    <h1 class="page__title"><?php printf(esc_html__('Hello %s!', TEXT_DOMAIN), esc_html($user_name)); ?></h1>
                     <?php 
                         if ( ! empty( $last_login ) ) {
                             $formatted_date = date_i18n( 'Y. F d., H:i', strtotime($last_login) );

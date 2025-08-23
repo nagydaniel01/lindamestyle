@@ -1,6 +1,12 @@
 <?php
     $logo                         = get_field('site_logo', 'option');
     $header_partner_logo_repeater = get_field('header_partner_logo_repeater', 'option');
+
+    $current_user = wp_get_current_user() ?? null;
+    $avatar       = get_avatar( $current_user->ID, 32 );
+    $first_name   = $current_user->first_name ?? '';
+    $last_name    = $current_user->last_name ?? '';
+    $user_name    = $first_name ? $first_name : $current_user->display_name;
 ?>
 
 <header class="header">
@@ -20,14 +26,9 @@
                 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
                     <!-- Mobile My Account / Login -->
                     <?php if ( is_user_logged_in() ) : ?>
-                        <?php 
-                            $current_user = wp_get_current_user();
-                            $avatar       = get_avatar( $current_user->ID, 32 );
-                            $first_name   = $current_user->first_name;
-                        ?>
                         <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center">
                             <?php echo $avatar; ?>
-                            <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $first_name ) ); ?></span>
+                            <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
                         </a>
                     <?php else : ?>
                         <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
@@ -83,14 +84,9 @@
                             <div class="nav-item ms-lg-3">
                                 <!-- My Account / Login -->
                                 <?php if ( is_user_logged_in() ) : ?>
-                                    <?php 
-                                        $current_user = wp_get_current_user();
-                                        $avatar       = get_avatar( $current_user->ID, 32 );
-                                        $first_name   = $current_user->first_name;
-                                    ?>
                                     <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center">
                                         <?php echo $avatar; ?>
-                                        <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $first_name ) ); ?></span>
+                                        <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
                                     </a>
                                 <?php else : ?>
                                     <button type="button" class="btn btn-outline-primary btn-link" data-bs-toggle="modal" data-bs-target="#login_formModal">
