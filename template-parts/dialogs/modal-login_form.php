@@ -1,5 +1,5 @@
 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
-    <div class="modal fade" id="login_formModal" tabindex="-1" aria-labelledby="login_formModalLabel" aria-hidden="true">
+    <div class="modal modal--alt fade" id="login_formModal" tabindex="-1" aria-labelledby="login_formModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

@@ -6,7 +6,8 @@
     $avatar       = get_avatar( $current_user->ID, 32 );
     $first_name   = $current_user->first_name ?? '';
     $last_name    = $current_user->last_name ?? '';
-    $user_name    = $first_name ? $first_name : $current_user->display_name;
+    $display_name = $current_user->display_name ?? '';
+    $user_name    = $display_name ? $display_name : $first_name;
 ?>
 
 <header class="header">
@@ -26,19 +27,19 @@
                 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
                     <!-- Mobile My Account / Login -->
                     <?php if ( is_user_logged_in() ) : ?>
-                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center">
+                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center me-3 text-decoration-none">
                             <?php echo $avatar; ?>
-                            <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
+                            <span class="visually-hidden"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
                         </a>
                     <?php else : ?>
-                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                        <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#login_formModal">
                             <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
-                            <span><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
+                            <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
                         </button>
                     <?php endif; ?>
 
                     <!-- Mobile Cart Trigger -->
-                    <button class="btn btn-outline-secondary position-relative me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                    <button class="btn btn-outline-secondary position-relative me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                         <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
                         <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
                         <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
@@ -81,10 +82,10 @@
                     <!-- Desktop header actions -->
                     <div class="header-actions d-none d-lg-flex ms-lg-auto">
                         <?php if ( class_exists( 'WooCommerce' ) ) : ?>
-                            <div class="nav-item ms-lg-3">
+                            <div class="nav-item ms-lg-4">
                                 <!-- My Account / Login -->
                                 <?php if ( is_user_logged_in() ) : ?>
-                                    <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center">
+                                    <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center text-decoration-none">
                                         <?php echo $avatar; ?>
                                         <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
                                     </a>
@@ -96,7 +97,7 @@
                                 <?php endif; ?>
                             </div>
 
-                            <div class="nav-item ms-lg-3">
+                            <div class="nav-item ms-lg-4">
                                 <!-- Cart Trigger -->
                                 <button class="btn btn-outline-primary btn-link position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                                     <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
@@ -108,7 +109,7 @@
                             </div>
                         <?php endif; ?>
 
-                        <div class="nav-item ms-lg-3">
+                        <div class="nav-item ms-lg-4">
                             <!-- Search bar Trigger -->
                             <button class="btn btn-outline-primary btn-link" data-bs-toggle="modal" data-bs-target="#searchModal">
                                 <svg class="icon icon-magnifying-glass"><use xlink:href="#icon-magnifying-glass"></use></svg>

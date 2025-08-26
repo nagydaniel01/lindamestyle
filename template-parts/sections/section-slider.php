@@ -16,12 +16,15 @@
 
 <?php if (!empty($slider_items)) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--slider">
-        <div class="section__header">
-            <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
-            <?php if (!empty($section_lead)) : ?>
-                <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
-            <?php endif; ?>
-        </div>
+        <?php if ($section_title || $section_lead) : ?>
+            <div class="section__header">
+                <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                <?php if (!empty($section_lead)) : ?>
+                    <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        
         <div class="section__content">
             <div class="slider slider--main" id="<?php echo esc_attr($section_slug); ?>-slider">
                 <div class="slider__list">

@@ -1005,7 +1005,36 @@
             {
                 "param": "post_type",
                 "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates\/page-flexibile-elements.php"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
                 "value": "post"
+            },
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "templates\/page-flexibile-elements.php"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "knowledge_base"
+            },
+            {
+                "param": "post_template",
+                "operator": "==",
+                "value": "templates\/page-flexibile-elements.php"
             }
         ],
         [
@@ -1028,18 +1057,6 @@
                 "operator": "==",
                 "value": "product"
             }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "page"
-            },
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "templates\/page-flexibile-elements.php"
-            }
         ]
     ],
     "menu_order": 0,
@@ -1051,5 +1068,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1755860749
+    "modified": 1756122738
 }

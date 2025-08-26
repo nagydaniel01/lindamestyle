@@ -21,13 +21,15 @@ $is_vertical  = $tab_layout === 'vertical';
 <?php if (!empty($tab_items)) : ?>
 <section id="<?php echo esc_attr($section_slug); ?>" class="section section--tab">
     <div class="container">
-        <div class="section__header">
-            <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
-            <?php if (!empty($section_lead)) : ?>
-                <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
-            <?php endif; ?>
-        </div>
-
+        <?php if ($section_title || $section_lead) : ?>
+            <div class="section__header">
+                <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                <?php if (!empty($section_lead)) : ?>
+                    <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+        
         <div class="section__content<?php echo $is_vertical ? ' d-flex' : ''; ?>">
             <ul class="nav <?php echo esc_attr($nav_class); ?><?php echo $is_vertical ? ' flex-column me-3' : ''; ?>" 
                 id="<?php echo esc_attr($section_slug); ?>-tabs" role="tablist">

@@ -104,7 +104,7 @@
                 'label'                 => __( 'Bejegyzés', TEXT_DOMAIN ),
                 'description'           => __( 'Tudásbázis bejegyzések', TEXT_DOMAIN ),
                 'labels'                => $labels,
-                'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
+                'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt', 'post-formats', 'page-attributes' ),
                 'taxonomies'            => array( 'post_tag', 'knowledge_base_cat' ),
                 'hierarchical'          => false,
                 'show_in_rest'          => true, // enables Gutenberg + REST API

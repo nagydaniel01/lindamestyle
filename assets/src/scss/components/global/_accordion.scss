@@ -1,7 +1,34 @@
 .accordion {
+  .accordion-item {
+    margin-bottom: 1.5rem;
+    border: 1px solid $primary;
+    border-radius: $border-radius;
+
+    &:hover {
+      outline: 1px solid $primary;
+    }
+  }
+
   .accordion-button {
     font-family: $font-family-base;
     font-weight: $font-weight-semibold;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+    border-top-left-radius: $border-radius;
+    box-shadow: none;
+
+    &:not(.collapsed) {
+      &:hover,
+      &:focus {
+        background-color: transparent;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      background-color: $primary-light;
+    }
   }
 
   &.accordion--alt {

@@ -1,13 +1,13 @@
 {
-    "key": "group_68a84f53b259f",
-    "title": "Post",
+    "key": "group_68ad4ec6925f8",
+    "title": "User data",
     "fields": [
         {
-            "key": "field_68a84f5311746",
-            "label": "Bevezető",
-            "name": "post_lead",
+            "key": "field_68ad4ec751b0a",
+            "label": "Könyvjelzők",
+            "name": "user_bookmarks",
             "aria-label": "",
-            "type": "textarea",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,27 +16,27 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "maxlength": "",
+            "post_type": "",
+            "post_status": "",
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": "",
             "allow_in_bindings": 0,
-            "rows": "",
-            "placeholder": "",
-            "new_lines": "wpautop"
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "current_user",
                 "operator": "==",
-                "value": "post"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "knowledge_base"
+                "value": "logged_in"
             }
         ]
     ],
@@ -49,5 +49,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756113580
+    "modified": 1756191569
 }

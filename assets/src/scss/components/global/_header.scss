@@ -2,7 +2,7 @@
   position: relative;
   z-index: 100;
   background-color: $white;
-  margin-bottom: 2rem;
+  //margin-bottom: 2rem;
 
   .navbar {
     width: 100%;
@@ -28,6 +28,6 @@
 
 @include media-breakpoint-up(lg) {
   .header {
-    margin-bottom: 2rem;
+    //margin-bottom: 2rem;
   }
 }

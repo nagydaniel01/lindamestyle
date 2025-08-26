@@ -383,5 +383,28 @@
 
             return $redirect;
         }
-        add_filter( 'woocommerce_login_redirect', 'my_custom_login_redirect', 10, 2 );
+        //add_filter( 'woocommerce_login_redirect', 'my_custom_login_redirect', 10, 2 );
+    }
+
+    add_action( 'pre_get_posts', 'exclude_subscription_products_from_shop' );
+    function exclude_subscription_products_from_shop( $query ) {
+        // Ensure this only runs on the main shop loop and frontend
+        if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() || is_product_tag() ) ) {
+
+            // Get the term for subscription products
+            $subscription_term = get_term_by( 'slug', 'subscription', 'product_type' );
+
+            if ( $subscription_term && ! is_wp_error( $subscription_term ) ) {
+                $tax_query = (array) $query->get( 'tax_query' );
+
+                $tax_query[] = array(
+                    'taxonomy' => 'product_type',
+                    'field'    => 'slug',
+                    'terms'    => array( 'subscription' ),
+                    'operator' => 'NOT IN',
+                );
+
+                $query->set( 'tax_query', $tax_query );
+            }
+        }
     }

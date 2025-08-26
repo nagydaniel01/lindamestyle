@@ -11,6 +11,10 @@ table,
   border-collapse: separate;
   border-spacing: 0 0.5rem;
 
+  tr {
+    border: none;
+  }
+
   th, td {
     vertical-align: middle;
     background-color: $white;
@@ -78,5 +82,9 @@ table,
       background: $gray-100;
       font-size: 0.95rem;
     }
+  }
+
+  &.wc-block-cart-items {
+    border: none !important;
   }
 }

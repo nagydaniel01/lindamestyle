@@ -1,6 +1,11 @@
 .section {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+
+    &.section--page-title {
+        background-color: $primary-light;
+        color: $white;
+    }
 
     .container--narrow {
         max-width: 65rem;
@@ -105,7 +110,7 @@
 
 @include media-breakpoint-up(lg) {
     .section {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 4rem;
+        padding-bottom: 4rem;
     }
 }

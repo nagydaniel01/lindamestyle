@@ -129,6 +129,12 @@
         transform: rotate(-34deg) translateX(-25px) translateY(-68px);
 		z-index: 10;
 	}
+
+	.card__bookmark {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 }
 
 @include media-breakpoint-only(xl) {

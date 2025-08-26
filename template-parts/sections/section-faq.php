@@ -20,12 +20,14 @@
 <?php if (!empty($accordion_items)) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--accordion section--faq">
         <div class="container">
-            <div class="section__header">
-                <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
-                <?php if (!empty($section_lead)) : ?>
-                    <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
-                <?php endif; ?>
-            </div>
+            <?php if ($section_title || $section_lead) : ?>
+                <div class="section__header">
+                    <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php if (!empty($section_lead)) : ?>
+                        <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
 
             <div class="section__content">
                 <div class="accordion<?php echo esc_attr($extra_classes); ?>" id="accordion-<?php echo esc_attr($section_slug); ?>">

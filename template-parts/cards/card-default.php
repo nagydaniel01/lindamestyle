@@ -1,6 +1,8 @@
 <?php
     $post_type    = $args['post_type'] ?? '';
-    
+
+    $current_user_id = get_current_user_id();
+
     $post_id      = get_the_ID();
     $title        = get_the_title();
     $thumbnail_id = get_post_thumbnail_id();
@@ -84,4 +86,25 @@
             </span>
         </div>
     </a>
+    <?php if ( ! is_user_logged_in() ) : ?>
+        <a class="card__bookmark btn" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+            <svg class="icon icon-bookmark-empty">
+                <use xlink:href="#icon-bookmark-empty"></use>
+            </svg>
+            <span class="visually-hidden"><?php echo esc_html(__('Login to bookmark', TEXT_DOMAIN)); ?></span>
+        </a>
+    <?php else : ?>
+        <?php
+            $bookmark_ids  = get_field('user_bookmarks', 'user_'.$current_user_id) ?: [];
+            $is_bookmarked = in_array( get_the_ID(), $bookmark_ids, true );
+            $bookmark_icon = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
+            $bookmark_text = $is_bookmarked ? __('Remove Bookmark', TEXT_DOMAIN) : __('Add to Bookmarks', TEXT_DOMAIN);
+        ?>
+        <a id="btn-bookmark" class="card__bookmark btn" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
+            <svg class="icon icon-<?php echo esc_attr($bookmark_icon); ?>">
+                <use xlink:href="#icon-<?php echo esc_attr($bookmark_icon); ?>"></use>
+            </svg>
+            <span class="visually-hidden"><?php echo esc_html($bookmark_text); ?></span>
+        </a>
+    <?php endif; ?>
 </article>
