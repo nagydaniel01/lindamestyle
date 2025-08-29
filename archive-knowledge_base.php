@@ -114,12 +114,22 @@
             </header>
 
             <div class="section__body">
-                <div id="post-list" class="section__content">
-                    <?php 
-                        $template_args = array('post_type' => esc_attr($post_type));
-                        get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
-                    ?>
-                </div>
+                <?php 
+                    $user_id = get_current_user_id();
+
+                    // If user is not logged in OR not admin and has no active membership
+                    if ( ! is_user_logged_in() || ( ! current_user_can( 'administrator' ) && ! wc_memberships_is_user_active_member( $user_id ) ) ) {
+                        wc_add_notice( __( 'This content is for members only. Please <a href="/buy-subscription">buy a subscription</a> to access it.', TEXT_DOMAIN ), 'notice' );
+                        wc_print_notices();
+                    } else {
+                ?>
+                    <div id="post-list" class="section__content">
+                        <?php 
+                            $template_args = array('post_type' => esc_attr($post_type));
+                            get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
+                        ?>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </section>

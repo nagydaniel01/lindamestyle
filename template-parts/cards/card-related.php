@@ -6,6 +6,7 @@
     $thumbnail_id = get_post_thumbnail_id();
     $fallback_id  = PLACEHOLDER_IMAGE_ID;
     $image_id     = $thumbnail_id ?: $fallback_id;
+    $categories   = get_the_terms($post_id, 'category');
 
     if ($image_id === $fallback_id) {
         $alt_text = __('', TEXT_DOMAIN);
@@ -13,7 +14,6 @@
         $alt_text = get_post_meta($image_id, '_wp_attachment_image_alt', true) ?: $title;
     }
 
-    $categories   = get_the_terms($post_id, 'category');
     if (is_wp_error($categories)) {
         $categories = [];
     }

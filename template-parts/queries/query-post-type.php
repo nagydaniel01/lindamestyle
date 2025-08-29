@@ -1,23 +1,89 @@
 <?php
 $post_type          = $args['post_type'] ?? '';
+$event_type         = $args['event_type'] ?? '';
+
 $current_date_time  = current_time('Y-m-d H:i:s');
 $paged              = max(1, get_query_var('paged', 1));
 $post_type_args     = [];
 
-
+// =========================
+// Basic post type args
+// =========================
 if (!empty($post_type)) {
     $post_type_args['post_type'] = $post_type;
     $post_type_args['post_status'] = 'publish';
 
-    if ($post_type == 'service' && !empty($event_type)) {
+    if ($post_type == 'service') {
         $post_type_args['orderby'] = 'name';
         $post_type_args['order'] = 'ASC';
-    } else {
+    } elseif ($post_type == 'event') {
+        $post_type_args['orderby'] = 'meta_value';
+        $post_type_args['meta_key'] = 'event_start_date';
+
+        if ($event_type == 'upcoming') {
+            $post_type_args['meta_query'][] = array(
+                'key' => 'event_end_date',
+                'value' => $current_date_time,
+                'compare' => '>=',
+                'type' => 'DATETIME'
+            );
+            $post_type_args['order'] = 'ASC';
+        } elseif ($event_type == 'past') {
+            $post_type_args['meta_query'][] = array(
+                'key' => 'event_end_date',
+                'value' => $current_date_time,
+                'compare' => '<',
+                'type' => 'DATETIME'
+            );
+            $post_type_args['order'] = 'DESC';
+        }
+    }
+    else {
         $post_type_args['orderby'] = 'date';
         $post_type_args['order'] = 'DESC';
     }
 }
 
+// =========================
+// Handle apply_profile_filters pre-filter
+// =========================
+/*
+$apply_profile_filters = !empty($filter_object['apply_profile_filters']) && isset($filter_object['apply_profile_filters'][0]) && $filter_object['apply_profile_filters'][0] === '1';
+$current_user_id       = get_current_user_id();
+
+if ($apply_profile_filters && $current_user_id) {
+    $user_meta_keys = ['szintipus']; // Add more ACF user fields here
+
+    foreach ($user_meta_keys as $meta_key) {
+        $user_value = get_user_meta($current_user_id, $meta_key, true);
+
+        if (!empty($user_value)) {
+            if (!isset($post_type_args['meta_query'])) {
+                $post_type_args['meta_query'] = ['relation' => 'AND'];
+            }
+
+            $post_type_args['meta_query'][] = [
+                'key'     => $meta_key,
+                'value'   => sanitize_text_field($user_value),
+                'compare' => '=', // or 'LIKE' if serialized
+            ];
+        }
+    }
+}
+*/
+
+// =========================
+// Remove apply_profile_filters from other filters
+// =========================
+/*
+if (!empty($filter_object) && isset($filter_object['apply_profile_filters'])) {
+    unset($filter_object['apply_profile_filters']);
+}
+*/
+
+// =========================
+// Process other filters
+// =========================
 if (!empty($filter_object)) {
     $tax_counter = 0;
     $meta_counter = 0;
@@ -111,7 +177,7 @@ $post_type_query = new WP_Query($post_type_args);
                     case 'event':
                         ?>
 
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-12">
                             <?php
                                 if (!empty($template)) {
                                     // File exists, include it

@@ -1,10 +1,10 @@
 {
     "key": "group_68a4803434de3",
-    "title": "Sections",
+    "title": "Szekciók",
     "fields": [
         {
             "key": "field_68a48034f5c32",
-            "label": "Sections",
+            "label": "Szekciók",
             "name": "sections",
             "aria-label": "",
             "type": "flexible_content",
@@ -20,7 +20,7 @@
                 "layout_68a4804e8d2f6": {
                     "key": "layout_68a4804e8d2f6",
                     "name": "main_content",
-                    "label": "Main content",
+                    "label": "Fő tartalom",
                     "display": "block",
                     "sub_fields": [],
                     "min": "",
@@ -245,7 +245,7 @@
                 "layout_68a5d4b8fec59": {
                     "key": "layout_68a5d4b8fec59",
                     "name": "oembed",
-                    "label": "oEmbed",
+                    "label": "Beágyazott tartalom",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -492,7 +492,7 @@
                 "layout_68a48144f5c37": {
                     "key": "layout_68a48144f5c37",
                     "name": "post_query",
-                    "label": "Post query",
+                    "label": "Bejegyzések",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -516,6 +516,920 @@
                             "layout": "block",
                             "prefix_label": 0,
                             "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68af1f08b7de7",
+                            "label": "Hivatkozás",
+                            "name": "post_query_link",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_68af1a184229a",
+                            "label": "Slider",
+                            "name": "post_query_slider",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68af1a494229b",
+                            "label": "Doboz",
+                            "name": "post_query_box",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68af060f14a37",
+                            "label": "Bejegyzés típus",
+                            "name": "post_type",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "post": "Hírek",
+                                "event": "Események"
+                            },
+                            "default_value": "post",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_68af089814a3f",
+                            "label": "Rendezési elv",
+                            "name": "orderby",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "date": "Dátum szerint",
+                                "name": "Név szerint"
+                            },
+                            "default_value": "date",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_68af08cb14a40",
+                            "label": "Rendezés",
+                            "name": "order",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "asc": "Növekvő sorrendben",
+                                "desc": "Csökkenő sorrendben"
+                            },
+                            "default_value": "desc",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_68af086e14a3e",
+                            "label": "Bejegyzések száma",
+                            "name": "posts_per_page",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 1,
+                            "min": 1,
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_68af075014a38",
+                            "label": "Kiválasztás módja",
+                            "name": "selection_type",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "auto": "Automatikus",
+                                "manual": "Manuális"
+                            },
+                            "default_value": "auto",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "vertical",
+                            "save_other_choice": 0
+                        },
+                        {
+                            "key": "field_68af07be14a3a",
+                            "label": "Bejegyzések",
+                            "name": "post",
+                            "aria-label": "",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "post"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "post"
+                            ],
+                            "post_status": [
+                                "publish"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "object",
+                            "min": "",
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "elements": "",
+                            "bidirectional": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68af081e14a3c",
+                            "label": "Események",
+                            "name": "event",
+                            "aria-label": "",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "event"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "event"
+                            ],
+                            "post_status": [
+                                "publish"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "object",
+                            "min": "",
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "elements": "",
+                            "bidirectional": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68af077c14a39",
+                            "label": "Automatikus kiválasztás",
+                            "name": "",
+                            "aria-label": "",
+                            "type": "message",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "new_lines": "wpautop",
+                            "esc_html": 0
+                        },
+                        {
+                            "key": "field_68af0bfb49875",
+                            "label": "Kategóriák",
+                            "name": "category",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "post"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "category",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "checkbox",
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68af0cd8e49a0",
+                            "label": "Esemény kategóriák",
+                            "name": "event_cat",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "event"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "event_cat",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "checkbox",
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68af0e9cef10e",
+                            "label": "Meta lekérdezés",
+                            "name": "meta_query",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "layout": "table",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "",
+                            "button_label": "Sor hozzáadása",
+                            "rows_per_page": 20,
+                            "sub_fields": [
+                                {
+                                    "key": "field_68af0f66ef10f",
+                                    "label": "Kulcs",
+                                    "name": "meta_key",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "allow_in_bindings": 0,
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_68af0e9cef10e"
+                                },
+                                {
+                                    "key": "field_68af0f7aef110",
+                                    "label": "Érték",
+                                    "name": "meta_value",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "allow_in_bindings": 0,
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_68af0e9cef10e"
+                                },
+                                {
+                                    "key": "field_68af0f95ef111",
+                                    "label": "Összehasonlítás",
+                                    "name": "meta_compare",
+                                    "aria-label": "",
+                                    "type": "select",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "=": "=",
+                                        "!=": "!=",
+                                        ">": ">",
+                                        ">=": ">=",
+                                        "<": "<",
+                                        "<=": "<=",
+                                        "LIKE": "LIKE",
+                                        "NOT LIKE": "NOT LIKE",
+                                        "IN": "IN",
+                                        "NOT IN": "NOT IN",
+                                        "BETWEEN": "BETWEEN",
+                                        "NOT BETWEEN": "NOT BETWEEN",
+                                        "NOT EXISTS": "NOT EXISTS",
+                                        "REGEXP": "REGEXP",
+                                        "NOT REGEXP": "NOT REGEXP",
+                                        "RLIKE": "RLIKE"
+                                    },
+                                    "default_value": "=",
+                                    "return_format": "value",
+                                    "multiple": 0,
+                                    "allow_null": 0,
+                                    "allow_in_bindings": 0,
+                                    "ui": 0,
+                                    "ajax": 0,
+                                    "placeholder": "",
+                                    "create_options": 0,
+                                    "save_options": 0,
+                                    "parent_repeater": "field_68af0e9cef10e"
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68adae872c12e": {
+                    "key": "layout_68adae872c12e",
+                    "name": "term_query",
+                    "label": "Kategóriák",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68adae872c130",
+                            "label": "Section",
+                            "name": "term_query",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68b03cd1ad69f",
+                            "label": "Hivatkozás",
+                            "name": "term_query_link",
+                            "aria-label": "",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_68b03cdfad6a0",
+                            "label": "Slider",
+                            "name": "term_query_slider",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68b03ce3ad6a1",
+                            "label": "Doboz",
+                            "name": "term_query_box",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68b03e2bad6a6",
+                            "label": "Kategória típus",
+                            "name": "taxonomy_type",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "category": "Kategóriák",
+                                "event_cat": "Esemény kategóriák"
+                            },
+                            "default_value": "category",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_68b03ef3ad6a9",
+                            "label": "Rendezési elv",
+                            "name": "orderby",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "name": "Név szerint",
+                                "slug": "Slug szerint",
+                                "count": "Darabszám szerint",
+                                "term_order": "Term szerint"
+                            },
+                            "default_value": "name",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_68b03f92ad6aa",
+                            "label": "Rendezés",
+                            "name": "order",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "asc": "Növekvő sorrendben",
+                                "desc": "Csökkenő sorrendben"
+                            },
+                            "default_value": "asc",
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        },
+                        {
+                            "key": "field_68b03e97ad6a7",
+                            "label": "Kategóriák száma",
+                            "name": "terms_per_page",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 1,
+                            "min": 1,
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_68b03ebfad6a8",
+                            "label": "Üres elrejtése",
+                            "name": "hide_empty",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "",
+                            "ui_off_text": "",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68b03d38ad6a2",
+                            "label": "Kiválasztás módja",
+                            "name": "selection_type",
+                            "aria-label": "",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "auto": "Automatikus",
+                                "manual": "Manuális"
+                            },
+                            "default_value": "auto",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "allow_in_bindings": 0,
+                            "layout": "vertical",
+                            "save_other_choice": 0
+                        },
+                        {
+                            "key": "field_68b03dd6ad6a4",
+                            "label": "Kategóriák",
+                            "name": "category",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68b03d38ad6a2",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    },
+                                    {
+                                        "field": "field_68b03e2bad6a6",
+                                        "operator": "==",
+                                        "value": "category"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "category",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "checkbox",
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68b0476877e14",
+                            "label": "Szülő kategória",
+                            "name": "parent_category",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68b03d38ad6a2",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    },
+                                    {
+                                        "field": "field_68b03e2bad6a6",
+                                        "operator": "==",
+                                        "value": "category"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "category",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "select",
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68b03e0cad6a5",
+                            "label": "Esemény kategóriák",
+                            "name": "event_cat",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68b03d38ad6a2",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    },
+                                    {
+                                        "field": "field_68b03e2bad6a6",
+                                        "operator": "==",
+                                        "value": "event_cat"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "event_cat",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "checkbox",
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68b0479377e15",
+                            "label": "Szülő esemény kategória",
+                            "name": "parent_event_cat",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68b03d38ad6a2",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    },
+                                    {
+                                        "field": "field_68b03e2bad6a6",
+                                        "operator": "==",
+                                        "value": "event_cat"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "event_cat",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "select",
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "bidirectional_target": []
                         }
                     ],
                     "min": "",
@@ -993,6 +1907,99 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_68ad9c910daf9": {
+                    "key": "layout_68ad9c910daf9",
+                    "name": "gravity_forms",
+                    "label": "Gravity Forms",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68ad9c910dafb",
+                            "label": "Section",
+                            "name": "wysiwyg_editor",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68ad9c910dafc",
+                            "label": "Űrlap",
+                            "name": "gform",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "none": "None",
+                                "1": "Simple Contact Form"
+                            },
+                            "default_value": false,
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68adaed73656d": {
+                    "key": "layout_68adaed73656d",
+                    "name": "instagram",
+                    "label": "Instagram",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68adaed73656f",
+                            "label": "Section",
+                            "name": "instagram",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "min": "",
@@ -1068,5 +2075,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756122738
+    "modified": 1756383493
 }

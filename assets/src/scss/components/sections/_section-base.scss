@@ -7,6 +7,14 @@
         color: $white;
     }
 
+    &.section--box {
+        .section__content {
+            padding: 2rem;
+            background-color: $primary;
+            border-radius: $border-radius-xl;
+        }
+    }
+
     .container--narrow {
         max-width: 65rem;
 
@@ -63,6 +71,11 @@
                 background-color: $primary;
             }
         }
+    }
+
+    .section__link {
+        display: flex;
+        justify-content: flex-end;
     }
 
     .section__categories {

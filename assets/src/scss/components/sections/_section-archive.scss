@@ -1,14 +1,13 @@
 .section.section--archive {
-    &.section--archive-post {
-        .section__header {
-            flex-direction: row;
-            align-items: center;
+    .section__title-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
 
-            .filter--search {
-                max-width: 480px;
-                height: max-content;
-                margin: 0 0 0 auto;
-            }
+        .filter--search {
+            max-width: 480px;
+            height: max-content;
+            margin: 0 0 0 auto;
         }
     }
 }

@@ -157,3 +157,32 @@
             }
         }
     }
+
+    // Populate ACF select field options with Gravity Forms forms
+    if ( ! function_exists( 'acf_populate_gform_ids' ) ) {
+        /**
+         * Populate ACF select field options with available Gravity Forms forms.
+         *
+         * @param array $field The ACF field array.
+         * @return array Modified field array with form choices.
+         */
+        function acf_populate_gform_ids( $field ) {
+            if ( ! class_exists( 'GFFormsModel' ) ) {
+                return $field;
+            }
+
+            $choices = [ 'none' => __( 'None', TEXT_DOMAIN ) ];
+            $forms   = GFFormsModel::get_forms();
+
+            if ( ! empty( $forms ) ) {
+                foreach ( $forms as $form ) {
+                    $choices[ $form->id ] = $form->title;
+                }
+            }
+
+            $field['choices'] = $choices;
+
+            return $field;
+        }
+        add_filter( 'acf/load_field/name=gform', 'acf_populate_gform_ids' );
+    }

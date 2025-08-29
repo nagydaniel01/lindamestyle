@@ -1,13 +1,13 @@
 {
     "key": "group_68a866a6aa801",
-    "title": "Filters",
+    "title": "Szűrők",
     "fields": [
         {
             "key": "field_68a866a78a65e",
             "label": "Színtípus",
             "name": "szintipus",
             "aria-label": "",
-            "type": "select",
+            "type": "checkbox",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -24,14 +24,12 @@
             },
             "default_value": [],
             "return_format": "value",
-            "multiple": 1,
-            "allow_null": 0,
+            "allow_custom": 0,
             "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "create_options": 0,
-            "save_options": 0
+            "layout": "vertical",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
         }
     ],
     "location": [
@@ -59,5 +57,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1755944058
+    "modified": 1756465712
 }

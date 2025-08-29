@@ -1,13 +1,13 @@
 {
-    "key": "group_68ad4ec6925f8",
-    "title": "Fiók adatok",
+    "key": "group_68b189c05fe26",
+    "title": "Személyes adatok",
     "fields": [
         {
-            "key": "field_68ad4ec751b0a",
-            "label": "Könyvjelzők",
-            "name": "user_bookmarks",
+            "key": "field_68b189c04a762",
+            "label": "Színtípus",
+            "name": "szintipus",
             "aria-label": "",
-            "type": "relationship",
+            "type": "radio",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,19 +16,19 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "post_status": "",
-            "taxonomy": "",
-            "filters": [
-                "search"
-            ],
-            "return_format": "id",
-            "min": "",
-            "max": "",
+            "choices": {
+                "tavasz": "Tavasz",
+                "nyar": "Nyár",
+                "osz": "Ősz",
+                "tel": "Tél"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
             "allow_in_bindings": 0,
-            "elements": "",
-            "bidirectional": 0,
-            "bidirectional_target": []
+            "layout": "vertical",
+            "save_other_choice": 0
         }
     ],
     "location": [
@@ -49,5 +49,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756465286
+    "modified": 1756465727
 }

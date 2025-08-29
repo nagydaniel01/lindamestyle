@@ -15,16 +15,6 @@
 		text-decoration: none;
 	}
 
-	.card__button {
-		position: absolute;
-		inset: auto 0.75rem 0.875rem auto;
-
-		.icon {
-			width: 1.5rem;
-			height: 1.5rem;
-		}
-	}
-
 	.card__header {
 		flex: 0 0 auto;
 		position: relative;
@@ -34,7 +24,7 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1.25rem 0.75rem 0.875rem;
+		padding: 1.25rem;
 	}
 
 	.card__image {
@@ -79,6 +69,16 @@
             overflow: hidden;
             color: rgba($black, .5);
 			margin-bottom: 0.75rem;
+		}
+	}
+
+	.card__button {
+		position: absolute;
+		inset: auto 0.75rem 0.875rem auto;
+
+		.icon {
+			width: 1.5rem;
+			height: 1.5rem;
 		}
 	}
 

@@ -75,7 +75,7 @@
                 'singular_name'         => _x( 'Bejegyzés', 'Post Type Singular Name', TEXT_DOMAIN ),
                 'menu_name'             => __( 'Tudásbázis', TEXT_DOMAIN ),
                 'name_admin_bar'        => __( 'Bejegyzés', TEXT_DOMAIN ),
-                'archives'              => __( 'Tudásbázis archívum', TEXT_DOMAIN ),
+                'archives'              => __( 'Tudásbázis', TEXT_DOMAIN ),
                 'attributes'            => __( 'Bejegyzés attribútumok', TEXT_DOMAIN ),
                 'parent_item_colon'     => __( 'Szülő bejegyzés:', TEXT_DOMAIN ),
                 'all_items'             => __( 'Összes bejegyzés', TEXT_DOMAIN ),
@@ -102,7 +102,7 @@
 
             $args = array(
                 'label'                 => __( 'Bejegyzés', TEXT_DOMAIN ),
-                'description'           => __( 'Tudásbázis bejegyzések', TEXT_DOMAIN ),
+                'description'           => __( '', TEXT_DOMAIN ),
                 'labels'                => $labels,
                 'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt', 'post-formats', 'page-attributes' ),
                 'taxonomies'            => array( 'post_tag', 'knowledge_base_cat' ),
@@ -170,7 +170,7 @@
 
             $args = array(
                 'label'                 => __( 'Szolgáltatás', TEXT_DOMAIN ),
-                'description'           => __( 'A cég által kínált szolgáltatások', TEXT_DOMAIN ),
+                'description'           => __( '', TEXT_DOMAIN ),
                 'labels'                => $labels,
                 'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
                 'taxonomies'            => array( 'service_cat' ),
@@ -238,7 +238,7 @@
 
             $args = array(
                 'label'                 => __( 'Esemény', TEXT_DOMAIN ),
-                'description'           => __( 'Esemény leírása', TEXT_DOMAIN ),
+                'description'           => __( '', TEXT_DOMAIN ),
                 'labels'                => $labels,
                 'supports'              => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
                 'taxonomies'            => array( 'post_tag', 'event_cat' ),
@@ -296,7 +296,7 @@
 
             $args = array(
                 'label'                 => __( 'Résztvevő', TEXT_DOMAIN ),
-                'description'           => __( 'Résztvevő leírása', TEXT_DOMAIN ),
+                'description'           => __( '', TEXT_DOMAIN ),
                 'labels'                => $labels,
                 'supports'              => array( 'title' ),
                 'taxonomies'            => array(),
@@ -366,7 +366,7 @@
 
             $args = array(
                 'label'                 => __( 'Gyakori kérdés', TEXT_DOMAIN ),
-                'description'           => __( 'Gyakori kérdés leírása', TEXT_DOMAIN ),
+                'description'           => __( '', TEXT_DOMAIN ),
                 'labels'                => $labels,
                 'supports'              => array( 'title', 'editor' ),
                 'taxonomies'            => array(),

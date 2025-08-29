@@ -27,53 +27,47 @@
         <div class="container">
             <header class="section__header">
                 <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
-                
-                <div class="section__title-wrapper">
-                    <h1 class="section__title">
-                        <?php
-                            switch ( true ) {
-                                case is_category():
-                                    single_cat_title();
-                                    break;
-                                case is_tag():
-                                    single_tag_title();
-                                    break;
-                                case is_tax():
-                                    single_term_title();
-                                    break;
-                                case is_author():
-                                    printf( /* translators: %s is the author name */
-                                        esc_html__( 'Author: %s', TEXT_DOMAIN ),
-                                        get_the_author()
-                                    );
-                                    break;
-                                case is_day():
-                                    printf(
-                                        esc_html__( 'Day: %s', TEXT_DOMAIN ),
-                                        get_the_date()
-                                    );
-                                    break;
-                                case is_month():
-                                    printf(
-                                        esc_html__( 'Month: %s', TEXT_DOMAIN ),
-                                        get_the_date( 'F Y' )
-                                    );
-                                    break;
-                                case is_year():
-                                    printf(
-                                        esc_html__( 'Year: %s', TEXT_DOMAIN ),
-                                        get_the_date( 'Y' )
-                                    );
-                                    break;
-                                default:
-                                    post_type_archive_title();
-                                    break;
-                            }
-                        ?>
-                    </h1>
-                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', TEXT_DOMAIN), strtolower($post_type_obj->labels->name))); ?>" >
-                </div>
-                
+
+                <h1 class="section__title">
+                    <?php
+                        switch ( true ) {
+                            case is_category():
+                                single_cat_title();
+                                break;
+                            case is_tag():
+                                single_tag_title();
+                                break;
+                            case is_author():
+                                printf( /* translators: %s is the author name */
+                                    esc_html__( 'Author: %s', TEXT_DOMAIN ),
+                                    get_the_author()
+                                );
+                                break;
+                            case is_day():
+                                printf(
+                                    esc_html__( 'Day: %s', TEXT_DOMAIN ),
+                                    get_the_date()
+                                );
+                                break;
+                            case is_month():
+                                printf(
+                                    esc_html__( 'Month: %s', TEXT_DOMAIN ),
+                                    get_the_date( 'F Y' )
+                                );
+                                break;
+                            case is_year():
+                                printf(
+                                    esc_html__( 'Year: %s', TEXT_DOMAIN ),
+                                    get_the_date( 'Y' )
+                                );
+                                break;
+                            default:
+                                post_type_archive_title();
+                                break;
+                        }
+                    ?>
+                </h1>
+
                 <?php
                     if ( $description ) {
                         echo '<div class="section__lead">';
@@ -83,9 +77,12 @@
                         the_archive_description( '<div class="section__lead">', '</div>' );
                     }
                 ?>
-
+                
                 <div class="section__toolbar">
                     <div class="row"> <!-- Bootstrap row wrapper -->
+                        <div class="col-md-8 mb-3">
+                            <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( '%s keresése', TEXT_DOMAIN ), $label ) ); ?>" class="filter filter--search form-control js-filter-search">
+                        </div>
                         <div class="col-md-4 mb-3">
                             <?php foreach ($taxonomies as $key => $tax_obj) :
                                 $terms = get_terms([
@@ -120,6 +117,23 @@
                         get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
                     ?>
                 </div>
+                <!--
+                <h2 class="section__subtitle"><?php esc_html_e('Aktuális rendezvényeink', 'mmaarts'); ?></h2>
+                <div id="post-list-upcoming" class="section__content">
+                    <?php 
+                        $template_args = array('post_type' => esc_attr($post_type), 'event_type' => esc_attr('upcoming'));
+                        get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
+                    ?>
+                </div>
+
+                <h2 class="section__subtitle"><?php esc_html_e('Múltbéli rendezvényeink', 'mmaarts'); ?></h2>
+                <div id="post-list-past" class="section__content">
+                    <?php 
+                        $template_args = array('post_type' => esc_attr($post_type), 'event_type' => esc_attr('past'));
+                        get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
+                    ?>
+                </div>
+                -->
             </div>
         </div>
     </section>
