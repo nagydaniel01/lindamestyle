@@ -50,11 +50,11 @@
                         'relation' => 'AND',
                         [
                             'key'   => 'event_id',
-                            'value' => $event_id,
+                            'value' => $event_id
                         ],
                         [
                             'key'   => 'attendee_email',
-                            'value' => $email,
+                            'value' => $email
                         ]
                     ]
                 ]);
@@ -67,12 +67,17 @@
                 $registration_id = wp_insert_post([
                     'post_type'   => 'attendee',
                     'post_status' => 'publish',
-                    'post_title'  => sprintf(__('Registration - %s (%s)', TEXT_DOMAIN), $name, $email),
+                    'post_title'  => sprintf(
+                        __('[Event ID: %d] %s (%s)', TEXT_DOMAIN),
+                        $event_id,
+                        $name,
+                        $email
+                    ),
                     'post_author' => $user_id,
                     'meta_input'  => [
                         'event_id'       => $event_id,
                         'attendee_name'  => $name,
-                        'attendee_email' => $email,
+                        'attendee_email' => $email
                     ]
                 ]);
 
