@@ -9,6 +9,10 @@
         $post_type       = get_post_type();
         $post_format     = get_post_format();
         $categories_list = get_the_category_list(', ');
+
+        $published       = get_the_date();
+        $modified        = get_the_modified_date();
+
         $post_lead       = get_field('post_lead');
         $post_oembed     = get_field('post_oembed');
 
@@ -119,9 +123,6 @@
                     <div class="section__meta">
                         <span class="section__date">
                             <?php
-                                $published = get_the_date();
-                                $modified  = get_the_modified_date();
-
                                 if ( $published !== $modified ) {
                                     // Show last modified date if different
                                     printf(

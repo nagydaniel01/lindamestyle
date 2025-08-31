@@ -1917,7 +1917,7 @@
                         {
                             "key": "field_68ad9c910dafb",
                             "label": "Section",
-                            "name": "wysiwyg_editor",
+                            "name": "gravity_forms",
                             "aria-label": "",
                             "type": "clone",
                             "instructions": "",
@@ -1953,6 +1953,66 @@
                             "choices": {
                                 "none": "None",
                                 "1": "Simple Contact Form"
+                            },
+                            "default_value": false,
+                            "return_format": "value",
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "allow_in_bindings": 0,
+                            "ui": 0,
+                            "ajax": 0,
+                            "placeholder": "",
+                            "create_options": 0,
+                            "save_options": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68b44d5a07081": {
+                    "key": "layout_68b44d5a07081",
+                    "name": "form",
+                    "label": "Űrlap",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68b44d5a07083",
+                            "label": "Section",
+                            "name": "form",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68b44d5a07084",
+                            "label": "Űrlap",
+                            "name": "form",
+                            "aria-label": "",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "contact_form": "Kapcsolati űrlap"
                             },
                             "default_value": false,
                             "return_format": "value",
@@ -2075,5 +2135,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1756383493
+    "modified": 1756646946
 }

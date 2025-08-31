@@ -298,7 +298,7 @@
                 'label'                 => __( 'Résztvevő', TEXT_DOMAIN ),
                 'description'           => __( '', TEXT_DOMAIN ),
                 'labels'                => $labels,
-                'supports'              => array( 'title' ),
+                'supports'              => array( 'title', 'custom-fields' ),
                 'taxonomies'            => array(),
                 'hierarchical'          => false,
                 'public'                => false,

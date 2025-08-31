@@ -21,6 +21,7 @@ import './filter';
 //import './fancybox-init';
 import './slick-init';
 import './select2-init';
+import './validate-form';
 import './youtube-player';
 import './minicart';
 import './quantity'; 

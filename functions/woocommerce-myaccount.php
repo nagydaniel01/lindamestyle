@@ -103,12 +103,17 @@
                     'customer-logout' => __( 'Logout', 'woocommerce' ),
 
                     // WooCommerce Subscriptions
-                    'subscriptions'      => __( 'My Subscriptions', 'woocommerce-subscriptions' ),
-                    'view-subscription'  => __( 'Subscription Details', 'woocommerce-subscriptions' ),
+                    'subscriptions'     => __( 'My Subscriptions', 'woocommerce-subscriptions' ),
+                    'view-subscription' => __( 'Subscription Details', 'woocommerce-subscriptions' ),
 
                     // WooCommerce Memberships
-                    'members-area'       => __( 'My Memberships', 'woocommerce-memberships' ),
-                    'view-membership'    => __( 'Membership Details', 'woocommerce-memberships' ),
+                    'members-area'    => __( 'My Memberships', 'woocommerce-memberships' ),
+                    'view-membership' => __( 'Membership Details', 'woocommerce-memberships' ),
+
+                    // Custom
+                    'beauty-profile'  => __( 'Beauty profile', TEXT_DOMAIN ),
+                    'bookmarks'       => __( 'Bookmarks', TEXT_DOMAIN ),
+                    'email-marketing' => __( 'Newsletter', TEXT_DOMAIN ),
                 );
 
                 foreach ( $titles as $endpoint => $endpoint_title ) {

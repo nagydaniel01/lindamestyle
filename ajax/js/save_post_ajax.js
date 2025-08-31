@@ -18,7 +18,7 @@
                 type: 'POST',
                 url: save_post_ajax_object.ajax_url,
                 data: {
-                    action: 'update_bookmark_list_function'
+                    action: 'update_bookmark_list_handler'
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -51,7 +51,7 @@
                 type: 'POST',
                 url: save_post_ajax_object.ajax_url,
                 data: {
-                    action: 'save_post_function',
+                    action: 'save_post_handler',
                     post_id: post_id
                 },
                 dataType: 'json',

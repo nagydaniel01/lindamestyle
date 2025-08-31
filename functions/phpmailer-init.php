@@ -17,7 +17,7 @@
         }
 
         // Uncomment to activate Mailtrap config
-        //add_action( 'phpmailer_init', 'mailtrap' );
+        add_action( 'phpmailer_init', 'mailtrap' );
     }
 
     if ( ! function_exists( 'rd_mailtrap' ) ) {
@@ -38,7 +38,7 @@
         }
 
         // Uncomment to activate Mailtrap config
-        add_action( 'phpmailer_init', 'rd_mailtrap' );
+        //add_action( 'phpmailer_init', 'rd_mailtrap' );
     }
 
     if ( ! function_exists( 'log_mailer_errors' ) ) {

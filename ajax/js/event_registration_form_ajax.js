@@ -1,0 +1,59 @@
+(function($){
+    'use strict';
+
+    $(document).ready(function(){
+
+        $('#event_registration_form').on('submit', function(e){
+            e.preventDefault();
+
+            var data = {
+                action: 'event_registration_form_handler',
+                user_id: event_registration_form_ajax_object.user_id,
+                form_data: $(this).serialize() // send all form fields including nonce
+            };
+
+            $.ajax({
+                url: event_registration_form_ajax_object.ajax_url,
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+
+                // Before sending, show a loading indicator
+                beforeSend: function() {
+                    $('#event_response').html('<div class="alert alert-info">'+event_registration_form_ajax_object.msg_registering+'</div>');
+                },
+
+                success: function(response){
+                    if(response && typeof response === 'object'){
+                        if(response.success){
+                            var message = response.data && response.data.message ? response.data.message : event_registration_form_ajax_object.msg_success;
+                            $('#event_response').html('<div class="alert alert-success">'+message+'</div>');
+                        } else {
+                            var message = response.data && response.data.message ? response.data.message : event_registration_form_ajax_object.msg_error_sending;
+                            $('#event_response').html('<div class="alert alert-danger">'+message+'</div>');
+                        }
+                    } else {
+                        $('#event_response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_unexpected+'</div>');
+                    }
+                },
+
+                error: function(xhr, status, error){
+                    var errMsg = event_registration_form_ajax_object.msg_network_error;
+                    if(xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message){
+                        errMsg = xhr.responseJSON.data.message;
+                    } else if(error){
+                        errMsg += ' (' + error + ')';
+                    }
+                    $('#event_response').html('<div class="alert alert-danger">'+errMsg+'</div>');
+                },
+
+                complete: function() {
+                    // Optional: remove loading spinner or do other cleanup
+                    // Example: console.log('AJAX request completed');
+                }
+            });
+        });
+
+    });
+
+})(jQuery);
