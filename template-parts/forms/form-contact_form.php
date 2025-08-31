@@ -2,21 +2,21 @@
     $current_user = wp_get_current_user();
 ?>
 
-<form id="contact_form" class="form">
+<form id="contact_form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
     <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
 
     <div class="mb-3">
         <label class="form-label" for="name">
             <?php echo esc_html( 'Full Name' ); ?> <span class="required">*</span>
         </label>
-        <input type="text" class="form-control" id="name" name="name" value="<?php echo esc_attr($current_user->display_name); ?>" placeholder="<?php echo esc_attr('Enter your full name', TEXT_DOMAIN ); ?>" required>
+        <input type="text" class="form-control" id="name" name="name" value="<?php echo esc_attr($current_user->display_name); ?>" placeholder="<?php echo esc_attr('Enter your full name', TEXT_DOMAIN ); ?>" required aria-required="true">
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="email">
             <?php echo esc_html( 'Email' ); ?> <span class="required">*</span>
         </label>
-        <input type="email" class="form-control" id="email" name="email" value="<?php echo esc_attr($current_user->user_email); ?>" placeholder="<?php echo esc_attr('Enter your email address', TEXT_DOMAIN ); ?>" required>
+        <input type="email" class="form-control" id="email" name="email" value="<?php echo esc_attr($current_user->user_email); ?>" placeholder="<?php echo esc_attr('Enter your email address', TEXT_DOMAIN ); ?>" required aria-required="true">
     </div>
 
     <div class="mb-3">
@@ -30,14 +30,14 @@
         <label class="form-label" for="subject">
             <?php echo esc_html( 'Subject' ); ?> <span class="required">*</span>
         </label>
-        <input type="text" class="form-control" id="subject" name="subject" placeholder="<?php echo esc_attr('Enter subject', TEXT_DOMAIN ); ?>" required>
+        <input type="text" class="form-control" id="subject" name="subject" placeholder="<?php echo esc_attr('Enter subject', TEXT_DOMAIN ); ?>" required aria-required="true">
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="message">
             <?php echo esc_html( 'Message' ); ?> <span class="required">*</span>
         </label>
-        <textarea class="form-control" id="message" name="message" rows="4" placeholder="<?php echo esc_attr('Write your message here...', TEXT_DOMAIN ); ?>" required></textarea>
+        <textarea class="form-control" id="message" name="message" rows="4" placeholder="<?php echo esc_attr('Write your message here...', TEXT_DOMAIN ); ?>" required aria-required="true"></textarea>
     </div>
 
     <div class="form__actions">
