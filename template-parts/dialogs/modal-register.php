@@ -10,7 +10,9 @@
                     <p>Would you like to save your favorites?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary"><?php echo esc_html('Login or Register', TEXT_DOMAIN); ?></button>
+                    <a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" class="btn btn-primary">
+                        <?php echo esc_html('Login or Register', TEXT_DOMAIN); ?>
+                    </a>
                 </div>
             </div>
         </div>

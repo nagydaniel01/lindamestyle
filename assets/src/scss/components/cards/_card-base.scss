@@ -134,6 +134,14 @@
 		position: absolute;
 		top: 0;
 		right: 0;
+
+		.icon {
+			margin: 0;
+		}
+
+		span {
+			@extend .visually-hidden;
+		}
 	}
 }
 

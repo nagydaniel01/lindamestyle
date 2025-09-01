@@ -7,7 +7,7 @@
             var iconClass = newStatus ? 'icon-bookmark' : 'icon-bookmark-empty';
             var iconHtml = '<svg class="icon ' + iconClass + '"><use xlink:href="#' + iconClass + '"></use></svg>';
             var label = newStatus ? 'Remove from Bookmarks' : 'Add to Bookmarks';
-            var buttonHtml = iconHtml + '<span class="visually-hidden">' + label + '</span>';
+            var buttonHtml = iconHtml + '<span>' + label + '</span>';
 
             $button.attr('data-bookmarked', newStatus);
             $button.html(buttonHtml);
@@ -44,7 +44,7 @@
             var newStatus = !currentStatus;
 
             // Add loading state
-            var loadingHtml = '<svg class="icon icon-loading"><use xlink:href="#icon-loading"></use></svg><span class="visually-hidden">Processing...</span>';
+            var loadingHtml = '<svg class="icon icon-loading"><use xlink:href="#icon-loading"></use></svg><span>Processing...</span>';
             $button.html(loadingHtml);
 
             $.ajax({

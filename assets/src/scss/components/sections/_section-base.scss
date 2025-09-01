@@ -55,7 +55,7 @@
         align-items: center;
         margin-bottom: 1rem;
 
-        span:not(:first-child) {
+        & > span:not(:first-child) {
             position: relative;
             margin-left: 1rem;
             padding-left: 1rem;
@@ -70,6 +70,10 @@
                 height: 1rem;
                 background-color: $primary;
             }
+        }
+
+        a {
+            margin-left: 1rem;
         }
     }
 

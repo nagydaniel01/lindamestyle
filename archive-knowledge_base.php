@@ -119,7 +119,13 @@
 
                     // If user is not logged in OR not admin and has no active membership
                     if ( ! is_user_logged_in() || ( ! current_user_can( 'administrator' ) && ! wc_memberships_is_user_active_member( $user_id ) ) ) {
-                        wc_add_notice( __( 'This content is for members only. Please <a href="/buy-subscription">buy a subscription</a> to access it.', TEXT_DOMAIN ), 'notice' );
+                        wc_add_notice( 
+                            sprintf(
+                                __( 'This content is for members only. Please <a href="%s">buy a subscription</a> to access it.', TEXT_DOMAIN ),
+                                esc_url( '/elofizetesek' )
+                            ),
+                            'notice'
+                        );
                         wc_print_notices();
                     } else {
                 ?>

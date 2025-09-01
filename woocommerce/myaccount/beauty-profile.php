@@ -3,7 +3,7 @@
     $szintipus_value = get_field('szintipus', 'user_' . $current_user_id);
 ?>
 
-<form id="beauty_profile_form" class="form">
+<form id="beauty_profile_form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
     <?php wp_nonce_field('beauty_profile_form_action', 'beauty_profile_form_nonce'); ?>
 
     <fieldset class="mb-3">
