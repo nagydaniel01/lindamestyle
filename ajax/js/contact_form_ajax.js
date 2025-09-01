@@ -6,6 +6,12 @@
         $('#contact_form').on('submit', function(e){
             e.preventDefault();
 
+            // Check if privacy checkbox is checked
+            if( !$('#privacy_policy').is(':checked') ){
+                $('#response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_privacy_required+'</div>');
+                return; // stop submission
+            }
+
             var data = {
                 action: 'contact_form_handler',
                 user_id: contact_form_ajax_object.user_id,

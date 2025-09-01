@@ -343,68 +343,39 @@
         add_action( 'woocommerce_after_single_product_summary', 'my_sticky_product_block', 5 );
     }
 
-    if ( ! function_exists( 'my_custom_login_redirect' ) ) {
+    if ( ! function_exists( 'exclude_subscription_products_from_shop' ) ) {
         /**
-         * Redirect WooCommerce customers to a specific page after login.
+         * Exclude subscription products from the main shop, product category, and product tag pages.
          *
-         * This filter hooks into the WooCommerce login process and redirects
-         * users with the 'customer' or 'subscriber' role to a custom page
-         * based on the assigned page template.
+         * This function modifies the WooCommerce main query on the frontend to exclude products
+         * that belong to the "subscription" product type. It prevents subscription products from
+         * appearing in the shop loop, category archives, and tag archives.
          *
-         * @param string  $redirect The default redirect URL.
-         * @param WP_User $user     The logged-in user object.
+         * @param WP_Query $query The WP_Query instance (passed by reference).
          *
-         * @return string The new redirect URL.
+         * @return void
          */
-        function my_custom_login_redirect( $redirect, $user ) {
-            if ( ! ( $user instanceof WP_User ) ) {
-                return $redirect;
-            }
+        function exclude_subscription_products_from_shop( $query ) {
+            // Ensure this only runs on the main shop loop and frontend
+            if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() || is_product_tag() ) ) {
 
-            $roles_to_redirect = [ 'customer', 'subscriber' ];
-            $template_name     = 'templates/page-dashboard.php';
+                // Get the term for subscription products from the "product_type" taxonomy
+                $subscription_term = get_term_by( 'slug', 'subscription', 'product_type' );
 
-            if ( ! empty( $user->roles ) && array_intersect( $roles_to_redirect, (array) $user->roles ) ) {
-                $target_url = get_template_url( $template_name );
+                if ( $subscription_term && ! is_wp_error( $subscription_term ) ) {
+                    $tax_query = (array) $query->get( 'tax_query' );
 
-                // If valid permalink found, redirect there
-                if ( ! empty( $target_url ) && filter_var( $target_url, FILTER_VALIDATE_URL ) ) {
-                    return $target_url;
+                    // Exclude subscription products
+                    $tax_query[] = array(
+                        'taxonomy' => 'product_type',
+                        'field'    => 'slug',
+                        'terms'    => array( 'subscription' ),
+                        'operator' => 'NOT IN',
+                    );
+
+                    $query->set( 'tax_query', $tax_query );
                 }
-
-                // Fallback: redirect to My Account if template not found
-                $myaccount_url = wc_get_page_permalink( 'myaccount' );
-                if ( $myaccount_url ) {
-                    return $myaccount_url;
-                }
-
-                return home_url();
-            }
-
-            return $redirect;
-        }
-        //add_filter( 'woocommerce_login_redirect', 'my_custom_login_redirect', 10, 2 );
-    }
-
-    add_action( 'pre_get_posts', 'exclude_subscription_products_from_shop' );
-    function exclude_subscription_products_from_shop( $query ) {
-        // Ensure this only runs on the main shop loop and frontend
-        if ( ! is_admin() && $query->is_main_query() && ( is_shop() || is_product_category() || is_product_tag() ) ) {
-
-            // Get the term for subscription products
-            $subscription_term = get_term_by( 'slug', 'subscription', 'product_type' );
-
-            if ( $subscription_term && ! is_wp_error( $subscription_term ) ) {
-                $tax_query = (array) $query->get( 'tax_query' );
-
-                $tax_query[] = array(
-                    'taxonomy' => 'product_type',
-                    'field'    => 'slug',
-                    'terms'    => array( 'subscription' ),
-                    'operator' => 'NOT IN',
-                );
-
-                $query->set( 'tax_query', $tax_query );
             }
         }
+        add_action( 'pre_get_posts', 'exclude_subscription_products_from_shop' );
     }

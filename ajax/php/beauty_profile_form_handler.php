@@ -4,12 +4,16 @@
             try {
                 // Ensure request is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
-                    wp_send_json_error(['message' => __('Invalid request method.', TEXT_DOMAIN)], 405);
+                    wp_send_json_error([
+                        'message' => __('Invalid request method.', TEXT_DOMAIN)
+                    ], 405);
                 }
 
                 // Check if form data is present
                 if ( empty($_POST['form_data']) ) {
-                    wp_send_json_error(['message' => __('No form data received.', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('No form data received.', TEXT_DOMAIN)
+                    ], 400);
                 }
 
                 // Parse the serialized form data
@@ -21,13 +25,17 @@
                 // Nonce check
                 if ( ! isset($form['beauty_profile_form_nonce']) ||
                     ! wp_verify_nonce($form['beauty_profile_form_nonce'], 'beauty_profile_form_action') ) {
-                    wp_send_json_error(['message' => __('Invalid security token.', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('Invalid security token.', TEXT_DOMAIN)
+                    ], 400);
                 }
 
                 // Check user ID
                 $user_id = isset($_POST['user_id']) ? intval($_POST['user_id']) : 0;
                 if ( ! $user_id ) {
-                    wp_send_json_error(['message' => __('Invalid user!', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('Invalid user!', TEXT_DOMAIN)
+                    ], 400);
                 }
 
                 // Process form fields
@@ -55,11 +63,7 @@
                     // Error handling with is_wp_error()
                     if ( is_wp_error($saved) ) {
                         wp_send_json_error([
-                            'message' => sprintf(
-                                __('Saving the %s field failed: %s', TEXT_DOMAIN),
-                                $key,
-                                $saved->get_error_message()
-                            )
+                            'message' => sprintf(__('Saving the %s field failed: %s', TEXT_DOMAIN), $key, $saved->get_error_message())
                         ], 500);
                     }
 
@@ -71,7 +75,9 @@
                 }
 
                 // Success response
-                wp_send_json_success(['message' => __('Data saved successfully!', TEXT_DOMAIN)]);
+                wp_send_json_success([
+                    'message' => __('Data saved successfully!', TEXT_DOMAIN)
+                ], 200);
 
             } catch ( Exception $e ) {
                 wp_send_json_error([

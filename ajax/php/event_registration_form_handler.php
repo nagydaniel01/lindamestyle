@@ -4,7 +4,9 @@
             try {
                 // Check if form data is present
                 if ( empty($_POST['form_data']) ) {
-                    wp_send_json_error(['message' => __('No form data received.', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('No form data received.', TEXT_DOMAIN)
+                    ], 400);
                 }
 
                 // Parse the serialized form data
@@ -16,7 +18,9 @@
                 // Nonce check
                 if ( ! isset($form['event_registration_form_nonce']) ||
                     ! wp_verify_nonce($form['event_registration_form_nonce'], 'event_registration_form_action') ) {
-                    wp_send_json_error(['message' => __('Invalid security token', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('Invalid security token', TEXT_DOMAIN)
+                    ], 400);
                 }
 
                 // Extract fields safely
@@ -24,22 +28,40 @@
                 $user_id  = get_current_user_id();
                 $name     = isset($form['reg_name']) ? sanitize_text_field($form['reg_name']) : '';
                 $email    = isset($form['reg_email']) ? sanitize_email($form['reg_email']) : '';
+                $privacy  = isset($form['reg_privacy_policy']) ? sanitize_text_field($form['reg_privacy_policy']) : '';
 
                 // Validate inputs
+                /*
                 if ( ! $user_id ) {
-                    wp_send_json_error(['message' => __('You must be logged in to register.', TEXT_DOMAIN)], 401);
+                    wp_send_json_error([
+                        'message' => __('You must be logged in to register.', TEXT_DOMAIN)
+                    ], 401);
                 }
+                */
 
                 if ( empty($name) || empty($email) ) {
-                    wp_send_json_error(['message' => __('Name and email are required.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error([
+                        'message' => __('Name and email are required.', TEXT_DOMAIN)
+                    ], 422);
                 }
 
                 if ( ! is_email($email) ) {
-                    wp_send_json_error(['message' => __('Invalid email format.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error([
+                        'message' => __('Invalid email format.', TEXT_DOMAIN)
+                    ], 422);
                 }
 
                 if ( ! $event_id ) {
-                    wp_send_json_error(['message' => __('Invalid event ID.', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('Invalid event ID.', TEXT_DOMAIN)
+                    ], 400);
+                }
+
+                // Validate privacy checkbox
+                if ( empty($privacy) || $privacy !== 'on' ) {
+                    wp_send_json_error([
+                        'message' => __('You must agree to the privacy policy.', TEXT_DOMAIN)
+                    ], 422);
                 }
 
                 // Prevent duplicate registration
@@ -60,7 +82,9 @@
                 ]);
 
                 if ( $existing ) {
-                    wp_send_json_error(['message' => __('You are already registered for this event.', TEXT_DOMAIN)], 409);
+                    wp_send_json_error([
+                        'message' => __('You are already registered for this event.', TEXT_DOMAIN)
+                    ], 409);
                 }
 
                 // Create attendee post
@@ -88,11 +112,15 @@
                 }
 
                 if ( $registration_id === false ) {
-                    wp_send_json_error(['message' => __('Registration failed, please try again.', TEXT_DOMAIN)], 500);
+                    wp_send_json_error([
+                        'message' => __('Registration failed, please try again.', TEXT_DOMAIN)
+                    ], 500);
                 }
 
                 // Success response
-                wp_send_json_success(['message' => __('Successfully registered!', TEXT_DOMAIN)]);
+                wp_send_json_success([
+                    'message' => __('Successfully registered!', TEXT_DOMAIN)
+                ], 200);
 
             } catch ( Exception $e ) {
                 wp_send_json_error([

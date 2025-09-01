@@ -1,67 +1,131 @@
-  .commentlist {
-    @extend .list-unstyled;
+.comment-list,
+.commentlist {
+  @extend .list-unstyled;
+  padding: 0;
 
-    .review {
-      .comment_container {
-        @extend .card;
-        @extend .shadow-lg;
-        @extend .border-0;
+  .comment {
+    .comment__inner {
+      @extend .card;
+      @extend .shadow-lg;
+      @extend .border-0;
+      display: flex;
+      flex-direction: row;
+      gap: 1.25rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: $white;
+      border-radius: 1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+      }
+
+      .avatar {
+        @extend .rounded-circle;
+        @extend .border;
+        flex-shrink: 0;
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+      }
+
+      .comment__author-inner {
         display: flex;
-        flex-direction: row;
-        gap: 1.25rem;
-        padding: 1.5rem;
-        margin-bottom: 1.5rem;
-        background: $white;
-        border-radius: 1rem;
-        transition: transform .2s ease, box-shadow .2s ease;
+        flex-direction: column;
+        justify-content: flex-start;
 
-        .avatar {
-          @extend .rounded-circle;
-          @extend .border;
-          flex-shrink: 0;
-          width: 64px;
-          height: 64px;
-          object-fit: cover;
-        }
+        .comment__author {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
 
-        .comment-text {
-          flex: 1;
-
-          .meta {
-            @extend .d-flex;
-            @extend .align-items-center;
-            @extend .gap-2;
-            @extend .mb-2;
-            font-size: 0.875rem;
-            color: $gray-600;
-
-            .woocommerce-review__author {
-              @extend .fw-bold;
-              color: $gray-900;
-            }
-
-            .woocommerce-review__verified {
-              @extend .badge;
-              @extend .bg-success-subtle;
-              @extend .text-success;
-              font-style: normal;
-              font-weight: 500;
-            }
-
-            .woocommerce-review__dash {
-              color: $gray-400;
-            }
+          .fn {
+            font-weight: 600;
+            color: $gray-900;
           }
 
-          .description {
-            p {
-              @extend .mb-0;
-              font-size: 1rem;
-              line-height: 1.5;
-              color: $gray-800;
+          .says {
+            font-size: 0.875rem;
+            color: $gray-600;
+          }
+        }
+      }
+
+      .comment__content {
+        flex: 1;
+
+        p {
+          margin: 0;
+          font-size: 1rem;
+          line-height: 1.5;
+          color: $gray-800;
+
+          &.comment-awaiting-moderation {
+            font-style: italic;
+            color: $gray-500;
+          }
+        }
+      }
+
+      .comment__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 0.75rem;
+        font-size: 0.875rem;
+        color: $gray-500;
+
+        time {
+          font-style: normal;
+        }
+
+        .comment__link {
+          a {
+            text-decoration: none;
+            color: $primary;
+            font-weight: 500;
+            transition: color 0.2s;
+
+            &:hover {
+              color: darken($primary, 10%);
             }
           }
         }
       }
     }
+
+    // Nested replies
+    > .children {
+      margin-top: 1rem;
+      margin-left: 3rem; // Indent for replies
+      list-style: none;
+      padding-left: 0;
+
+      .comment {
+        .comment__inner {
+          padding: 1rem 1.25rem;
+          gap: 1rem;
+
+          // Slightly smaller avatar for nested replies (optional)
+          .avatar {
+            width: 48px;
+            height: 48px;
+          }
+        }
+
+        // Further nested replies
+        > .children {
+          margin-left: 3rem;
+        }
+      }
+    }
+  }
+}
+
+#cancel-comment-reply-link {
+  @extend .btn;
+  @extend .btn-outline-primary;
+  float: right;
 }

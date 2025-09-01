@@ -4,12 +4,16 @@
             try {
                 // Ensure request is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
-                    wp_send_json_error(['message' => __('Invalid request method.', TEXT_DOMAIN)], 405);
+                    wp_send_json_error([
+                        'message' => __('Invalid request method.', TEXT_DOMAIN)
+                    ], 405);
                 }
 
                 // Check if form data is present
                 if ( empty($_POST['form_data']) ) {
-                    wp_send_json_error(['message' => __('No form data received.', TEXT_DOMAIN)], 400);
+                    wp_send_json_error([
+                        'message' => __('No form data received.', TEXT_DOMAIN)
+                    ], 400);
                 }
 
                 // Parse the serialized form data
@@ -21,7 +25,9 @@
                 // Nonce check
                 if ( ! isset($form['contact_form_nonce']) ||
                     ! wp_verify_nonce($form['contact_form_nonce'], 'contact_form_action') ) {
-                    wp_send_json_error(['message' => __('Invalid security token.', TEXT_DOMAIN)], 403);
+                    wp_send_json_error([
+                        'message' => __('Invalid security token.', TEXT_DOMAIN)
+                    ], 403);
                 }
 
                 // Extract fields safely
@@ -30,20 +36,34 @@
                 $phone   = isset($form['phone']) ? sanitize_text_field($form['phone']) : '';
                 $subject = isset($form['subject']) ? sanitize_text_field($form['subject']) : '';
                 $message = isset($form['message']) ? sanitize_textarea_field($form['message']) : '';
+                $privacy  = isset($form['privacy_policy']) ? sanitize_text_field($form['privacy_policy']) : '';
 
                 // Validate inputs
                 if ( empty($name) || empty($email) || empty($subject) || empty($message) ) {
-                    wp_send_json_error(['message' => __('All required fields must be filled out.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error([
+                        'message' => __('All required fields must be filled out.', TEXT_DOMAIN)
+                    ], 422);
                 }
 
                 if ( ! is_email($email) ) {
-                    wp_send_json_error(['message' => __('Invalid email format.', TEXT_DOMAIN)], 422);
+                    wp_send_json_error([
+                        'message' => __('Invalid email format.', TEXT_DOMAIN)
+                    ], 422);
+                }
+
+                // Validate privacy checkbox
+                if ( empty($privacy) || $privacy !== 'on' ) {
+                    wp_send_json_error([
+                        'message' => __('You must agree to the privacy policy.', TEXT_DOMAIN)
+                    ], 422);
                 }
 
                 // Prepare email
                 $admin_email = get_option('admin_email');
                 if ( ! $admin_email || ! is_email($admin_email) ) {
-                    wp_send_json_error(['message' => __('Admin email is not configured properly.', TEXT_DOMAIN)], 500);
+                    wp_send_json_error([
+                        'message' => __('Admin email is not configured properly.', TEXT_DOMAIN)
+                    ], 500);
                 }
 
                 $headers = [
@@ -85,11 +105,15 @@
                 $sent = wp_mail($admin_email, $mail_subject, $mail_message, $headers);
 
                 if ( ! $sent ) {
-                    wp_send_json_error(['message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)], 500);
+                    wp_send_json_error([
+                        'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
+                    ], 500);
                 }
 
                 // Success response
-                wp_send_json_success(['message' => __('Your message has been sent successfully!', TEXT_DOMAIN)]);
+                wp_send_json_success([
+                    'message' => __('Your message has been sent successfully!', TEXT_DOMAIN)
+                ], 200);
 
             } catch ( Exception $e ) {
                 wp_send_json_error([

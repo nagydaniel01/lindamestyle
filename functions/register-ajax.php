@@ -7,6 +7,115 @@
         error_log( 'Directory does not exist: ' . $ajax_dir );
     }
 
+    if ( ! function_exists( 'enqueue_comment_form_ajax_scripts' ) ) {
+        // https://rudrastyh.com/wordpress/ajax-comments.html
+        function enqueue_comment_form_ajax_scripts() {
+            $script_rel_path = '/ajax/js/comment_form_ajax.js'; // relative to theme root
+            $script_path = get_template_directory() . $script_rel_path;
+            $script_uri = get_template_directory_uri() . $script_rel_path;
+
+            // Check if the script file exists before enqueuing
+            if ( file_exists( $script_path ) ) {
+                // Enqueue the script with jQuery as a dependency, to be loaded in the footer
+                wp_enqueue_script( 'comment_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
+
+                // Localize script for use in JS
+                wp_localize_script( 'comment_form_ajax_script', 'comment_form_ajax_object', array(
+                    'ajax_url'        => admin_url( 'admin-ajax.php' ),
+                    'loading_text'    => __( 'Loading...', TEXT_DOMAIN ),
+                    'post_comment'    => __( 'Post Comment' ),
+                    'error_adding'    => __( 'Error while adding comment', TEXT_DOMAIN ),
+                    'error_timeout'   => __( 'Error: Server doesn’t respond.', TEXT_DOMAIN )
+                ) );
+            } else {
+                // Log an error if the script file doesn't exist
+                error_log( 'Script file does not exist: ' . $script_path );
+            }
+        }
+
+        add_action( 'wp_enqueue_scripts', 'enqueue_comment_form_ajax_scripts' );
+    }
+
+    if ( ! function_exists( 'enqueue_beauty_profile_form_ajax_scripts' ) ) {
+        function enqueue_beauty_profile_form_ajax_scripts() {
+            $script_rel_path = '/ajax/js/beauty_profile_form_ajax.js'; // relative to theme root
+            $script_path = get_template_directory() . $script_rel_path;
+            $script_uri  = get_template_directory_uri() . $script_rel_path;
+
+            // Only enqueue if the file exists
+            if ( file_exists( $script_path ) ) {
+                wp_enqueue_script( 'beauty_profile_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
+
+                // Pass dynamic data to JS
+                wp_localize_script( 'beauty_profile_form_ajax_script', 'beauty_profile_form_ajax_object', array(
+                    'ajax_url'          => admin_url('admin-ajax.php'),
+                    'user_id'           => get_current_user_id(),
+                    'msg_saving'        => __( 'Saving in progress…', TEXT_DOMAIN ),
+                    'msg_success'       => __( 'Data saved successfully!', TEXT_DOMAIN ),
+                    'msg_error_saving'  => __( 'An error occurred while saving the data!', TEXT_DOMAIN ),
+                    'msg_unexpected'    => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
+                    'msg_network_error' => __( 'A network error occurred.', TEXT_DOMAIN )
+                ) );
+            } else {
+                error_log( 'Script file does not exist: ' . $script_path );
+            }
+        }
+
+        add_action( 'wp_enqueue_scripts', 'enqueue_beauty_profile_form_ajax_scripts' );
+    }
+
+    if ( ! function_exists( 'enqueue_event_registration_form_ajax_scripts' ) ) {
+        function enqueue_event_registration_form_ajax_scripts() {
+            $script_rel_path = '/ajax/js/event_registration_form_ajax.js'; // relative to theme root
+            $script_path = get_template_directory() . $script_rel_path;
+            $script_uri  = get_template_directory_uri() . $script_rel_path;
+
+            if ( file_exists( $script_path ) ) {
+                wp_enqueue_script( 'event_registration_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
+
+                wp_localize_script( 'event_registration_form_ajax_script', 'event_registration_form_ajax_object', array(
+                    'ajax_url'             => admin_url( 'admin-ajax.php' ),
+                    'user_id'              => get_current_user_id(),
+                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
+                    'msg_registering'      => __( 'Registering…', TEXT_DOMAIN ),
+                    'msg_success'          => __( 'Successfully registered!', TEXT_DOMAIN ),
+                    'msg_error_sending'    => __( 'There was an error while sending your registration.', TEXT_DOMAIN ),
+                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
+                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
+                ) );
+            } else {
+                error_log( 'Script file does not exist: ' . $script_path );
+            }
+        }
+        add_action( 'wp_enqueue_scripts', 'enqueue_event_registration_form_ajax_scripts' );
+    }
+
+    if ( ! function_exists( 'enqueue_contact_form_ajax_scripts' ) ) {
+        function enqueue_contact_form_ajax_scripts() {
+            $script_rel_path = '/ajax/js/contact_form_ajax.js'; // relative to theme root
+            $script_path = get_template_directory() . $script_rel_path;
+            $script_uri  = get_template_directory_uri() . $script_rel_path;
+
+            if ( file_exists( $script_path ) ) {
+                wp_enqueue_script( 'contact_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
+
+                wp_localize_script( 'contact_form_ajax_script', 'contact_form_ajax_object', array(
+                    'ajax_url'             => admin_url( 'admin-ajax.php' ),
+                    'user_id'              => get_current_user_id(),
+                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
+                    'msg_sending'          => __( 'Sending…', TEXT_DOMAIN ),
+                    'msg_success'          => __( 'Message sent successfully!', TEXT_DOMAIN ),
+                    'msg_error_sending'    => __( 'There was an error while sending your message.', TEXT_DOMAIN ),
+                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
+                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
+                ) );
+            } else {
+                error_log( 'Script file does not exist: ' . $script_path );
+            }
+        }
+        add_action( 'wp_enqueue_scripts', 'enqueue_contact_form_ajax_scripts' );
+    }
+
     if ( ! function_exists( 'enqueue_save_post_ajax_scripts' ) ) {
         function enqueue_save_post_ajax_scripts() {
             $script_rel_path = '/ajax/js/save_post_ajax.js';
@@ -29,82 +138,4 @@
         }
 
         add_action( 'wp_enqueue_scripts', 'enqueue_save_post_ajax_scripts' );
-    }
-
-    if ( ! function_exists( 'enqueue_beauty_profile_form_ajax_scripts' ) ) {
-        function enqueue_beauty_profile_form_ajax_scripts() {
-            $script_rel_path = '/ajax/js/beauty_profile_form_ajax.js'; // relative to theme root
-            $script_path = get_template_directory() . $script_rel_path;
-            $script_uri  = get_template_directory_uri() . $script_rel_path;
-
-            // Only enqueue if the file exists
-            if ( file_exists( $script_path ) ) {
-                wp_enqueue_script( 'beauty_profile_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
-
-                // Pass dynamic data to JS
-                wp_localize_script( 'beauty_profile_form_ajax_script', 'beauty_profile_form_ajax_object', array(
-                    'ajax_url'          => admin_url('admin-ajax.php'),
-                    'user_id'           => get_current_user_id(),
-                    'msg_saving'        => __('Saving in progress…', TEXT_DOMAIN),
-                    'msg_success'       => __('Data saved successfully!', TEXT_DOMAIN),
-                    'msg_error_saving'  => __('An error occurred while saving the data!', TEXT_DOMAIN),
-                    'msg_unexpected'    => __('An unexpected error occurred.', TEXT_DOMAIN),
-                    'msg_network_error' => __('A network error occurred.', TEXT_DOMAIN)
-                ) );
-            } else {
-                error_log('Script file does not exist: ' . $script_path);
-            }
-        }
-
-        add_action('wp_enqueue_scripts', 'enqueue_beauty_profile_form_ajax_scripts');
-    }
-
-    if ( ! function_exists( 'enqueue_event_registration_form_ajax_scripts' ) ) {
-        function enqueue_event_registration_form_ajax_scripts() {
-            $script_rel_path = '/ajax/js/event_registration_form_ajax.js'; // relative to theme root
-            $script_path = get_template_directory() . $script_rel_path;
-            $script_uri  = get_template_directory_uri() . $script_rel_path;
-
-            if ( file_exists( $script_path ) ) {
-                wp_enqueue_script( 'event_registration_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
-
-                wp_localize_script( 'event_registration_form_ajax_script', 'event_registration_form_ajax_object', array(
-                    'ajax_url'          => admin_url( 'admin-ajax.php' ),
-                    'user_id'           => get_current_user_id(),
-                    'msg_registering'   => __( 'Registering…', TEXT_DOMAIN ),
-                    'msg_success'       => __( 'Successfully registered!', TEXT_DOMAIN ),
-                    'msg_error_sending' => __( 'There was an error while sending your registration.', TEXT_DOMAIN ),
-                    'msg_unexpected'    => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
-                    'msg_network_error' => __( 'A network error occurred.', TEXT_DOMAIN )
-                ) );
-            } else {
-                error_log( 'Script file does not exist: ' . $script_path );
-            }
-        }
-        add_action( 'wp_enqueue_scripts', 'enqueue_event_registration_form_ajax_scripts' );
-    }
-
-    if ( ! function_exists( 'enqueue_contact_form_ajax_scripts' ) ) {
-        function enqueue_contact_form_ajax_scripts() {
-            $script_rel_path = '/ajax/js/contact_form_ajax.js'; // relative to theme root
-            $script_path = get_template_directory() . $script_rel_path;
-            $script_uri  = get_template_directory_uri() . $script_rel_path;
-
-            if ( file_exists( $script_path ) ) {
-                wp_enqueue_script( 'contact_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
-
-                wp_localize_script( 'contact_form_ajax_script', 'contact_form_ajax_object', array(
-                    'ajax_url'          => admin_url( 'admin-ajax.php' ),
-                    'user_id'           => get_current_user_id(),
-                    'msg_sending'       => __( 'Sending…', TEXT_DOMAIN ),
-                    'msg_success'       => __( 'Message sent successfully!', TEXT_DOMAIN ),
-                    'msg_error_sending' => __( 'There was an error while sending your message.', TEXT_DOMAIN ),
-                    'msg_unexpected'    => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
-                    'msg_network_error' => __( 'A network error occurred.', TEXT_DOMAIN )
-                ) );
-            } else {
-                error_log( 'Script file does not exist: ' . $script_path );
-            }
-        }
-        add_action( 'wp_enqueue_scripts', 'enqueue_contact_form_ajax_scripts' );
     }
