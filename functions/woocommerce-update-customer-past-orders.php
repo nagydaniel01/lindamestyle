@@ -1,4 +1,6 @@
 <?php
+    if ( ! class_exists( 'WooCommerce' ) ) return;
+
     /**
      * Link previous orders to a newly created user account during registration.
      * 

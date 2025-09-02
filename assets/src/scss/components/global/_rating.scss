@@ -60,3 +60,61 @@
     }
   }
 }
+
+.stars {
+	font-size: 0;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: row-reverse;
+}
+
+.stars * {
+	font-size: 1.4rem;
+}
+
+.stars > input {
+	//display: none;
+	width: 0;
+	border: 0;
+  box-shadow: none !important;
+}
+
+.stars > input + label {
+	/* only enough room for the star */
+	font-family: 'dashicons';
+	display: inline-block;
+	overflow: hidden;
+	text-indent: 9999px;
+	width: 1em;
+	white-space: nowrap;
+	cursor: pointer;
+	margin: 0;
+}
+
+.stars > input + label:before {
+	display: inline-block;
+	text-indent: -9999px;
+	content: "\f154";
+	color: $gray-300;
+}
+
+.stars > input:checked ~ label:before,
+.stars > input + label:hover ~ label:before,
+.stars > input + label:hover:before {
+	content: "\f155";
+	color: $primary;
+	text-shadow: 0 0 1px $primary;
+}
+
+.stars:hover > input + label:before {
+	content: "\f154";
+	color: $gray-300;
+	text-shadow: none;
+}
+
+.stars:hover > input + label:hover ~ label:before,
+.stars:hover > input + label:hover:before {
+	content: "\f155";
+	color: $primary;
+	text-shadow: 0 0 1px $primary;
+}

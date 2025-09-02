@@ -78,6 +78,16 @@ wc_set_loop_prop( 'total_pages', $max_num_pages );
             endif;
         ?>
 
+        <!--
+        <h1 data-tg-tour="Welcome to the homepage! This is the main heading.">Hello WordPress</h1>
+
+        <p data-tg-tour="Here’s some text. You can highlight any element.">
+            This paragraph is part of the tour.
+        </p>
+        -->
+
+        <button id="start-tour">Start Tour</button>
+
         <?php do_action( 'woocommerce_after_main_content' ); ?>
     </div>
 </main>

@@ -5,8 +5,9 @@
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
+        background-color: $white;
+        border-radius: $border-radius;
         padding: 1rem;
-        background-color: $gray-100;
         margin-bottom: 1rem;
 
         .woocommerce-result-count {

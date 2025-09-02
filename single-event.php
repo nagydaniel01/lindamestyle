@@ -4,10 +4,12 @@
     <?php while (have_posts()) : the_post(); ?>
 
     <?php 
-        $post_type       = get_post_type();
-        $taxonomy        = 'event_cat';
-        
-        $estimated_reading_time = get_estimated_reading_time( get_the_content() );
+        $post_type        = get_post_type();
+        $event_start_date = get_field('event_start_date', $post_id);
+        $event_start_time = get_field('event_start_time', $post_id);
+        $event_end_date   = get_field('event_end_date', $post_id);
+        $event_end_time   = get_field('event_end_time', $post_id);
+        $taxonomy         = 'event_cat';
     ?>
 
     <main class="page page--single page--single-<?php echo esc_attr( $post_type ); ?>">
@@ -17,25 +19,6 @@
                     <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
 
                     <h1 class="section__title"><?php the_title(); ?></h1>
-
-                    <div class="section__meta">
-                        <?php if ( $estimated_reading_time ) : ?>
-                            <span class="section__reading-time">
-                                <?php
-                                    /* translators: %s: Estimated reading time in minutes */
-                                    printf(
-                                        _n(
-                                            '%s minute reading',   // singular
-                                            '%s minutes reading',  // plural
-                                            $estimated_reading_time,
-                                            TEXT_DOMAIN
-                                        ),
-                                        esc_html( $estimated_reading_time )
-                                    );
-                                ?>
-                            </span>
-                        <?php endif; ?>
-                    </div>
 
                     <?php if ( has_post_thumbnail() ) : ?>
                         <div class="section__image-wrapper">
@@ -51,8 +34,33 @@
                             ?>
                         </div>
                     <?php endif; ?>
+                    
+                    <div class="section__meta">
+                        <?php if ( $event_start_date || $event_end_date ) : ?>
+                            <div class="event__datetime">
+                                <?php if ( $event_start_date ) : ?>
+                                    <span class="event__date-start">
+                                        <strong><?php esc_html_e( 'Start:', TEXT_DOMAIN ); ?></strong>
+                                        <time datetime=""><?php echo wp_safe_format_date( $event_start_date, 'd/m/Y' ); ?></time>
+                                        <?php if ( $event_start_time ) : ?>
+                                            <time datetime=""><?php echo ' ' . esc_html( $event_start_time ); ?></time>
+                                        <?php endif; ?>
+                                    </span>
+                                <?php endif; ?>
+
+                                <?php if ( $event_end_date ) : ?>
+                                    <span class="event__date-end">
+                                        <strong><?php esc_html_e( 'End:', TEXT_DOMAIN ); ?></strong>
+                                        <time datetime=""><?php echo wp_safe_format_date( $event_end_date, 'd/m/Y' ); ?></time>
+                                        <?php if ( $event_end_time ) : ?>
+                                            <time datetime=""><?php echo ' ' . esc_html( $event_end_time ); ?></time>
+                                        <?php endif; ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </header>
-                
                 
                 <div class="section__content">
                     <?php

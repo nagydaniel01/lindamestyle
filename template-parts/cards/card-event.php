@@ -3,12 +3,12 @@
 
     $current_user_id = get_current_user_id();
 
-    $post_id      = get_the_ID();
-    $title        = get_the_title();
-    $thumbnail_id = get_post_thumbnail_id();
-    $fallback_id  = PLACEHOLDER_IMAGE_ID;
-    $image_id     = $thumbnail_id ?: $fallback_id;
-    $categories   = get_the_terms($post_id, 'category');
+    $post_id          = get_the_ID();
+    $title            = get_the_title();
+    $thumbnail_id     = get_post_thumbnail_id();
+    $fallback_id      = PLACEHOLDER_IMAGE_ID;
+    $image_id         = $thumbnail_id ?: $fallback_id;
+    $categories       = get_the_terms($post_id, 'category');
     $event_start_date = get_field('event_start_date', $post_id);
     $event_start_time = get_field('event_start_time', $post_id);
     $event_end_date   = get_field('event_end_date', $post_id);
@@ -84,7 +84,7 @@
 
                 <span class="card__date-wrapper">
                     <strong><?php echo esc_html('Event date', TEXT_DOMAIN); ?>:</strong>
-                    <time datetime="<?php esc_html_e(get_the_date('c')); ?>" class="card__date"><?php echo wp_safe_format_date($event_start_date, 'd/m/Y'); ?></time>
+                    <time class="card__date"><?php echo wp_safe_format_date($event_start_date, 'd/m/Y'); ?></time>
                 </span>
             </div>
 

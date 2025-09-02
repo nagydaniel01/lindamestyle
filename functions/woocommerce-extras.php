@@ -1,4 +1,6 @@
 <?php
+    if ( ! class_exists( 'WooCommerce' ) ) return;
+
     // Change WooCommerce image sizes programmatically
     if ( ! function_exists( 'custom_woocommerce_image_sizes' ) ) {
         /**

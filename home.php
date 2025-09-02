@@ -61,7 +61,7 @@
                             </div>
                         <?php endif; ?>
     
-                        <?php if (!empty($authors)) : ?>
+                        <?php if (!empty($authors) && count($authors) > 1) : ?>
                             <div class="col-md-4 mb-3">
                                 <?php $filter_label = __('Authors', TEXT_DOMAIN); ?>
                                 <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))); ?>">
@@ -74,22 +74,24 @@
                             </div>
                         <?php endif; ?>
 
-                        <div class="col-md-4 mb-3">
-                            <fieldset id="filter-profile">
-                                <legend class="fw-bold mb-2">
-                                    <?php _e('My Profile Filters', TEXT_DOMAIN); ?>
-                                </legend>
-                                <?php 
-                                    $apply_profile_checked = !empty($_GET['apply_profile_filters']) && $_GET['apply_profile_filters'] == '1';
-                                ?>
-                                <div class="form-check">
-                                    <input type="checkbox" name="apply_profile_filters" value="1" id="apply-profile-filters" class="form-check-input filter js-filter js-filter-default" data-filter="apply_profile_filters" <?php checked($apply_profile_checked); ?>>
-                                    <label class="form-check-label" for="apply-profile-filters">
-                                        <?php _e('Apply my profile settings', TEXT_DOMAIN); ?>
-                                    </label>
-                                </div>
-                            </fieldset>
-                        </div>
+                        <?php if ( is_user_logged_in() ) : ?>
+                            <div class="col-md-4 mb-3">
+                                <fieldset id="filter-profile">
+                                    <legend class="fw-bold mb-2">
+                                        <?php _e('My Profile Filters', TEXT_DOMAIN); ?>
+                                    </legend>
+                                    <?php 
+                                        $apply_profile_checked = !empty($_GET['apply_profile_filters']) && $_GET['apply_profile_filters'] == '1';
+                                    ?>
+                                    <div class="form-check">
+                                        <input type="checkbox" name="apply_profile_filters" value="1" id="apply-profile-filters" class="form-check-input filter js-filter js-filter-default" data-filter="apply_profile_filters" <?php checked($apply_profile_checked); ?>>
+                                        <label class="form-check-label" for="apply-profile-filters">
+                                            <?php _e('Apply my profile settings', TEXT_DOMAIN); ?>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        <?php endif; ?>
     
                         <?php
                             $post_filter_group_id = 'group_68a866a6aa801';

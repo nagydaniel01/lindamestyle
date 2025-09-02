@@ -225,7 +225,13 @@
         function add_featured_image_column_to_all_post_types() {
             $post_types = get_post_types( [ 'public' => true ], 'names' );
 
+            // Exclude WooCommerce products
+            $excluded_post_types = [ 'product' ];
+
             foreach ( $post_types as $post_type ) {
+                if ( in_array( $post_type, $excluded_post_types ) ) {
+                    continue;
+                }
 
                 // Add column header
                 add_filter( "manage_{$post_type}_posts_columns", function ( $columns ) {
@@ -334,6 +340,183 @@
             }
         }
         add_action( 'admin_init', 'add_term_id_column_to_all_taxonomies' );
+    }
+
+    // ============================================================
+    // ADD TAXONOMY IMAGES
+    // ============================================================
+
+    if ( ! function_exists( 'add_custom_taxonomy_image' ) ) {
+        /**
+         * Display image upload field on the taxonomy add form.
+         *
+         * @param string $taxonomy The taxonomy slug.
+         */
+        function add_custom_taxonomy_image( $taxonomy ) { ?>
+            <div class="form-field term-group">
+                <label for="term_thumbnail_id"><?php _e( 'Image', 'wordpress' ); ?></label>
+                <input type="hidden" id="term_thumbnail_id" name="term_thumbnail_id" value="">
+                <div id="image_wrapper"></div>
+                <p>
+                    <input type="button" class="button button-secondary taxonomy_media_button" id="taxonomy_media_button" value="<?php _e( 'Add Image', 'wordpress' ); ?>">
+                    <input type="button" class="button button-secondary taxonomy_media_remove" id="taxonomy_media_remove" value="<?php _e( 'Remove Image', 'wordpress' ); ?>">
+                </p>
+            </div>
+        <?php }
+        add_action( 'category_add_form_fields', 'add_custom_taxonomy_image' );
+        add_action( 'taxonomy_add_form_fields', 'add_custom_taxonomy_image' );
+    }
+
+    if ( ! function_exists( 'save_custom_taxonomy_image' ) ) {
+        /**
+         * Save the taxonomy image on term creation.
+         *
+         * @param int $term_id Term ID.
+         */
+        function save_custom_taxonomy_image( $term_id ) {
+            if ( isset( $_POST['term_thumbnail_id'] ) && '' !== $_POST['term_thumbnail_id'] ) {
+                add_term_meta( $term_id, '_thumbnail_id', sanitize_text_field( $_POST['term_thumbnail_id'] ), true );
+            }
+        }
+        add_action( 'created_category', 'save_custom_taxonomy_image' );
+        add_action( 'created_taxonomy', 'save_custom_taxonomy_image' );
+    }
+
+    if ( ! function_exists( 'update_custom_taxonomy_image' ) ) {
+        /**
+         * Display the image upload field on the taxonomy edit form.
+         *
+         * @param WP_Term $term The term object.
+         */
+        function update_custom_taxonomy_image( $term ) { 
+            $term_thumbnail_id = get_term_meta( $term->term_id, '_thumbnail_id', true ); ?>
+            <tr class="form-field term-group-wrap">
+                <th scope="row">
+                    <label for="term_thumbnail_id"><?php _e( 'Image', 'wordpress' ); ?></label>
+                </th>
+                <td>
+                    <input type="hidden" id="term_thumbnail_id" name="term_thumbnail_id" value="<?php echo esc_attr( $term_thumbnail_id ); ?>">
+                    <div id="image_wrapper">
+                        <?php if ( $term_thumbnail_id ) {
+                            echo wp_get_attachment_image( $term_thumbnail_id, 'thumbnail' );
+                        } ?>
+                    </div>
+                    <p>
+                        <input type="button" class="button button-secondary taxonomy_media_button" value="<?php _e( 'Add Image', 'wordpress' ); ?>">
+                        <input type="button" class="button button-secondary taxonomy_media_remove" value="<?php _e( 'Remove Image', 'wordpress' ); ?>">
+                    </p>
+                </td>
+            </tr>
+        <?php }
+        add_action( 'category_edit_form_fields', 'update_custom_taxonomy_image' );
+        add_action( 'taxonomy_edit_form_fields', 'update_custom_taxonomy_image' );
+    }
+
+    if ( ! function_exists( 'updated_custom_taxonomy_image' ) ) {
+        /**
+         * Save the taxonomy image on term update.
+         *
+         * @param int $term_id Term ID.
+         */
+        function updated_custom_taxonomy_image( $term_id ) {
+            if ( isset( $_POST['term_thumbnail_id'] ) ) {
+                update_term_meta( $term_id, '_thumbnail_id', sanitize_text_field( $_POST['term_thumbnail_id'] ) );
+            }
+        }
+        add_action( 'edited_category', 'updated_custom_taxonomy_image' );
+        add_action( 'edited_taxonomy', 'updated_custom_taxonomy_image' );
+    }
+
+    if ( ! function_exists( 'custom_taxonomy_load_media' ) ) {
+        /**
+         * Enqueue WordPress media scripts for taxonomy pages.
+         */
+        function custom_taxonomy_load_media() {
+            if ( isset( $_GET['taxonomy'] ) ) {
+                wp_enqueue_media();
+            }
+        }
+        add_action( 'admin_enqueue_scripts', 'custom_taxonomy_load_media' );
+    }
+
+    if ( ! function_exists( 'add_custom_taxonomy_script' ) ) {    
+        /**
+         * JavaScript for handling the image upload functionality.
+         */
+        function add_custom_taxonomy_script() {
+            if ( isset( $_GET['taxonomy'] ) ) { ?>
+                <script>
+                    jQuery(document).ready(function($) {
+                        function taxonomy_media_upload(button_class) {
+                            var custom_media = true;
+                            var original_attachment = wp.media.editor.send.attachment;
+
+                            $('body').on('click', button_class, function(e) {
+                                e.preventDefault();
+                                var button = $(this);
+
+                                wp.media.editor.send.attachment = function(props, attachment) {
+                                    if (custom_media) {
+                                        $('#term_thumbnail_id').val(attachment.id);
+                                        $('#image_wrapper').html('<img class="custom_media_image" src="' + attachment.url + '" style="max-height:100px;"/>');
+                                    } else {
+                                        return original_attachment.apply(button, [props, attachment]);
+                                    }
+                                };
+
+                                wp.media.editor.open(button);
+                                return false;
+                            });
+
+                            $('body').on('click', '.taxonomy_media_remove', function() {
+                                $('#term_thumbnail_id').val('');
+                                $('#image_wrapper').html('');
+                            });
+                        }
+
+                        taxonomy_media_upload('.taxonomy_media_button');
+                    });
+                </script>
+            <?php }
+        }
+        add_action( 'admin_footer', 'add_custom_taxonomy_script' );
+    }
+
+    if ( ! function_exists( 'display_custom_taxonomy_image_column_heading' ) ) {
+        /**
+         * Add custom column heading for taxonomy images.
+         *
+         * @param array $columns List of columns.
+         * @return array Updated list of columns.
+         */
+        function display_custom_taxonomy_image_column_heading( $columns ) {
+            $columns['term_image'] = __( 'Image', 'wordpress' );
+            return $columns;
+        }
+        add_filter( 'manage_edit-category_columns', 'display_custom_taxonomy_image_column_heading' );
+        add_filter( 'manage_edit-taxonomy_columns', 'display_custom_taxonomy_image_column_heading' );
+    }
+
+    if ( ! function_exists( 'display_custom_taxonomy_image_column_value' ) ) {
+        /**
+         * Display the taxonomy image in the admin column.
+         *
+         * @param string $columns Column content.
+         * @param string $column The column name.
+         * @param int    $id Term ID.
+         * @return string Updated column content.
+         */
+        function display_custom_taxonomy_image_column_value( $columns, $column, $id ) {
+            if ( 'term_image' === $column ) {
+                $term_thumbnail_id = get_term_meta( $id, '_thumbnail_id', true );
+                if ( $term_thumbnail_id ) {
+                    $columns = wp_get_attachment_image( $term_thumbnail_id, array( 50, 50 ) );
+                }
+            }
+            return $columns;
+        }
+        add_action( 'manage_category_custom_column', 'display_custom_taxonomy_image_column_value', 10, 3 );
+        add_action( 'manage_taxonomy_custom_column', 'display_custom_taxonomy_image_column_value', 10, 3 );
     }
 
     // ============================================================

@@ -1,4 +1,6 @@
 <?php
+    if ( ! class_exists( 'WooCommerce' ) ) return;
+
     if ( ! function_exists( 'hide_downloads_tab_my_account' ) ) {
         /**
          * Hide downloads tab in My Account if customer has no downloads.

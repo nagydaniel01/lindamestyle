@@ -2,7 +2,7 @@
     $extra_classes = '';
     
     // Determine extra classes for WooCommerce pages
-    if ( class_exists('WooCommerce') ) {
+    if ( class_exists( 'WooCommerce' ) ) {
         // Add general WooCommerce class if any specific page matched
         $extra_classes = ' page--woocommerce';
 
