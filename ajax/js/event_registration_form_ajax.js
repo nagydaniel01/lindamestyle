@@ -34,6 +34,18 @@
                         if(response.success){
                             var message = response.data && response.data.message ? response.data.message : event_registration_form_ajax_object.msg_success;
                             $('#event_response').html('<div class="alert alert-success">'+message+'</div>');
+
+                            if(response.data.redirect_url){
+                                // Grab values from response
+                                var attendee_id = response.data.attendee_id ? response.data.attendee_id : '';
+
+                                // Build query string
+                                var queryString = '?attendee_id=' + encodeURIComponent(attendee_id);
+
+                                setTimeout(function(){
+                                    window.location.href = response.data.redirect_url + queryString;
+                                }, 500); // short delay so user sees the success message
+                            }
                         } else {
                             var message = response.data && response.data.message ? response.data.message : event_registration_form_ajax_object.msg_error_sending;
                             $('#event_response').html('<div class="alert alert-danger">'+message+'</div>');

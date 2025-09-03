@@ -159,7 +159,7 @@
         function event_product_custom_tab($tabs) {
             // Add a new tab
             $tabs['event_options'] = array(
-                'label'    => __('Event Details', 'lindame'),
+                'label'    => __('Event Details', TEXT_DOMAIN),
                 'target'   => 'event_product_options',
                 'class'    => array('show_if_event'),
                 'priority' => 21,
@@ -183,7 +183,7 @@
                         // Date field for event date
                         woocommerce_wp_text_input(array(
                             'id'          => '_event_date',
-                            'label'       => __('Event Date', 'lindame'),
+                            'label'       => __('Event Date', TEXT_DOMAIN),
                             'placeholder' => 'YYYY-MM-DD',
                             'type'        => 'date',
                             'desc_tip'    => false
@@ -192,7 +192,7 @@
                         // Time field for event time
                         woocommerce_wp_text_input(array(
                             'id'          => '_event_time',
-                            'label'       => __('Event Time', 'lindame'),
+                            'label'       => __('Event Time', TEXT_DOMAIN),
                             'placeholder' => 'HH:MM',
                             'type'        => 'time',
                             'desc_tip'    => false
@@ -201,10 +201,10 @@
                         // Radio button group for event location type
                         woocommerce_wp_radio(array(
                             'id'      => '_event_location_type',
-                            'label'   => __('Event Location Type', 'lindame'),
+                            'label'   => __('Event Location Type', TEXT_DOMAIN),
                             'options' => array(
-                                'in-person'  => __('In-Person', 'lindame'),
-                                'online'     => __('Online', 'lindame')
+                                'in-person'  => __('In-Person', TEXT_DOMAIN),
+                                'online'     => __('Online', TEXT_DOMAIN)
                             )
                         ));
                     ?>
@@ -213,29 +213,29 @@
                         <?php
                             woocommerce_wp_text_input(array(
                                 'id'          => '_event_address',
-                                'label'       => __('Address', 'lindame'),
-                                'placeholder' => __('Enter address', 'lindame'),
+                                'label'       => __('Address', TEXT_DOMAIN),
+                                'placeholder' => __('Enter address', TEXT_DOMAIN),
                                 'desc_tip'    => false
                             ));
 
                             woocommerce_wp_text_input(array(
                                 'id'          => '_event_city',
-                                'label'       => __('City', 'lindame'),
-                                'placeholder' => __('Enter city', 'lindame'),
+                                'label'       => __('City', TEXT_DOMAIN),
+                                'placeholder' => __('Enter city', TEXT_DOMAIN),
                                 'desc_tip'    => false
                             ));
                             
                             woocommerce_wp_text_input(array(
                                 'id'          => '_event_postal_code',
-                                'label'       => __('Postal Code', 'lindame'),
-                                'placeholder' => __('Enter postal code', 'lindame'),
+                                'label'       => __('Postal Code', TEXT_DOMAIN),
+                                'placeholder' => __('Enter postal code', TEXT_DOMAIN),
                                 'desc_tip'    => false
                             ));
                             
                             woocommerce_wp_text_input(array(
                                 'id'          => '_event_country',
-                                'label'       => __('Country / Region', 'lindame'),
-                                'placeholder' => __('Enter country', 'lindame'),
+                                'label'       => __('Country / Region', TEXT_DOMAIN),
+                                'placeholder' => __('Enter country', TEXT_DOMAIN),
                                 'desc_tip'    => false
                             ));
                         ?>
@@ -245,18 +245,18 @@
                         <?php
                             woocommerce_wp_radio(array(
                                 'id'      => '_event_platform',
-                                'label'   => __('Platform', 'lindame'),
+                                'label'   => __('Platform', TEXT_DOMAIN),
                                 'options' => array(
-                                    'zoom'      		=> __('Zoom', 'lindame'),
-                                    'microsoft_teams' 	=> __('Microsoft Teams', 'lindame'),
-                                    'google_meet' 		=> __('Google Meet', 'lindame')
+                                    'zoom'      		=> __('Zoom', TEXT_DOMAIN),
+                                    'microsoft_teams' 	=> __('Microsoft Teams', TEXT_DOMAIN),
+                                    'google_meet' 		=> __('Google Meet', TEXT_DOMAIN)
                                 )
                             ));
 
                             woocommerce_wp_text_input(array(
                                 'id'          => '_event_link',
-                                'label'       => __('Event Link', 'lindame'),
-                                'placeholder' => __('Enter event link', 'lindame'),
+                                'label'       => __('Event Link', TEXT_DOMAIN),
+                                'placeholder' => __('Enter event link', TEXT_DOMAIN),
                                 'desc_tip'    => false
                             ));
                         ?>
@@ -265,8 +265,8 @@
                     <?php
                         woocommerce_wp_textarea_input(array(
                             'id'          => '_event_details',
-                            'label'       => __('Event Details', 'lindame'),
-                            'placeholder' => __('Enter additional details', 'lindame'),
+                            'label'       => __('Event Details', TEXT_DOMAIN),
+                            'placeholder' => __('Enter additional details', TEXT_DOMAIN),
                             'desc_tip'    => false
                         ));
                     ?>
@@ -403,7 +403,7 @@
 
                 // Add the event details tab with a callback function if event details exist
                 $tabs['event_details'] = array(
-                    'title'    => __('Event details', 'lindame'),
+                    'title'    => __('Event details', TEXT_DOMAIN),
                     'priority' => 5,
                     'callback' => $event_details ? 'event_details_tab' : null
                 );
@@ -457,9 +457,9 @@
 
                 // Mapping of platform codes to labels
                 $platform_options = array(
-                    'zoom'           => __('Zoom', 'lindame'),
-                    'microsoft_teams'=> __('Microsoft Teams', 'lindame'),
-                    'google_meet'    => __('Google Meet', 'lindame')
+                    'zoom'           => __('Zoom', TEXT_DOMAIN),
+                    'microsoft_teams'=> __('Microsoft Teams', TEXT_DOMAIN),
+                    'google_meet'    => __('Google Meet', TEXT_DOMAIN)
                 );
 
                 // Display platform label
@@ -472,11 +472,11 @@
                 if (!empty($event_date)) {
                     $date = new DateTime($event_date);
                     $formatted_date = $formatter->format($date);
-                    echo '<tr><th>' . __('Date:', 'lindame') . '</th><td>' . esc_html($formatted_date) . '</td></tr>';
+                    echo '<tr><th>' . __('Date:', TEXT_DOMAIN) . '</th><td>' . esc_html($formatted_date) . '</td></tr>';
                 }
 
                 if (!empty($event_time)) {
-                    echo '<tr><th>' . __('Time:', 'lindame') . '</th><td>' . esc_html($event_time) . '</td></tr>';
+                    echo '<tr><th>' . __('Time:', TEXT_DOMAIN) . '</th><td>' . esc_html($event_time) . '</td></tr>';
                 }
 
                 // Display event location or platform
@@ -484,9 +484,9 @@
                     $address = urlencode($event_address . ', ' . $event_city . ', ' . $event_postal_code . ', ' . $event_country);
                     $google_maps_url = 'https://www.google.com/maps/search/?api=1&query=' . $address;
 
-                    echo '<tr><th>' . __('Location:', 'lindame') . '</th><td>' . esc_html($event_postal_code) . ' ' . esc_html($event_city) . ', ' . esc_html($event_address) . ',<br/>' . esc_html($event_country) . '<br/><a href="' . esc_url($google_maps_url) . '" target="_blank">' . __('View on map', 'lindame') . '</a></td></tr>';
+                    echo '<tr><th>' . __('Location:', TEXT_DOMAIN) . '</th><td>' . esc_html($event_postal_code) . ' ' . esc_html($event_city) . ', ' . esc_html($event_address) . ',<br/>' . esc_html($event_country) . '<br/><a href="' . esc_url($google_maps_url) . '" target="_blank">' . __('View on map', TEXT_DOMAIN) . '</a></td></tr>';
                 } elseif ($event_location_type == 'online') {
-                    echo '<tr><th>' . __('Platform:', 'lindame') . '</th><td>' . esc_html($platform_label) . '</td></tr>';
+                    echo '<tr><th>' . __('Platform:', TEXT_DOMAIN) . '</th><td>' . esc_html($platform_label) . '</td></tr>';
                 }
 
                 echo '</table>';
@@ -515,7 +515,7 @@
 
             // Show a message if the order is not completed yet
             if ($order->get_status() !== 'completed') {
-                echo '<p>' . __('Your order is not yet completed. You will receive the event details once your order is completed.', 'lindame') . '</p>';
+                echo '<p>' . __('Your order is not yet completed. You will receive the event details once your order is completed.', TEXT_DOMAIN) . '</p>';
                 return;
             }
 
@@ -528,8 +528,8 @@
                     $event_link = get_post_meta($product->get_id(), '_event_link', true);
 
                     if (!empty($event_link)) {
-                        echo '<h2>' . __('Event details', 'lindame') . '</h2>';
-                        echo '<p>' . __('You can access the event here:', 'lindame') . ' <a href="' . esc_url($event_link) . '" target="_blank">' . esc_html($event_link) . '</a></p>';
+                        echo '<h2>' . __('Event details', TEXT_DOMAIN) . '</h2>';
+                        echo '<p>' . __('You can access the event here:', TEXT_DOMAIN) . ' <a href="' . esc_url($event_link) . '" target="_blank">' . esc_html($event_link) . '</a></p>';
                     }
                     break;
                 }
@@ -566,11 +566,11 @@
                     if (!empty($event_link)) {
                         // Display event link in plain text or HTML
                         if ($plain_text) {
-                            echo __('Event details', 'lindame') . ":\n";
-                            echo __('You can access the event here: ', 'lindame') . esc_url($event_link) . "\n";
+                            echo __('Event details', TEXT_DOMAIN) . ":\n";
+                            echo __('You can access the event here: ', TEXT_DOMAIN) . esc_url($event_link) . "\n";
                         } else {
-                            echo '<h2>' . __('Event details', 'lindame') . '</h2>';
-                            echo '<p>' . __('You can access the event here:', 'lindame') . ' <a href="' . esc_url($event_link) . '" target="_blank">' . esc_html($event_link) . '</a></p>';
+                            echo '<h2>' . __('Event details', TEXT_DOMAIN) . '</h2>';
+                            echo '<p>' . __('You can access the event here:', TEXT_DOMAIN) . ' <a href="' . esc_url($event_link) . '" target="_blank">' . esc_html($event_link) . '</a></p>';
                         }
                     }
                     break;

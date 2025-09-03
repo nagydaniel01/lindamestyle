@@ -26,7 +26,7 @@
                     <div class="footer__block">
                         <?php if ($footer_logo) : ?>
                             <div class="logo logo--footer">
-                                <a href="<?php echo esc_url(home_url('/')); ?>" class="logo__link">
+                                <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="logo__link">
                                     <?php
                                         $logo_args = array(
                                             'class'     => 'logo__image',

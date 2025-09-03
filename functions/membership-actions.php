@@ -2,7 +2,6 @@
     if ( ! class_exists( 'WC_Memberships' ) ) return;
 
     if ( ! function_exists( 'my_redirect_cpt_to_landing' ) ) {
-
         /**
          * Redirect Knowledge Base CPT archive and single pages to a landing page
          * if the user is not logged in, not an administrator, or does not have an optional active membership.
@@ -14,9 +13,9 @@
             $cpt_slug = 'knowledge_base';
 
             // Landing page URL (fallback to home if empty)
-            $landing_page_url = home_url( '/content-restricted/' );
+            $landing_page_url = esc_url( trailingslashit( home_url( '/content-restricted' ) ) );
             if ( empty( $landing_page_url ) ) {
-                $landing_page_url = home_url( '/' );
+                $landing_page_url = esc_url( trailingslashit( home_url() ) );
             }
 
             // Get current user ID
@@ -61,6 +60,5 @@
                 }
             }
         }
-
         add_action( 'template_redirect', 'my_redirect_cpt_to_landing' );
     }

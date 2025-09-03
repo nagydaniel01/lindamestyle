@@ -41,9 +41,9 @@
                                 <?php if ( $event_start_date ) : ?>
                                     <span class="event__date-start">
                                         <strong><?php esc_html_e( 'Start:', TEXT_DOMAIN ); ?></strong>
-                                        <time datetime=""><?php echo wp_safe_format_date( $event_start_date, 'd/m/Y' ); ?></time>
+                                        <time datetime=""><?php echo wp_safe_format_date( $event_start_date, 'd/m/Y', 'Y. F d.' ); ?></time>
                                         <?php if ( $event_start_time ) : ?>
-                                            <time datetime=""><?php echo ' ' . esc_html( $event_start_time ); ?></time>
+                                            <time datetime=""><?php echo ' ' . wp_safe_format_time( $event_start_time, 'g:i a' ); ?></time>
                                         <?php endif; ?>
                                     </span>
                                 <?php endif; ?>
@@ -51,9 +51,9 @@
                                 <?php if ( $event_end_date ) : ?>
                                     <span class="event__date-end">
                                         <strong><?php esc_html_e( 'End:', TEXT_DOMAIN ); ?></strong>
-                                        <time datetime=""><?php echo wp_safe_format_date( $event_end_date, 'd/m/Y' ); ?></time>
+                                        <time datetime=""><?php echo wp_safe_format_date( $event_end_date, 'd/m/Y', 'Y. F d.' ); ?></time>
                                         <?php if ( $event_end_time ) : ?>
-                                            <time datetime=""><?php echo ' ' . esc_html( $event_end_time ); ?></time>
+                                            <time datetime=""><?php echo ' ' . wp_safe_format_time( $event_end_time, 'g:i a' ); ?></time>
                                         <?php endif; ?>
                                     </span>
                                 <?php endif; ?>

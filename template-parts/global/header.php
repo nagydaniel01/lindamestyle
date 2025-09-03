@@ -14,7 +14,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg">
             <!-- Brand -->
-            <a class="navbar-brand" href="<?php echo esc_url(home_url('/')); ?>">
+            <a class="navbar-brand" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
                 <?php if ($logo) : ?>
                     <?php echo wp_get_attachment_image($logo['ID'], array(50, 50), false, array('alt' => esc_attr($logo['alt'] ?: get_bloginfo('name')))); ?>
                 <?php else : ?>

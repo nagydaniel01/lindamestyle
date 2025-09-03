@@ -8,7 +8,7 @@
         function get_current_url() {
             global $wp;
 
-            return home_url( add_query_arg( array(), $wp->request ) );
+            return esc_url( trailingslashit( home_url( add_query_arg( array(), $wp->request ) ) ) );
         }
     }
 
@@ -150,12 +150,20 @@
         /**
          * Safely format a date string into WordPress date format.
          *
-         * @param mixed  $date_str     The input date string.
-         * @param string $input_format The format of the input date string. Default is 'd/m/Y'.
-         * @param string $fallback     Optional fallback string if date is invalid. Default is 'Invalid date.'.
+         * @param mixed  $date_str       The input date string.
+         * @param string $input_format   The format of the input date string. Default is 'd/m/Y'.
+         * @param string $output_format  The desired output format. Default is the WordPress date format option.
          * @return string Formatted date or fallback message.
          */
-        function wp_safe_format_date( $date_str, $input_format = 'd/m/Y', $fallback = 'Invalid date.' ) {
+        function wp_safe_format_date( $date_str, $input_format = 'd/m/Y', $output_format = '' ) {
+            // Define fallback message
+            $fallback = 'Invalid date.';
+
+            // Use WordPress date format if no output format is provided
+            if ( empty( $output_format ) ) {
+                $output_format = get_option('date_format');
+            }
+
             // Check if input is empty or not a string
             if ( empty($date_str) || !is_string($date_str) ) {
                 return $fallback;
@@ -171,11 +179,55 @@
                     return $fallback;
                 }
 
-                // Format date according to WordPress settings
-                return date_i18n( get_option('date_format'), $date->getTimestamp() );
+                // Format date according to the specified output format
+                return date_i18n( $output_format, $date->getTimestamp() );
 
             } catch ( Exception $e ) {
                 // Catch any unexpected exceptions
+                return $fallback;
+            }
+        }
+    }
+
+    if ( ! function_exists( 'wp_safe_format_time' ) ) {
+        /**
+         * Safely format a time string into WordPress time format.
+         * Handles multiple languages for AM/PM notation.
+         *
+         * @param mixed  $time_str       The input time string.
+         * @param string $input_format   The format of the input time string. Default is 'h:i A'.
+         * @param string $output_format  The desired output format. Default is the WordPress time format option.
+         * @return string Formatted time or fallback message.
+         */
+        function wp_safe_format_time( $time_str, $input_format = 'H:i', $output_format = '' ) {
+            $fallback = 'Invalid time.';
+
+            if ( empty( $output_format ) ) {
+                $output_format = get_option('time_format');
+            }
+
+            if ( empty($time_str) || !is_string($time_str) ) {
+                return $fallback;
+            }
+
+            // Map common AM/PM notations in different languages to English
+            $am_pm_map = [
+                'am' => ['am', 'a.m.', 'vorm.', 'de.'], // English, German (vorm.), Hungarian (de.)
+                'pm' => ['pm', 'p.m.', 'nachm.', 'du.'] // English, German (nachm.), Hungarian (du.)
+            ];
+
+            foreach ( $am_pm_map as $eng => $variants ) {
+                $time_str = str_ireplace( $variants, $eng, $time_str );
+            }
+
+            try {
+                $time = DateTime::createFromFormat( $input_format, $time_str );
+                $errors = DateTime::getLastErrors();
+                if ( $time === false || $errors['warning_count'] > 0 || $errors['error_count'] > 0 ) {
+                    return $fallback;
+                }
+                return date_i18n( $output_format, $time->getTimestamp() );
+            } catch ( Exception $e ) {
                 return $fallback;
             }
         }

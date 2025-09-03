@@ -118,16 +118,30 @@
                 // Send the email
                 $sent = wp_mail($admin_email, $mail_subject, $mail_message, $headers);
 
-                // Handle email sending failure
+                // Handle email sending errors
                 if ( ! $sent ) {
                     wp_send_json_error([
                         'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
                     ], 500);
                 }
 
+                // Generates a unique message ID.
+                // Stores message data temporarily in a WordPress transient (expires after 15 mins).
+                // Useful for debugging, logging, or displaying confirmation later: get_transient('contact_form_' . $message_id).
+                $message_id = time() . wp_generate_password(8, false, false);
+                set_transient( 'contact_form_' . $message_id, [
+                    'name'    => $name,
+                    'email'   => $email,
+                    'phone'   => $phone,
+                    'subject' => $subject,
+                    'message' => $message,
+                ], 15 * MINUTE_IN_SECONDS ); // expires after 15 mins
+                
                 // Success response
                 wp_send_json_success([
-                    'message' => __('Your message has been sent successfully!', TEXT_DOMAIN)
+                    'message'      => __('Your message has been sent successfully!', TEXT_DOMAIN),
+                    'redirect_url' => esc_url( trailingslashit( home_url('/thank-you') ) ),
+                    'message_id'   => $message_id
                 ], 200);
 
             } catch ( Exception $e ) {

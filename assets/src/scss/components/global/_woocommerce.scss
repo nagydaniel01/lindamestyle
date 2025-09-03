@@ -114,6 +114,18 @@
         }
       }
     }
+
+    .woocommerce-form-login {
+      .form-row:not(.form-row-wide) {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .woocommerce-form-login__submit {
+        margin-top: auto;
+      }
+    }
   }
 
   // ---------------------------------------------

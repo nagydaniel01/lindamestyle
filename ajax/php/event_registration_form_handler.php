@@ -58,7 +58,7 @@
                 // Validate required fields
                 if ( empty($name) || empty($email) ) {
                     wp_send_json_error([
-                        'message' => __('Name and email are required.', TEXT_DOMAIN)
+                        'message' => __('All required fields must be filled out.', TEXT_DOMAIN)
                     ], 422);
                 }
 
@@ -139,7 +139,9 @@
 
                 // Success response
                 wp_send_json_success([
-                    'message' => __('Successfully registered!', TEXT_DOMAIN)
+                    'message'      => __('Successfully registered!', TEXT_DOMAIN),
+                    'redirect_url' => esc_url( trailingslashit( home_url('/thank-you') ) ),
+                    'attendee_id'  => $registration_id
                 ], 200);
 
             } catch ( Exception $e ) {

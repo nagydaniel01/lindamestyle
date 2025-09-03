@@ -30,7 +30,7 @@ get_header();
                 </div>
             <?php endif; ?>
     
-            <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn btn-secondary btn-lg page__button"><?php _e('Vissza a főoldalra', TEXT_DOMAIN); ?></a>
+            <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="btn btn-secondary btn-lg page__button"><?php _e('Vissza a főoldalra', TEXT_DOMAIN); ?></a>
         </div>
     </div>
 </main>
