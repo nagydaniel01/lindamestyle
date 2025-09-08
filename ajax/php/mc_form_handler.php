@@ -75,7 +75,7 @@
 
                 // Success response
                 wp_send_json_success([
-                    'message'      => __('Subscribed successfully!', TEXT_DOMAIN),
+                    'message'      => $subscribe['message'],
                     'redirect_url' => esc_url(trailingslashit(home_url('/thank-you'))),
                     'email'        => $email
                 ], 200);
