@@ -53,8 +53,8 @@
 
                 // Mailchimp subscription
                 $mailchimp = new MailchimpService(
-                    '5dbe8bd77df156ae2e3b92ba502f185d-us3',
-                    '409e8ec6a8'
+                    get_field('mailchimp_api_key', 'option'),
+                    get_field('mailchimp_audience_id', 'option')
                 );
 
                 $subscribe = $mailchimp->subscribe($email, $name, '', ['WordPress'], 'subscribed');
