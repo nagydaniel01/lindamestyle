@@ -1,15 +1,19 @@
 <?php
     if ( ! function_exists('contact_form_handler') ) {
         /**
-         * Handles AJAX contact form submissions.
+         * Handles AJAX submissions for the contact form.
          *
-         * This function validates POST requests, verifies the security nonce, sanitizes inputs,
-         * validates required fields and email format, ensures privacy policy consent,
-         * prepares an HTML email, and sends it to the site admin.
+         * This function processes POST requests submitted via AJAX for the contact form.
+         * It performs the following steps:
+         *   1. Validates the request method and presence of form data.
+         *   2. Parses and sanitizes form inputs.
+         *   3. Verifies the security nonce.
+         *   4. Validates required fields, email format, and privacy policy consent.
+         *   5. Prepares and sends an HTML email to the site admin.
+         *   6. Stores the message temporarily in a WordPress transient for 15 minutes.
+         *   7. Returns a JSON response indicating success or failure.
          *
-         * Responds with JSON success or error messages depending on the outcome.
-         *
-         * @return void Sends JSON response and exits.
+         * @return void Outputs a JSON response and terminates execution.
          */
         function contact_form_handler() {
             try {
@@ -101,7 +105,7 @@
                     return '<p>' . esc_html($line) . '</p>';
                 }, $message_lines));
 
-                // Prepare full email body
+                // Prepare email message
                 $mail_message = sprintf(
                     '<strong>Name:</strong> %s<br/>
                     <strong>Email:</strong> %s<br/>
@@ -125,8 +129,7 @@
                     ], 500);
                 }
 
-                // Generates a unique message ID.
-                // Stores message data temporarily in a WordPress transient (expires after 15 mins).
+                // Generate a unique message ID and store message in a transient for 15 minutes
                 // Useful for debugging, logging, or displaying confirmation later: get_transient('contact_form_' . $message_id).
                 $message_id = time() . wp_generate_password(8, false, false);
                 set_transient( 'contact_form_' . $message_id, [

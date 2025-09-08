@@ -1,9 +1,5 @@
 .modal {
     &.modal--alt {
-        &.show {
-            background-color: rgba($primary, .75);
-        }
-
         .modal-content,
         .modal-header {
             background-color: transparent;

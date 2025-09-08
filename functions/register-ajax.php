@@ -8,7 +8,6 @@
     }
 
     if ( ! function_exists( 'enqueue_comment_form_ajax_scripts' ) ) {
-        // https://rudrastyh.com/wordpress/ajax-comments.html
         function enqueue_comment_form_ajax_scripts() {
             $script_rel_path = '/ajax/js/comment_form_ajax.js'; // relative to theme root
             $script_path = get_template_directory() . $script_rel_path;
@@ -28,11 +27,9 @@
                     'error_timeout'   => __( 'Error: Server doesn’t respond.', TEXT_DOMAIN )
                 ) );
             } else {
-                // Log an error if the script file doesn't exist
                 error_log( 'Script file does not exist: ' . $script_path );
             }
         }
-
         add_action( 'wp_enqueue_scripts', 'enqueue_comment_form_ajax_scripts' );
     }
 
@@ -57,10 +54,9 @@
                     'msg_network_error' => __( 'A network error occurred.', TEXT_DOMAIN )
                 ) );
             } else {
-                error_log( 'Script file does not exist: ' . $script_path );
+                error_log( 'Beauty profile form script file does not exist: ' . $script_path );
             }
         }
-
         add_action( 'wp_enqueue_scripts', 'enqueue_beauty_profile_form_ajax_scripts' );
     }
 
@@ -70,9 +66,11 @@
             $script_path = get_template_directory() . $script_rel_path;
             $script_uri  = get_template_directory_uri() . $script_rel_path;
 
+            // Only enqueue if the file exists
             if ( file_exists( $script_path ) ) {
                 wp_enqueue_script( 'event_registration_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
 
+                // Pass dynamic data to JS
                 wp_localize_script( 'event_registration_form_ajax_script', 'event_registration_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
@@ -84,7 +82,7 @@
                     'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
                 ) );
             } else {
-                error_log( 'Script file does not exist: ' . $script_path );
+                error_log( 'Event registration form script file does not exist: ' . $script_path );
             }
         }
         add_action( 'wp_enqueue_scripts', 'enqueue_event_registration_form_ajax_scripts' );
@@ -96,9 +94,11 @@
             $script_path = get_template_directory() . $script_rel_path;
             $script_uri  = get_template_directory_uri() . $script_rel_path;
 
+            // Only enqueue if the file exists
             if ( file_exists( $script_path ) ) {
                 wp_enqueue_script( 'contact_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
 
+                // Pass dynamic data to JS
                 wp_localize_script( 'contact_form_ajax_script', 'contact_form_ajax_object', array(
                     'ajax_url'             => admin_url( 'admin-ajax.php' ),
                     'user_id'              => get_current_user_id(),
@@ -110,10 +110,38 @@
                     'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
                 ) );
             } else {
-                error_log( 'Script file does not exist: ' . $script_path );
+                error_log( 'Contact form script file does not exist: ' . $script_path );
             }
         }
         add_action( 'wp_enqueue_scripts', 'enqueue_contact_form_ajax_scripts' );
+    }
+
+    if ( ! function_exists( 'enqueue_mailchimp_form_ajax_scripts' ) ) {
+        function enqueue_mailchimp_form_ajax_scripts() {
+            $script_rel_path = '/ajax/js/mc_form_ajax.js'; // relative to theme root
+            $script_path     = get_template_directory() . $script_rel_path;
+            $script_uri      = get_template_directory_uri() . $script_rel_path;
+
+            // Only enqueue if the file exists
+            if ( file_exists( $script_path ) ) {
+                wp_enqueue_script( 'mc_form_ajax_script', $script_uri, array( 'jquery' ), null, true );
+
+                // Pass dynamic data to JS
+                wp_localize_script( 'mc_form_ajax_script', 'mc_form_ajax_object', array(
+                    'ajax_url'             => admin_url( 'admin-ajax.php' ),
+                    'user_id'              => get_current_user_id(),
+                    'msg_privacy_required' => __( 'You must agree to the privacy policy.', TEXT_DOMAIN ),
+                    'msg_sending'          => __( 'Subscribing…', TEXT_DOMAIN ),
+                    'msg_success'          => __( 'You have been subscribed successfully!', TEXT_DOMAIN ),
+                    'msg_error_sending'    => __( 'There was an error while processing your subscription.', TEXT_DOMAIN ),
+                    'msg_unexpected'       => __( 'An unexpected error occurred.', TEXT_DOMAIN ),
+                    'msg_network_error'    => __( 'A network error occurred.', TEXT_DOMAIN )
+                ) );
+            } else {
+                error_log( 'Mailchimp script file does not exist: ' . $script_path );
+            }
+        }
+        add_action( 'wp_enqueue_scripts', 'enqueue_mailchimp_form_ajax_scripts' );
     }
 
     if ( ! function_exists( 'enqueue_save_post_ajax_scripts' ) ) {
@@ -136,6 +164,5 @@
                 error_log( 'Script file does not exist: ' . $script_path );
             }
         }
-
         add_action( 'wp_enqueue_scripts', 'enqueue_save_post_ajax_scripts' );
     }

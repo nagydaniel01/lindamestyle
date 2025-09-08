@@ -1,13 +1,19 @@
 <?php
     if ( ! function_exists('event_registration_form_handler') ) {
         /**
-         * Handles AJAX event registration form submissions.
+         * Handles AJAX submissions for the event registration form.
          *
-         * This function validates POST requests, verifies the security nonce,
-         * sanitizes and validates user inputs, prevents duplicate registrations,
-         * creates an 'attendee' custom post type entry, and returns a JSON response.
+         * This function processes POST requests submitted via AJAX for event registration.
+         * It performs the following steps:
+         *   1. Validates the request method and presence of form data.
+         *   2. Parses and sanitizes form inputs.
+         *   3. Verifies the security nonce.
+         *   4. Validates required fields and prevents duplicate registrations.
+         *   5. Creates a new 'attendee' custom post type entry.
+         *   6. Sends a confirmation email to the registrant.
+         *   7. Returns a JSON response indicating success or failure.
          *
-         * @return void Sends JSON response and exits.
+         * @return void Outputs a JSON response and terminates execution.
          */
         function event_registration_form_handler() {
             try {
@@ -134,6 +140,42 @@
                 if ( $registration_id === false ) {
                     wp_send_json_error([
                         'message' => __('Registration failed, please try again.', TEXT_DOMAIN)
+                    ], 500);
+                }
+
+                // Get admin email and validate
+                $admin_email = get_option('admin_email');
+                if ( ! $admin_email || ! is_email($admin_email) ) {
+                    wp_send_json_error([
+                        'message' => __('Admin email is not configured properly.', TEXT_DOMAIN)
+                    ], 500);
+                }
+
+                // Prepare email headers
+                $headers = [
+                    'From: ' . get_bloginfo('name') . ' <' . $admin_email . '>',
+                    'Reply-To: ' . $name . ' <' . $email . '>',
+                    'Content-Type: text/html; charset=UTF-8'
+                ];
+
+                // Prepare email subject with site name
+                $subject = sprintf(__('Registration Confirmation for #%d', TEXT_DOMAIN), get_the_title($event_id));
+
+                // Prepare email message
+                $message = sprintf(
+                    __("Hi %s,\n\nThank you for registering for Event #%d.\n\nWe’ve reserved your spot and will contact you with more details soon.\n\nBest regards,\n%s", TEXT_DOMAIN),
+                    $name,
+                    get_the_title($event_id),
+                    get_bloginfo('name')
+                );
+
+                // Send the email
+                $sent = wp_mail($email, $subject, $message, $headers);
+
+                // Handle email sending errors
+                if ( ! $sent ) {
+                    wp_send_json_error([
+                        'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
                     ], 500);
                 }
 

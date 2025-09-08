@@ -27,9 +27,11 @@
                                 $alt_text = get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true );
 
                                 the_post_thumbnail('full', [
-                                    'class' => 'section__image',
-                                    'alt'   => $alt_text ?: get_the_title(),
-                                    'loading' => 'lazy'
+                                    'class'         => 'section__image',
+                                    'alt'           => $alt_text ?: get_the_title(),
+                                    'loading'       => 'eager',
+                                    'fetchpriority' => 'high',
+                                    'decoding'      => 'async'
                                 ]);
                             ?>
                         </div>

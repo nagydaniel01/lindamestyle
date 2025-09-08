@@ -39,6 +39,31 @@
         add_action( 'phpmailer_init', 'rd_mailtrap' );
     }
 
+    if ( ! function_exists( 'cpanel_mail' ) ) {
+        /**
+         * Configure PHPMailer to use cPanel default SMTP for sending emails.
+         *
+         * @param PHPMailer $phpmailer The PHPMailer instance to configure.
+         * 
+         * @return void
+         */
+        function cpanel_mail( $phpmailer ) {
+            $phpmailer->isSMTP();
+
+            // Replace these values with your cPanel email account info
+            $phpmailer->Host       = 'mail.yourdomain.com'; // Usually mail.yourdomain.com
+            $phpmailer->SMTPAuth   = true;
+            $phpmailer->Port       = 465;                   // Use 465 for SSL, 587 for TLS
+            $phpmailer->SMTPSecure = 'ssl';                 // 'ssl' or 'tls'
+            $phpmailer->Username   = 'you@yourdomain.com';  // Your cPanel email address
+            $phpmailer->Password   = 'your-email-password'; // Your email password
+            $phpmailer->From       = 'you@yourdomain.com';  // Optional: set From address
+            $phpmailer->FromName   = 'Your Name';           // Optional: set From name
+        }
+
+        //add_action( 'phpmailer_init', 'cpanel_mail' );
+    }
+
     if ( ! function_exists( 'log_mailer_errors' ) ) {
         /**
          * Logs email sending errors to a log file.
@@ -86,6 +111,10 @@
          * @return array Modified $args array with message wrapped in templates.
          */
         function wrap_wp_mail_with_php_templates( $args ) {
+            // Disable wrapping for WooCommerce emails
+            if (defined('WC_PLUGIN_FILE') && did_action('woocommerce_before_resend_order_emails') || doing_action('woocommerce_email')) {
+                return $args;
+            }
 
             // Define header and footer template paths
             $header_file = get_template_directory() . '/templates/emails/email-header.php';
@@ -108,7 +137,7 @@
                     $header = '';
                 }
             } else {
-                error_log( 'Email header template not found: ' . $header_file );
+                //error_log( 'Email header template not found: ' . $header_file );
             }
 
             // Include footer if file exists
@@ -122,7 +151,7 @@
                     $footer = '';
                 }
             } else {
-                error_log( 'Email footer template not found: ' . $footer_file );
+                //error_log( 'Email footer template not found: ' . $footer_file );
             }
 
             // Ensure original message exists

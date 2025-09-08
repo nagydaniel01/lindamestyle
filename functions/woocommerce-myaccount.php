@@ -105,11 +105,11 @@
                     'customer-logout' => __( 'Logout', 'woocommerce' ),
 
                     // WooCommerce Subscriptions
-                    'subscriptions'     => __( 'My Subscriptions', 'woocommerce-subscriptions' ),
+                    'subscriptions'     => __( 'My Subscription', 'woocommerce-subscriptions' ),
                     'view-subscription' => __( 'Subscription Details', 'woocommerce-subscriptions' ),
 
                     // WooCommerce Memberships
-                    'members-area'    => __( 'My Memberships', 'woocommerce-memberships' ),
+                    'members-area'    => __( 'My Membership', 'woocommerce-memberships' ),
                     'view-membership' => __( 'Membership Details', 'woocommerce-memberships' ),
 
                     // Custom

@@ -1,4 +1,10 @@
-.page.page--account {
+.page.page--account.user-logged-out {
+  .woocommerce-form-login__rememberme {
+    margin: 0;
+  }
+}
+
+.page.page--account.user-logged-in {
   .woocommerce {
     @extend .row;
   }
@@ -16,12 +22,19 @@
         @extend .list-group-item;
   
         a {
-          display: block;
+          display: flex;
+          align-items: center;
           color: var(--bs-body-color);
           text-decoration: none;
   
           &:hover {
             color: var(--bs-primary);
+          }
+
+          .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: .625rem;
           }
         }
   
@@ -81,9 +94,6 @@
   .woocommerce-ResetPassword,
   .woocommerce-EditAccountForm,
   .woocommerce-address-fields {
-    @extend .card;
-    height: auto !important;
-    padding: 1.5rem;
     margin-bottom: 2rem;
   
     .button {

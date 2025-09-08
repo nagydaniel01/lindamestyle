@@ -210,34 +210,5 @@
 }
 
 .section.section--product-tabs {
-  background-color: $primary;
-
-  .woocommerce-tabs {
-    margin-top: 3rem;
-  
-    ul.tabs {
-      @extend .nav;
-      @extend .nav-tabs;
-      justify-content: flex-start;
-      gap: 1rem 2rem;
-      border: none;
-      margin-bottom: 1.5rem;
-  
-      li {
-        @extend .nav-item;
-  
-        a {
-          @extend .nav-link;
-        }
-  
-        &.active a {
-          @extend .active;
-        }
-      }
-    }
-  
-    .woocommerce-Tabs-panel {
-      @extend .tab-content;
-    }
-  }
+  //background-color: $primary;
 }

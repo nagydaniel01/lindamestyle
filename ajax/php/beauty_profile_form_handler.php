@@ -1,13 +1,19 @@
 <?php
     if ( ! function_exists('beauty_profile_form_handler') ) {
         /**
-         * Handles the submission of the Beauty Profile form via AJAX.
+         * Handles AJAX submissions for the Beauty Profile form.
          *
-         * This function processes form data sent via POST, validates the nonce for security,
-         * sanitizes the input, and saves it as user meta or via Advanced Custom Fields (if available).
-         * Responds with JSON success or error messages.
+         * This function processes POST requests submitted via AJAX for the Beauty Profile form.
+         * It performs the following steps:
+         *   1. Validates the request method and presence of form data.
+         *   2. Parses and sanitizes form inputs.
+         *   3. Verifies the security nonce.
+         *   4. Validates user ID and required fields.
+         *   5. Saves form fields as user meta or via Advanced Custom Fields (if available).
+         *   6. Sends a notification email to the admin or user depending on who updated the profile.
+         *   7. Returns a JSON response indicating success or failure.
          *
-         * @return void Sends JSON response and exits.
+         * @return void Outputs a JSON response and terminates execution.
          */
         function beauty_profile_form_handler() {
             try {
@@ -83,6 +89,58 @@
                             'message' => sprintf(__('Saving the %s field failed, please try again.', TEXT_DOMAIN), $key)
                         ], 500);
                     }
+                }
+
+                // Determine who modified the profile
+                $current_user_id = get_current_user_id();
+                $user_info       = get_userdata($user_id);
+                $user_email      = $user_info->user_email;
+                $user_name       = $user_info->display_name;
+
+                // Get admin email and validate
+                $admin_email = get_option('admin_email');
+                if ( ! $admin_email || ! is_email($admin_email) ) {
+                    wp_send_json_error([
+                        'message' => __('Admin email is not configured properly.', TEXT_DOMAIN)
+                    ], 500);
+                }
+
+                // Prepare email headers
+                $headers = [
+                    'From: ' . get_bloginfo('name') . ' <' . $admin_email . '>',
+                    'Reply-To: ' . $name . ' <' . $email . '>',
+                    'Content-Type: text/html; charset=UTF-8'
+                ];
+
+                if ( $current_user_id === $user_id ) {
+                    // User updated their own profile → notify admin
+                    $subject_admin = __('A user updated their Beauty Profile', TEXT_DOMAIN);
+                    $message_admin = sprintf(
+                        __("User %s (ID: %d, Email: %s) has updated their Beauty Profile.", TEXT_DOMAIN),
+                        $user_name,
+                        $user_id,
+                        $user_email
+                    );
+
+                    // Send the email
+                    $sent = wp_mail($admin_email, $subject_admin, $message_admin, $headers);
+                } else {
+                    // Admin updated user profile → notify user
+                    $subject_user = __('Your Beauty Profile has been updated', TEXT_DOMAIN);
+                    $message_user = sprintf(
+                        __("Hello %s,\n\nYour Beauty Profile was updated by an administrator.\n\nThank you!", TEXT_DOMAIN),
+                        $user_name
+                    );
+
+                    // Send the email
+                    $sent = wp_mail($user_email, $subject_user, $message_user, $headers);
+                }
+
+                // Handle email sending errors
+                if ( ! $sent ) {
+                    wp_send_json_error([
+                        'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
+                    ], 500);
                 }
 
                 // Send success response

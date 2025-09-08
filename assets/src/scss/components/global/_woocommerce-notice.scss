@@ -17,11 +17,13 @@
     list-style: disc;
   }
 
+  /*
   & > li {
     display: flex;
     align-items: center;
     width: 100%;
   }
+  */
 
   .button {
     @extend .btn-sm;

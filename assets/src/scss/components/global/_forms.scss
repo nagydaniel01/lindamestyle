@@ -29,7 +29,6 @@ input[type="radio"] {
   @extend .form-check-input;
 }
 
-button,
 input[type="submit"],
 input[type="reset"],
 input[type="button"] {
@@ -48,12 +47,10 @@ legend {
   @extend .form-label;
   font-size: 1.125rem;
   font-weight: 600;
+  color: $primary;
 }
 
 .form {
-  @extend .card;
-  height: auto !important;
-  padding: 1.5rem;
   margin-bottom: 2rem;
 }
 

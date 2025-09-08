@@ -3,15 +3,16 @@
     if ( $object instanceof WP_Post_Type ) {
     
         // It's a post type object
-        $post_type   = $object->name;
-        $taxonomies  = get_object_taxonomies($post_type);
-        $description = get_field($post_type.'_description', 'option');
-        $label       = $object->labels->name;
+        $post_type     = $object->name;
+        $post_type_obj = get_post_type_object($post_type);
+        $taxonomies    = get_object_taxonomies($post_type);
+        $description   = get_field($post_type.'_description', 'option');
+        $label         = $object->labels->name;
     
     } elseif ( $object instanceof WP_Term ) {
     
         // It's a taxonomy term object
-        $taxonomy     = $object->taxonomy; // taxonomy slug (e.g. category, product_cat)
+        $taxonomy     = $object->taxonomy;
         $taxonomy_obj = get_taxonomy( $taxonomy );
         $post_types   = $taxonomy_obj->object_type;
         $post_type    = reset( $post_types );
@@ -81,7 +82,7 @@
                 <div class="section__toolbar">
                     <div class="row"> <!-- Bootstrap row wrapper -->
                         <div class="col-md-8 mb-3">
-                            <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( '%s keresése', TEXT_DOMAIN ), $label ) ); ?>" class="filter filter--search form-control js-filter-search">
+                            <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( 'Search for %s', TEXT_DOMAIN ), $label ) ); ?>" class="filter filter--search form-control js-filter-search">
                         </div>
                         <div class="col-md-4 mb-3">
                             <?php foreach ($taxonomies as $key => $tax_obj) :

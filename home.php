@@ -28,13 +28,15 @@
     <section class="section section--archive section--archive-<?php echo esc_attr(get_post_type()); ?>" data-post-type="<?php echo esc_attr($post_type); ?>" data-posts-per-page="<?php echo esc_attr($posts_per_page); ?>">
         <div class="container">
             <header class="section__header">
-                <h1 class="section__title"><?php esc_html_e($page_title); ?></h1>
-                <div class="mb-3">
+                <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
+
+                <div class="section__title-wrapper">
+                    <h1 class="section__title"><?php esc_html_e($page_title); ?></h1>
                     <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', TEXT_DOMAIN), strtolower($post_type_obj->labels->name))); ?>" >
                 </div>
+
                 <div class="section__toolbar">
-                    <div class="row"> <!-- Bootstrap row wrapper -->
-    
+                    <div class="row mt-3"> <!-- Bootstrap row wrapper -->
                         <?php if (!empty($categories) && is_array($categories)) : ?>
                             <div class="col-md-4 mb-3">
                                 <fieldset id="filter-categories">
@@ -73,25 +75,6 @@
                                 </select>
                             </div>
                         <?php endif; ?>
-
-                        <?php if ( is_user_logged_in() ) : ?>
-                            <div class="col-md-4 mb-3">
-                                <fieldset id="filter-profile">
-                                    <legend class="fw-bold mb-2">
-                                        <?php _e('My Profile Filters', TEXT_DOMAIN); ?>
-                                    </legend>
-                                    <?php 
-                                        $apply_profile_checked = !empty($_GET['apply_profile_filters']) && $_GET['apply_profile_filters'] == '1';
-                                    ?>
-                                    <div class="form-check">
-                                        <input type="checkbox" name="apply_profile_filters" value="1" id="apply-profile-filters" class="form-check-input filter js-filter js-filter-default" data-filter="apply_profile_filters" <?php checked($apply_profile_checked); ?>>
-                                        <label class="form-check-label" for="apply-profile-filters">
-                                            <?php _e('Apply my profile settings', TEXT_DOMAIN); ?>
-                                        </label>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        <?php endif; ?>
     
                         <?php
                             $post_filter_group_id = 'group_68a866a6aa801';
@@ -115,7 +98,7 @@
                                         case 'checkbox':
                                         case 'radio':
                                             echo '<fieldset class="filter-' . esc_attr($filter_name) . ' mb-3">';
-                                            echo '<legend class="fw-bold mb-2">' . esc_html($filter_label) . '</legend>';
+                                            echo '<legend class="fw-bold mb-2">' . esc_html(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))) . '</legend>';
     
                                             foreach ($filter_options as $value => $label) :
                                                 $input_type = ($filter_type === 'checkbox') ? 'checkbox' : 'radio';
@@ -154,6 +137,25 @@
                                 endforeach;
                             endif;
                         ?>
+
+                        <?php if ( is_user_logged_in() ) : ?>
+                            <div class="col-md-4 mb-3">
+                                <fieldset id="filter-profile">
+                                    <legend class="fw-bold mb-2">
+                                        <?php _e('My Profile Filters', TEXT_DOMAIN); ?>
+                                    </legend>
+                                    <?php 
+                                        $apply_profile_checked = !empty($_GET['apply_profile_filters']) && $_GET['apply_profile_filters'] == '1';
+                                    ?>
+                                    <div class="form-check">
+                                        <input type="checkbox" name="apply_profile_filters" value="1" id="apply-profile-filters" class="form-check-input filter js-filter js-filter-default" data-filter="apply_profile_filters" <?php checked($apply_profile_checked); ?>>
+                                        <label class="form-check-label" for="apply-profile-filters">
+                                            <?php _e('Apply my profile settings', TEXT_DOMAIN); ?>
+                                        </label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        <?php endif; ?>
                     </div> <!-- end row -->
                 </div>
             </header>

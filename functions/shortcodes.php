@@ -110,3 +110,105 @@
         }
         add_shortcode( 'thank_you_query', 'thank_you_query_shortcode' );
     }
+
+    if ( ! function_exists( 'custom_wc_registration_form_shortcode' ) ) {
+        /**
+         * Registration Form Shortcode
+         *
+         * Displays only the WooCommerce registration form.
+         * If the user is logged in, shows a message instead.
+         *
+         * @return string HTML output for registration form or message.
+         */
+        function custom_wc_registration_form_shortcode() {
+            if ( is_user_logged_in() ) {
+                return '<p>' . esc_html__( 'You are already registered.', 'woocommerce' ) . '</p>';
+            }
+
+            ob_start();
+
+            do_action( 'woocommerce_before_customer_login_form' );
+
+            $html = wc_get_template_html( 'myaccount/form-login.php' );
+
+            if ( empty( $html ) ) {
+                return '<p>' . esc_html__( 'Registration form not available.', 'woocommerce' ) . '</p>';
+            }
+
+            $dom = new DOMDocument();
+            $dom->encoding = 'utf-8';
+            $loaded = $dom->loadHTML( utf8_decode( $html ) );
+
+            if ( ! $loaded ) {
+                return '<p>' . esc_html__( 'Error loading registration form.', 'woocommerce' ) . '</p>';
+            }
+
+            $xpath = new DOMXPath( $dom );
+
+            $form = $xpath->query( '//form[contains(@class,"register")]' );
+            $form = $form->item( 0 );
+
+            echo $dom->saveHTML( $form );
+
+            return ob_get_clean();
+        }
+        add_shortcode( 'custom_wc_registration_form', 'custom_wc_registration_form_shortcode' );
+    }
+
+    if ( ! function_exists( 'custom_wc_login_form_shortcode' ) ) {
+        /**
+         * Login Form Shortcode
+         *
+         * Displays only the WooCommerce login form.
+         * If the user is logged in, shows a message instead.
+         *
+         * @return string HTML output for login form or message.
+         */
+        function custom_wc_login_form_shortcode() {
+            if ( is_user_logged_in() ) {
+                return '<p>' . esc_html__( 'You are already logged in.', 'woocommerce' ) . '</p>';
+            }
+
+            ob_start();
+
+            do_action( 'woocommerce_before_customer_login_form' );
+
+            woocommerce_login_form( [
+                'redirect' => wc_get_page_permalink( 'myaccount' ),
+            ] );
+
+            return ob_get_clean();
+        }
+        add_shortcode( 'custom_wc_login_form', 'custom_wc_login_form_shortcode' );
+    }
+
+    if ( ! function_exists( 'custom_wc_redirect_logged_in_users' ) ) {
+        /**
+         * Redirect Logged-In Users Away From Login/Registration Shortcodes
+         *
+         * If a logged-in user tries to access a page containing
+         * the login or registration shortcodes, redirect them
+         * to the "My Account" page instead.
+         *
+         * @return void
+         */
+        function custom_wc_redirect_logged_in_users() {
+            if ( ! is_user_logged_in() || ! is_page() ) {
+                return;
+            }
+
+            global $post;
+
+            if ( ! $post instanceof WP_Post ) {
+                return;
+            }
+
+            $content = $post->post_content;
+
+            if ( has_shortcode( $content, 'custom_wc_login_form' ) || has_shortcode( $content, 'custom_wc_registration_form' ) ) {
+                wp_safe_redirect( wc_get_page_permalink( 'myaccount' ) );
+                exit;
+            }
+        }
+        add_action( 'template_redirect', 'custom_wc_redirect_logged_in_users' );
+    }

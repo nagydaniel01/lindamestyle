@@ -80,53 +80,38 @@
 }
 
 // ---------------------------------------------
-// Columns / Forms
+// WooCommerce Components
 // ---------------------------------------------
 .woocommerce {
   .u-columns {
     @extend .row;
-    margin-bottom: 2rem;
 
     .u-column1,
     .col-1,
     .u-column2,
     .col-2 {
       @extend .col-12, .col-md-6;
-
-      form {
-        @extend .card;
-        padding: 1.5rem;
-        border-radius: 0.5rem;
-
-        h2 {
-          font-size: 1.25rem;
-          margin-bottom: 1rem;
-          font-weight: 600;
-        }
-
-        .form-row {
-          margin-bottom: 1rem;
-        }
-
-        .button { 
-          @extend .btn, .btn-primary;
-          width: 100%;
-        }
-      }
-    }
-
-    .woocommerce-form-login {
-      .form-row:not(.form-row-wide) {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
-
-      .woocommerce-form-login__submit {
-        margin-top: auto;
-      }
+      margin-bottom: 1rem;
     }
   }
+
+  /*
+  form {
+    h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .form-row {
+      margin-bottom: 1rem;
+    }
+
+    .button { 
+      @extend .btn, .btn-primary;
+    }
+  }
+  */
 
   // ---------------------------------------------
   // Product Grid

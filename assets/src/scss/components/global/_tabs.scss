@@ -1,33 +1,29 @@
-.nav.nav-tabs,
-.nav.nav-pills {
-  justify-content: center;
-  align-items: center;
-  gap: 1rem 2rem;
-  margin-top: 2rem;
+.woocommerce-tabs {
+  ul.tabs {
+    @extend .nav;
+    @extend .nav-tabs;
+    justify-content: flex-start;
+    gap: 1rem 2rem;
 
-  .nav-link {
-    .icon {
-      width: 1.5rem;
-      height: 1.5rem;
-      color: $gray-900;
-    }
+    li {
+      @extend .nav-item;
 
-    &.active {
-      .icon {
-        color: $primary;
+      a {
+        @extend .nav-link;
+      }
+
+      &.active a {
+        @extend .active;
       }
     }
   }
-}
 
-.tab-content {
-  padding: 2rem 0;
-}
-
-@include media-breakpoint-up(lg) {
-  .nav.nav-tabs,
-  .nav.nav-pills {
-    justify-content: flex-start;
-    gap: 1rem;
+  .woocommerce-Tabs-panel {
+    @extend .tab-content;
+    color: $white;
+    background-color: $primary;
+    padding: 1rem;
+    border-radius: $border-radius;
+    border-top-left-radius: 0;
   }
 }

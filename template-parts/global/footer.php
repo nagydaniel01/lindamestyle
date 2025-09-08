@@ -14,7 +14,7 @@
                     <p><?php echo esc_html('...egyenesen a postaládádba.', TEXT_DOMAIN); ?></p>
                 </div>
                 <div class="col-lg-6">
-                    <?php get_template_part('template-parts/blocks/block', 'subscribe'); ?>
+                    <?php get_template_part('template-parts/forms/form', 'subscribe'); ?>
                 </div>
             </div>
         </div>

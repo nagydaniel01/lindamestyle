@@ -35,11 +35,11 @@ $youtube:         #FF0033;
 
 // Override and add theme colors
 $primary: $peachfuzz;
-$primary-light: tint-color($primary, 40%); // makes it 40% lighter
-$primary-dark:  shade-color($primary, 20%); // makes it 20% lighter
+$primary-light: tint-color($primary, 50%); // makes it 40% lighter
+$primary-dark:  shade-color($primary, 25%); // makes it 20% lighter
 $secondary: $ivory;
-$secondary-light: tint-color($secondary, 40%); // makes it 40% lighter
-$secondary-dark:  shade-color($secondary, 20%); // makes it 20% lighter
+$secondary-light: tint-color($secondary, 50%); // makes it 40% lighter
+$secondary-dark:  shade-color($secondary, 25%); // makes it 20% lighter
 $info: $blue;
 $success: $green;
 $warning: $yellow;
@@ -90,11 +90,11 @@ $container-max-widths: (
 );
 
 // Grid columns
-$grid-gutter-width: 2rem;
+$grid-gutter-width: 1.5rem;
 
 // Body
-$body-bg: $gray-100;
 $body-color: $black;
+$body-bg: $gray-100;
 
 // Components
 $border-width: 1px;
@@ -123,6 +123,7 @@ $h6-font-size: 1.25rem;
 $headings-margin-bottom: 0;
 $headings-font-weight: 800;
 $headings-line-height: 1.4;
+$headings-color: $primary;
 
 $link-color: $primary;
 $link-decoration: underline;
@@ -206,26 +207,34 @@ $accordion-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/20
 $accordion-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#{$accordion-icon-active-color}"><path d="M30.5 24.7c-.4 0-.7-.1-1-.4L16 10.8 2.5 24.3c-.6.6-1.5.6-2.1 0-.6-.6-.6-1.5 0-2.1L15 7.7c.6-.6 1.5-.6 2.1 0l14.5 14.5c.6.6.6 1.5 0 2.1-.3.3-.7.4-1.1.4z"/></svg>');
 $accordion-alt-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#{$accordion-icon-color}"><path d="M16 5.1C10 5.1 5.1 10 5.1 16S10 26.9 16 26.9 26.9 22 26.9 16 22 5.1 16 5.1zm0 20.5c-5.3 0-9.6-4.3-9.6-9.6s4.3-9.6 9.6-9.6 9.6 4.3 9.6 9.6-4.3 9.6-9.6 9.6zm.6-15.4h-1.3v5.1h-5.1v1.3h5.1v5.1h1.3v-5.1h5.1v-1.3h-5.1v-5.1z"/></svg>');
 $accordion-alt-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#{$accordion-icon-active-color}"><path d="M10.2 15.4h11.5v1.3H10.2v-1.3z"/></svg>');
-// Navbar
 
-// Offcanvas
-$offcanvas-bg-color: $white;
+// Navs
+$nav-tabs-border-width: 0;
+
+$nav-link-color: $primary;
+$nav-link-hover-color: $black;
+$nav-tabs-link-active-color: $white;
+$nav-tabs-link-active-bg: $primary;
+$nav-pills-link-active-color: $nav-tabs-link-active-color;
+$nav-pills-link-active-bg: $nav-tabs-link-active-bg;
 
 // Modal
+$modal-content-border-width: 0;
+$modal-backdrop-bg: $primary;
+$modal-backdrop-opacity: .9;
+
 /*
 $modal-content-color: $black;
 $modal-content-bg: $white;
-*/
-
-/*
-$modal-content-border-width: 0;
-$modal-content-border-radius: 0;
-$modal-content-inner-border-radius: 0;
 $modal-content-box-shadow-xs: none;
 $modal-content-box-shadow-sm-up: none;
-$modal-backdrop-bg: $primary;
-$modal-backdrop-opacity: .9;
 */
+
+// Offcanvas
+$offcanvas-bg-color: $white;
+$offcanvas-backdrop-bg: $modal-backdrop-bg;
+$offcanvas-backdrop-opacity: $modal-backdrop-opacity;
+
 
 // Close
 $btn-close-width: 1.5rem;

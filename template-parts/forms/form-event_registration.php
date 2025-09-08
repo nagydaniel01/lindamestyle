@@ -10,18 +10,18 @@
         <label class="form-label" for="reg_name">
             <?php echo esc_html( 'Name', TEXT_DOMAIN ); ?> <span class="required">*</span>
         </label>
-        <input type="text" class="form-control" id="reg_name" name="reg_name" value="<?php echo esc_attr( $current_user->display_name ); ?>" required aria-required="true">
+        <input type="text" class="form-control" id="reg_name" name="reg_name" value="<?php echo esc_attr( $current_user->display_name ); ?>" placeholder="<?php echo esc_attr('Enter your full name', TEXT_DOMAIN ); ?>" required aria-required="true">
     </div>
 
     <div class="mb-3">
         <label class="form-label" for="reg_email">
             <?php echo esc_html( 'E-mail', TEXT_DOMAIN ); ?> <span class="required">*</span>
         </label>
-        <input type="email" class="form-control" id="reg_email" name="reg_email" value="<?php echo esc_attr( $current_user->user_email ); ?>" required aria-required="true">
+        <input type="email" class="form-control" id="reg_email" name="reg_email" value="<?php echo esc_attr( $current_user->user_email ); ?>" placeholder="<?php echo esc_attr('Enter your email address', TEXT_DOMAIN ); ?>" required aria-required="true">
     </div>
     
-    <fieldset>
-        <div class="mb-3 form-check">
+    <fieldset class="mb-3">
+        <div class="form-check">
             <input type="checkbox" class="form-check-input" id="reg_privacy_policy" name="reg_privacy_policy" required aria-required="true">
             <label class="form-check-label" for="reg_privacy_policy">
                 <?php 
