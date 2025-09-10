@@ -83,8 +83,8 @@
                 <?php endif; ?>
 
                 <span class="card__date-wrapper">
-                    <strong><?php echo esc_html('Event date', TEXT_DOMAIN); ?>:</strong>
                     <time class="card__date"><?php echo wp_safe_format_date($event_start_date, 'd/m/Y'); ?></time>
+                    <time class="card__time"><?php echo wp_safe_format_time($event_start_time, 'g:i a'); ?></time>
                 </span>
             </div>
 

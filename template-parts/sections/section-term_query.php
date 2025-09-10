@@ -1,15 +1,16 @@
 <?php
-$section_title  = $section['term_query_section_title'] ?? '';
-$section_slug   = sanitize_title($section_title);
-$section_lead   = $section['term_query_section_lead'] ?? '';
+$section_title      = $section['term_query_section_title'] ?? '';
+$section_hide_title = $section['term_query_section_hide_title'] ?? false;
+$section_slug       = sanitize_title($section_title);
+$section_lead       = $section['term_query_section_lead'] ?? '';
 
-$link           = $section['term_query_link'] ?? '';
-$slider         = $section['term_query_slider'] ?? '';
-$box            = $section['term_query_box'] ?? '';
+$link               = $section['term_query_link'] ?? '';
+$slider             = $section['term_query_slider'] ?? '';
+$box                = $section['term_query_box'] ?? '';
 
-$url         = is_array($link) ? ($link['url'] ?? '') : $link;
-$title       = is_array($link) ? (!empty($link['title']) ? $link['title'] : $url) : $url;
-$target      = is_array($link) ? ($link['target'] ?? '_self') : '_self';
+$url         = $link['url'] ?? '';
+$title       = $link['title'] ?? esc_url($url);
+$target      = isset($link['target']) && $link['target'] !== '' ? $link['target'] : '_self';
 $is_external = is_external_url($url, get_home_url());
 
 $query_args = [
@@ -55,9 +56,11 @@ $term_query = new WP_Term_Query($query_args);
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--term_query<?php echo ($slider != false) ? ' section--slider' : ''; ?><?php echo ($box != false) ? ' section--box' : ''; ?>">
         <div class="container">
             
-            <?php if ($section_title || $section_lead) : ?>
+            <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">
-                    <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php if ($section_hide_title !== true) : ?>
+                        <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php endif; ?>
                     <?php if (!empty($section_lead)) : ?>
                         <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
                     <?php endif; ?>
@@ -75,7 +78,7 @@ $term_query = new WP_Term_Query($query_args);
                 <?php if ($slider != false) : ?>
                     <div class="slider slider--term-query">
                         <div class="slider__list">
-                            <?php foreach ($term_query->terms as $term) : ?>
+                            <?php foreach ($term_query->terms as $key => $term) : ?>
                                 <div class="slider__item">
                                     <?php 
                                         $taxonomy = esc_attr($term->taxonomy);
@@ -95,7 +98,7 @@ $term_query = new WP_Term_Query($query_args);
                     </div>
                 <?php else : ?>
                     <div class="row gy-4">
-                        <?php foreach ($term_query->terms as $term) : ?>
+                        <?php foreach ($term_query->terms as $key => $term) : ?>
                             <?php 
                                 $taxonomy = esc_attr($term->taxonomy);
                                 $template_args = ['term' => $term];

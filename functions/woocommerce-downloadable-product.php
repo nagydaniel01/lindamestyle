@@ -71,7 +71,7 @@
             return sprintf(
                 '<a class="button" href="%s" download="download"><span>%s</span></a>',
                 esc_url($download_url),
-                esc_html__('Download', TEXT_DOMAIN)
+                esc_html__('Download', 'woocommerce')
             );
         }
     }

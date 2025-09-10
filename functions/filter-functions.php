@@ -20,7 +20,13 @@ if ( ! function_exists( 'post_filter' ) ) {
         // Sanitize and validate incoming POST data
         $post_type     = isset($_POST['post_type']) ? $_POST['post_type'] : '';
         $event_type    = isset($_POST['event_type']) ? $_POST['event_type'] : '';
+        $post_ids      = isset($_POST['post_ids']) ? $_POST['post_ids'] : '';
         $filter_object = isset($_POST['filter_object']) ? $_POST['filter_object'] : '';
+
+        // Handle bookmarks ids
+        if (!empty($post_ids)) {
+            $post_ids = array_map('intval', $post_ids);
+        }
 
         // Locate query template
         $query_template = get_template_directory() . '/template-parts/queries/query-post-type.php';
@@ -32,6 +38,7 @@ if ( ! function_exists( 'post_filter' ) ) {
         $args = [
             'post_type'     => $post_type,
             'event_type'    => $event_type,
+            'post_ids'      => $post_ids,
             'filter_object' => $filter_object,
         ];
 

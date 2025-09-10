@@ -1,5 +1,9 @@
 .footer {
   background-color: $primary-light;
+  background: linear-gradient(180deg, rgba($secondary, 0.75), rgba($primary, 0.4)), url('../images/footer.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   .footer__top {
     padding-top: 3rem;
@@ -16,71 +20,9 @@
 
   .footer__title {
     margin-bottom: 0.625rem;
-    color: $white;
+    color: $primary;
     font-size: 1.5rem;
     line-height: 1;
-  }
-
-  .footer__subscribe {
-    .footer__title {
-      margin-bottom: 0.75rem;
-      font-size: 1.75rem;
-    }
-    
-    .form-group {
-      margin-bottom: 0.75rem;
-    }
-    
-    .form-check-label {
-      color: $white;
-      font-size: 0.875rem;
-
-      a {
-        color: inherit;
-      }
-    }
-
-    .btn {
-      width: 100%;
-    }
-
-    .alert {
-      margin-top: 1rem;
-      margin-bottom: 0;
-    }
-
-    .error-message {
-      font-size: 0.75rem;
-      color: $danger;
-    }
-  }
-
-  .footer__contact {
-    color: $white;
-    padding: 2rem 0 1rem;
-    border-top: 1px solid rgba($white, .3);
-
-    .footer__title {
-      margin-bottom: 0;
-    }
-
-    p {
-      font-size: 0.9375rem;
-      line-height: 1.4;
-      font-weight: 400;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    a {
-      color: inherit;
-    }
-  }
-
-  .footer__contact-item {
-    margin-bottom: 1rem;
   }
 
   .footer__logo {
@@ -105,10 +47,14 @@
 
 .copyright {
   margin-bottom: 0;
-  color: $gray-700;
+  color: $white;
   font-size: 0.875rem;
-  line-height: 1.5;
   font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  padding: 1.5rem 0;
+  border-top: 0.0625rem solid $white;
+  margin-top: 1.5rem;
 }
 
 @include media-breakpoint-up(xl) {
@@ -129,14 +75,6 @@
     .footer__title {
       margin-bottom: 1.75rem;
       font-size: 2rem;
-    }
-
-    .footer__contact {
-      padding: 2.25rem 0;
-    }
-
-    .footer__contact-item {
-      margin-bottom: 0;
     }
   }
 }

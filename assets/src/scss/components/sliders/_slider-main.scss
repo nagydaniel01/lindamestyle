@@ -46,6 +46,10 @@
         font-size: 1.5rem;
     }
 
+    .slick-slide > div {
+        display: flex;
+    }
+
     .slick-dots {
         margin-top: 0.75rem;
 

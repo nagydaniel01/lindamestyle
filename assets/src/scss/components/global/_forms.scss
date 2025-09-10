@@ -12,10 +12,7 @@ input[type="date"],
 input[type="month"],
 input[type="week"],
 input[type="time"],
-input[type="color"] {
-  @extend .form-control;
-}
-
+input[type="color"],
 textarea {
   @extend .form-control;
 }
@@ -37,10 +34,10 @@ input[type="button"] {
 
 label {
   @extend .form-label;
-}
 
-fieldset {
-  @extend .form-group;
+  &:not(.form-check-label) {
+    font-weight: 600;
+  }
 }
 
 legend {
@@ -50,8 +47,13 @@ legend {
   color: $primary;
 }
 
-.form {
-  margin-bottom: 2rem;
+.form-control {
+  caret-color: $primary;
+  
+  &::placeholder {
+    color: $primary;
+    opacity: 1;
+  }
 }
 
 .required {

@@ -21,7 +21,7 @@
     </div>
     <div class="footer__bottom">
         <div class="container">
-            <div class="row pt-4">
+            <div class="row">
                 <div class="col-12 col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if ($footer_logo) : ?>
@@ -33,7 +33,7 @@
                                             'alt'       => get_bloginfo('name'),
                                         );
                                         
-                                        echo wp_get_attachment_image($footer_logo['ID'], array(80, 80), false, $logo_args);
+                                        echo wp_get_attachment_image($footer_logo['ID'], array($footer_logo['width'], $footer_logo['height']), false, $logo_args);
                                     ?>
                                 </a>
                             </div>
@@ -56,16 +56,16 @@
                                 <ul class="nav__list">
                                     <?php foreach ($social as $key => $row) : ?>
                                         <?php
-                                            $social_url    = $row['social_link']['url'];
-                                            $social_title  = $row['social_link']['title'];
-                                            $social_target = $row['social_link']['target'] ?: '_self';
+                                            $social_url    = $row['social_link']['url'] ?? '';
+                                            $social_title  = $row['social_link']['title'] ?? '';
+                                            $social_target = isset($row['social_link']['target']) && $row['social_link']['target'] !== '' ? $row['social_link']['target'] : '_self';
                                             $host          = parse_url($social_url, PHP_URL_HOST);
                                             $parts         = explode('.', $host);
                                             $base          = ($parts[0] === 'www') ? $parts[1] : $parts[0];
                                             $social_name   = $social_title ?: $custom_names[$base] ?? ucfirst($base);
                                         ?>
 
-                                        <?php if (isset($social_url)) : ?>
+                                        <?php if ($social_url) : ?>
                                             <li class="nav__item">
                                                 <a href="<?php echo esc_url($social_url); ?>" target="<?php echo esc_attr($social_target); ?>" class="nav__link">
                                                     <svg class="icon icon-<?php esc_attr_e($base); ?>"><use xlink:href="#icon-<?php esc_attr_e($base); ?>"></use></svg>
@@ -163,7 +163,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center py-4 mt-4 border-top">
+    <div class="copyright">
         <?php echo wpautop( wp_kses_post( $copyright ) ); ?>
     </div>
 </footer>

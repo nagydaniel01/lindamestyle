@@ -113,7 +113,7 @@
                         </div>
                     <?php endif; wp_reset_postdata(); ?>
                 <?php else : ?>
-                    <?php foreach ( $post_types as $post_type ) : ?>
+                    <?php foreach ( $post_types as $key => $post_type ) : ?>
                         <?php
                             $query = new WP_Query( array(
                                 's'                 => $search_query,

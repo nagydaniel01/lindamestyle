@@ -115,6 +115,53 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_68c156ccdee05",
+            "label": "Helytartó kép",
+            "name": "placeholder_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "allow_in_bindings": 0,
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_68c15735dee06",
+            "label": "Karbantartás mód",
+            "name": "under_construction_mode",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
             "key": "field_689ee108fa234",
             "label": "Közösségi média",
             "name": "",
@@ -509,5 +556,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757327387
+    "modified": 1757501296
 }

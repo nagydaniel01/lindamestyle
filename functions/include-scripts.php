@@ -15,6 +15,8 @@
             // Localize script for use in JS
             wp_localize_script( 'theme', 'localize', array(
                 'ajaxurl'      => admin_url( 'admin-ajax.php' ),
+                'resturl'      => esc_url( rest_url( 'wp/v2/posts' ) ),
+                'start_time'   => current_time( 'c' ),
                 'themeurl'     => TEMPLATE_DIR_URI,
                 'siteurl'      => SITE_URL,
                 'translations' => array(

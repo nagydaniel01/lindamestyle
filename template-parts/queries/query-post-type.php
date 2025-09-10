@@ -1,6 +1,7 @@
 <?php
 $post_type          = $args['post_type'] ?? '';
 $event_type         = $args['event_type'] ?? '';
+$post_ids           = $args['post_ids'] ?? '';
 
 $current_date_time  = current_time('Y-m-d H:i:s');
 $paged              = max(1, get_query_var('paged', 1));
@@ -80,6 +81,13 @@ if (!empty($filter_object) && isset($filter_object['apply_profile_filters'])) {
     unset($filter_object['apply_profile_filters']);
 }
 */
+
+// =========================
+// Detect Bookmark query
+// =========================
+if ($post_ids) {
+    $post_type_args['post__in'] = $post_ids;
+}
 
 // =========================
 // Process other filters
@@ -249,8 +257,6 @@ $post_type_query = new WP_Query($post_type_args);
                 <?php if ($current_page > 1) : ?>
                     <li>
                         <a href="" data-number="1" class="page-numbers first js-pagination-link">
-                            <svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg>
-                            <svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg>
                             <span class="page-numbers__label"><?php _e('Első', TEXT_DOMAIN); ?></span>
                         </a>
                     </li>
@@ -312,8 +318,6 @@ $post_type_query = new WP_Query($post_type_args);
                     <li>
                         <a href="" data-number="<?php echo $max_page; ?>" class="page-numbers last js-pagination-link">
                             <span class="page-numbers__label"><?php _e('Utolsó', TEXT_DOMAIN); ?></span>
-                            <svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg>
-                            <svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg>
                         </a>
                     </li>
                 <?php endif; ?>

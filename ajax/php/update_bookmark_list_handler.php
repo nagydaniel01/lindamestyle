@@ -20,35 +20,15 @@
             }
 
             // Define post types to include
-            $post_type    = ['post', 'knowledge_base'];
+            $post_type = ['post', 'knowledge_base'];
 
             // Retrieve bookmarked post IDs from user meta
-            $bookmark_ids = get_user_meta($current_user_id, 'user_bookmarks', true);
-
-            // If no bookmarks, set a placeholder ID to avoid query errors
-            if ( empty($bookmark_ids) || ! is_array($bookmark_ids) ) {
-                $bookmark_ids = [0];
-            }
-
-            // Query bookmarked posts
-            $args = [
-                'post_type'      => $post_type,
-                'post_status'    => 'publish',
-                'posts_per_page' => -1,
-                'post__in'       => $bookmark_ids,
-                'orderby'        => 'post__in', // preserve saved order
-            ];
-
-            $post_query = new WP_Query($args);
+            $bookmark_ids = get_user_meta($current_user_id, 'user_bookmarks', true) ?: [0];
 
             // Capture the template output
             ob_start();
-            $query_args = [
-                'query'             => $post_query,
-                'card_type'         => 'post',
-                'number_of_columns' => 2,
-            ];
-            get_template_part('template-parts/blocks/block', 'query', $query_args);
+            $template_args = array('post_type' => $post_type, 'post_ids' => $bookmark_ids);
+            get_template_part( 'template-parts/queries/query', 'post-type', $template_args );
             $html = ob_get_clean();
 
             // Return the rendered HTML as JSON

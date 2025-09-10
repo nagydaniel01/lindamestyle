@@ -13,6 +13,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                background-color: #F2E8DA;
                 background-image: url('<?php echo TEMPLATE_DIR_URI . "/assets/src/images/login-background.jpg"; ?>');
                 background-size: cover;
                 background-position: center center;
@@ -45,7 +46,7 @@
             }
             .logo img {
                 width: 150px;
-                height: 84px;
+                height: auto;
                 padding: 0;
                 margin: 0 auto;
             }
@@ -54,7 +55,7 @@
     <body>
         <div class="container">
             <div class="logo">
-                <img src="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/mmki_logo_short.svg' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+                <img src="<?php echo esc_url( TEMPLATE_DIR_URI . '/assets/src/images/lindamestyle-logo.png' ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
             </div>
             <h1><?php esc_html_e( 'Hamarosan', TEXT_DOMAIN ); ?></h1>
             <p><?php esc_html_e( 'Keményen dolgozunk az új weboldalunk elindításán. Maradjanak velünk!', TEXT_DOMAIN ); ?></p>

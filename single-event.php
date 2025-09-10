@@ -39,25 +39,29 @@
                     
                     <div class="section__meta">
                         <?php if ( $event_start_date || $event_end_date ) : ?>
-                            <div class="event__datetime">
+                            <div class="block block--event-data">
                                 <?php if ( $event_start_date ) : ?>
-                                    <span class="event__date-start">
-                                        <strong><?php esc_html_e( 'Start:', TEXT_DOMAIN ); ?></strong>
-                                        <time datetime=""><?php echo wp_safe_format_date( $event_start_date, 'd/m/Y', 'Y. F d.' ); ?></time>
-                                        <?php if ( $event_start_time ) : ?>
-                                            <time datetime=""><?php echo ' ' . wp_safe_format_time( $event_start_time, 'g:i a' ); ?></time>
-                                        <?php endif; ?>
-                                    </span>
+                                    <div class="block__inner">
+                                        <h2 class="block__title"><?php echo esc_html( 'Start:', TEXT_DOMAIN ); ?></h2>
+                                        <div class="block__content">
+                                            <time datetime=""><?php echo wp_safe_format_date( $event_start_date, 'd/m/Y', 'Y. F d.' ); ?></time>
+                                            <?php if ( $event_start_time ) : ?>
+                                                <time datetime=""><?php echo ' ' . wp_safe_format_time( $event_start_time, 'g:i a' ); ?></time>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
 
                                 <?php if ( $event_end_date ) : ?>
-                                    <span class="event__date-end">
-                                        <strong><?php esc_html_e( 'End:', TEXT_DOMAIN ); ?></strong>
-                                        <time datetime=""><?php echo wp_safe_format_date( $event_end_date, 'd/m/Y', 'Y. F d.' ); ?></time>
-                                        <?php if ( $event_end_time ) : ?>
-                                            <time datetime=""><?php echo ' ' . wp_safe_format_time( $event_end_time, 'g:i a' ); ?></time>
-                                        <?php endif; ?>
-                                    </span>
+                                    <div class="block__inner">
+                                        <h2 class="block__title"><?php echo esc_html( 'End:', TEXT_DOMAIN ); ?></h2>
+                                        <div class="block__content">
+                                            <time datetime=""><?php echo wp_safe_format_date( $event_end_date, 'd/m/Y', 'Y. F d.' ); ?></time>
+                                            <?php if ( $event_end_time ) : ?>
+                                                <time datetime=""><?php echo ' ' . wp_safe_format_time( $event_end_time, 'g:i a' ); ?></time>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
                                 <?php endif; ?>
                             </div>
                         <?php endif; ?>
@@ -76,9 +80,12 @@
                         ));
                     ?>
 
-                    <?php 
-                        get_template_part( 'template-parts/forms/form', 'event_registration' );
-                    ?>
+                    <div class="block block--event-registration">
+                        <h2 class="block__title"><?php echo esc_html( 'Registration', TEXT_DOMAIN ); ?></h2>
+                        <?php 
+                            get_template_part( 'template-parts/forms/form', 'event_registration' );
+                        ?>
+                    </div>
                 </div>
 
                 <footer class="section__footer">

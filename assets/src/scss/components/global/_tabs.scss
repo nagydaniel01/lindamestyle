@@ -1,29 +1,22 @@
-.woocommerce-tabs {
-  ul.tabs {
-    @extend .nav;
-    @extend .nav-tabs;
-    justify-content: flex-start;
-    gap: 1rem 2rem;
+.nav.nav-tabs,
+.nav.nav-pills,
+.woocommerce-tabs ul.tabs {
+  @extend .nav;
+  @extend .nav-tabs;
+  justify-content: flex-start;
+  column-gap: 1rem;
+  margin-bottom: 1rem;
 
-    li {
-      @extend .nav-item;
+  li {
+    @extend .nav-item;
 
-      a {
-        @extend .nav-link;
-      }
-
-      &.active a {
-        @extend .active;
-      }
+    a {
+      @extend .nav-link;
+      font-weight: 600;
     }
-  }
 
-  .woocommerce-Tabs-panel {
-    @extend .tab-content;
-    color: $white;
-    background-color: $primary;
-    padding: 1rem;
-    border-radius: $border-radius;
-    border-top-left-radius: 0;
+    &.active a {
+      @extend .active;
+    }
   }
 }

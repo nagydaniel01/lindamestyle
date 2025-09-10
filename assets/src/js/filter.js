@@ -3,11 +3,21 @@ import 'slick-slider';
 import imagesLoaded from "imagesloaded";
 import Masonry from "masonry-layout";
 
+let rawPostType = $('.section').attr('data-post-type');
+let parsedPostType;
+
+try {
+    parsedPostType = JSON.parse(rawPostType); // handles ["post","knowledge_base"]
+} catch (e) {
+    parsedPostType = rawPostType; // fallback for "post"
+}
+
 var filter = {
     url: window.location.href,
     urlParams: null,
     filterObject: {},
-    postType: $('.section').attr('data-post-type'),
+    //postType: $('.section').attr('data-post-type'),
+    postType: parsedPostType,
     hasMorePosts: true,
 
     /**
@@ -533,6 +543,28 @@ var filter = {
                 },
                 success: function (response) {
                     $('#post-list').html(response);
+                },
+                complete: function () {
+                    callback();
+                },
+            });
+        }
+
+        if ($('#bookmark-list').length) {
+            $.ajax({
+                type: 'post',
+                url: localize.ajaxurl,
+                data: {
+                    action: 'post_filter',
+                    post_type: postType,
+                    post_ids: JSON.parse($('.section').attr('data-post-ids')),
+                    filter_object: filterObject,
+                },
+                error: function (response) {
+                    console.log(response);
+                },
+                success: function (response) {
+                    $('#bookmark-list').html(response);
                 },
                 complete: function () {
                     callback();

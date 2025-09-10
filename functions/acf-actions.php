@@ -175,7 +175,7 @@
             $forms   = GFFormsModel::get_forms();
 
             if ( ! empty( $forms ) ) {
-                foreach ( $forms as $form ) {
+                foreach ( $forms as $key => $form ) {
                     $choices[ $form->id ] = $form->title;
                 }
             }

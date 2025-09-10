@@ -1,5 +1,20 @@
 <?php
     if ( ! function_exists('mc_form_handler') ) {
+        /**
+         * Handles AJAX submissions for the Mailchimp subscription form.
+         *
+         * This function processes POST requests submitted via AJAX for subscribing users to a Mailchimp list.
+         * It performs the following steps:
+         *   1. Validates that the request method is POST.
+         *   2. Checks for the presence of form data.
+         *   3. Parses serialized form data into an associative array.
+         *   4. Verifies the security nonce.
+         *   5. Sanitizes and validates form fields (name, email, privacy consent).
+         *   6. Subscribes the user to Mailchimp using the MailchimpService class.
+         *   7. Returns a JSON response indicating success or failure.
+         *
+         * @return void Outputs a JSON response and terminates execution.
+         */
         function mc_form_handler() {
             try {
                 // Ensure the request method is POST

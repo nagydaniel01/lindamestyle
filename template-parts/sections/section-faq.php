@@ -1,5 +1,6 @@
 <?php
     $section_title      = $section['faq_section_title'] ?? '';
+    $section_hide_title = $section['faq_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
     $section_lead       = $section['faq_section_lead'] ?? '';
     $accordion_items    = $section['faq_items'] ?? [];
@@ -20,9 +21,11 @@
 <?php if (!empty($accordion_items)) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--accordion section--faq">
         <div class="container">
-            <?php if ($section_title || $section_lead) : ?>
+            <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">
-                    <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php if ($section_hide_title !== true) : ?>
+                        <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php endif; ?>
                     <?php if (!empty($section_lead)) : ?>
                         <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
                     <?php endif; ?>

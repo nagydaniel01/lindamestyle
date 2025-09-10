@@ -98,7 +98,7 @@
                                     $label = !empty($taxonomy->label) ? $taxonomy->label : '';
                                     ?>
                                     <select id="filter-<?php echo esc_attr($tax_obj); ?>" name="<?php echo esc_attr($tax_obj); ?>[]" multiple="multiple" class="filter form-select js-filter js-filter-default" data-filter="<?php echo esc_attr($tax_obj); ?>" data-placeholder="<?php echo esc_attr(sprintf(__('Szűrés %s szerint', 'TEXT_DOMAIN'), strtolower($label))); ?>">
-                                        <?php foreach ($terms as $term) : ?>
+                                        <?php foreach ($terms as $key => $term) : ?>
                                             <option value="<?php echo esc_attr($term->slug); ?>" 
                                                 <?php selected(get_query_var($tax_obj . '_filter'), $term->slug); ?>>
                                                 <?php echo esc_html($term->name); ?>

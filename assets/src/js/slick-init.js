@@ -10,9 +10,8 @@ if (productGallerySlider) {
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg></button>',
-        nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg></button>',
-        appendArrows: '.slider--gallery .slider__controls',
+        prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+        nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
         responsive: [
             {
                 breakpoint: 991,
@@ -40,8 +39,8 @@ $('.slider--main').each(function() {
             slidesToShow: 1,
             slidesToScroll: 1,
             arrows: true,
-            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg></button>',
-            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg></button>',
+            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
             responsive: [
                 {
@@ -71,8 +70,8 @@ $('.slider--related').each(function() {
             slidesToShow: 1,
             slidesToScroll: 1,
             arrows: false,
-            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg></button>',
-            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg></button>',
+            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
             responsive: [
                 {
@@ -104,8 +103,8 @@ $('.slider--gallery').each(function() {
             slidesToScroll: 1,
             variableWidth: true,
             arrows: true,
-            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg></button>',
-            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg></button>',
+            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
             responsive: [
                 {
@@ -143,8 +142,8 @@ $('.slider--post-query').each(function() {
             mobileFirst: true,
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-chevron-left"><use xlink:href="#icon-chevron-left"></use></svg></button>',
-            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-chevron-right"><use xlink:href="#icon-chevron-right"></use></svg></button>',
+            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
             appendArrows: $controls,
             responsive: [
                 {
@@ -166,6 +165,43 @@ $('.slider--post-query').each(function() {
                     settings: {
                         slidesToShow: 4,
                         slidesToScroll: 1
+                    }
+                }
+            ]
+        });
+    }
+});
+
+// Post-query sliders
+$('.slider--card').each(function() {
+    const $slider = $(this).find('.slider__list');
+    const $controls = $(this).find('.slider__controls');
+
+    if ($slider.length) {
+
+        // Remove any existing arrows inside the controls
+        $controls.empty();
+
+        $slider.slick({
+            mobileFirst: true,
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            prevArrow: '<button type="button" class="slick-arrow slick-prev" aria-label="Előző"><svg class="icon icon-arrow-left"><use xlink:href="#icon-arrow-left"></use></svg></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next" aria-label="Következő"><svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg></button>',
+            appendArrows: $controls,
+            responsive: [
+                {
+                    breakpoint: 767,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 1,
+                    }
+                },
+                {
+                    breakpoint: 991,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 1,
                     }
                 }
             ]

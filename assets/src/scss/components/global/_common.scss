@@ -1,3 +1,23 @@
+/* width */
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $body-bg;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $primary;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-dark;
+}
+
 /* ------------------------- */
 /* Preserve Custom Classes    */
 /* ------------------------- */
@@ -33,17 +53,26 @@ iframe {
   width: 100%;
 }
 
+figure,
 img {
   display: block;
   max-width: 100%;
   height: auto;
+  border-radius: $border-radius-sm;
 
-  &.alignleft,
-  &.alignright,
+  &.alignleft {
+    float: left;
+    margin: 0 1rem 1rem 0;
+  }
+
+  &.alignright {
+    float: right;
+    margin: 0 0 1rem 1rem;
+  }
+
   &.aligncenter {
     float: none;
-    margin: 0 auto;
-    border-radius: $border-radius-sm;
+    margin: 0 auto 1rem;
   }
 }
 
@@ -55,9 +84,25 @@ img {
 }
 
 .wp-block-image {
-  .alignleft,
-  .alignright,
-  .aligncenter {
+  &.alignleft {
+    float: left;
+    margin: 0 1rem 1.5rem 0;
+
+    img {
+      border-radius: $border-radius-sm;
+    }
+  }
+
+  &.alignright {
+    float: right;
+    margin: 0 0 1.5rem 1rem;
+
+    img {
+      border-radius: $border-radius-sm;
+    }
+  }
+
+  &.aligncenter {
     float: none;
     margin: 0 auto 1.5rem;
 
@@ -98,7 +143,7 @@ blockquote {
   font-weight: 600;
   line-height: 1.5;
   margin: 2rem 0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
   overflow: hidden;
 
   &::before {

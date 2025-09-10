@@ -9,8 +9,7 @@
         function my_account_menu_items( $menu_links ) {
             $new_items = array(
                 'beauty-profile'    => __('Beauty profile', 'woocommerce'),
-                'bookmarks'         => __('Bookmarks', 'woocommerce'),
-                'email-marketing'   => __('Newsletter', 'woocommerce')
+                'bookmarks'         => __('Bookmarks', 'woocommerce')
             );
             
             // Add custom items to the My Account menu.
@@ -32,7 +31,6 @@
             // Register custom endpoints for each new section.
             add_rewrite_endpoint( 'beauty-profile', EP_ROOT | EP_PAGES );
             add_rewrite_endpoint( 'bookmarks', EP_ROOT | EP_PAGES );
-            add_rewrite_endpoint( 'email-marketing', EP_ROOT | EP_PAGES );
         }
 
         add_action( 'init', 'add_endpoints' );
@@ -64,18 +62,4 @@
         }
 
         add_action( 'woocommerce_account_bookmarks_endpoint', 'bookmarks_endpoint_content' );
-    }
-
-    /**
-     * Display the content for the 'Newsletter' section in My Account.
-     *
-     * @return void
-     */
-    if ( ! function_exists( 'email_marketing_content' ) ) {
-        function email_marketing_content() {
-            // Include custom template for 'Newsletter' endpoint.
-            wc_get_template( 'myaccount/email-marketing.php' );
-        }
-
-        add_action( 'woocommerce_account_email-marketing_endpoint', 'email_marketing_content' );
     }

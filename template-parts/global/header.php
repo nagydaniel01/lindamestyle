@@ -16,7 +16,7 @@
             <!-- Brand -->
             <a class="navbar-brand" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
                 <?php if ($logo) : ?>
-                    <?php echo wp_get_attachment_image($logo['ID'], array(50, 50), false, array('alt' => esc_attr($logo['alt'] ?: get_bloginfo('name')))); ?>
+                    <?php echo wp_get_attachment_image($logo['ID'], array($logo['width'], 50), false, array('alt' => esc_attr($logo['alt'] ?: get_bloginfo('name')))); ?>
                 <?php else : ?>
                     <?php bloginfo('name'); ?>
                 <?php endif; ?>
@@ -27,19 +27,19 @@
                 <?php if ( class_exists( 'WooCommerce' ) ) : ?>
                     <!-- Mobile My Account / Login -->
                     <?php if ( is_user_logged_in() ) : ?>
-                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center me-3 text-decoration-none">
+                        <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>">
                             <?php echo $avatar; ?>
                             <span class="visually-hidden"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
                         </a>
                     <?php else : ?>
-                        <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#login_formModal">
+                        <button type="button" class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#login_formModal">
                             <svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg>
                             <span class="visually-hidden"><?php echo esc_html__( 'Login / Register', TEXT_DOMAIN ); ?></span>
                         </button>
                     <?php endif; ?>
 
                     <!-- Mobile Cart Trigger -->
-                    <button class="btn btn-outline-secondary position-relative me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
+                    <button class="btn btn-outline-secondary position-relative me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#minicartCanvas" aria-controls="minicartCanvas">
                         <svg class="icon icon-bag-shopping"><use xlink:href="#icon-bag-shopping"></use></svg>
                         <span class="visually-hidden"><?php echo esc_html__( 'Cart', TEXT_DOMAIN ); ?></span>
                         <div class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
@@ -85,7 +85,7 @@
                             <div class="nav-item ms-lg-4">
                                 <!-- My Account / Login -->
                                 <?php if ( is_user_logged_in() ) : ?>
-                                    <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>" class="d-flex h-100 align-items-center text-decoration-none">
+                                    <a href="<?php echo esc_url( get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ) ); ?>">
                                         <?php echo $avatar; ?>
                                         <span class="ms-2"><?php echo sprintf( esc_html__( 'Hello %s!', TEXT_DOMAIN ), esc_html( $user_name ) ); ?></span>
                                     </a>

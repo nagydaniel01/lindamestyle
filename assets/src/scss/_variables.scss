@@ -30,14 +30,14 @@ $cyan:    #0dcaf0;
 
 // Override and add colors
 $peachfuzz:       #FFBE98;
-$ivory:           #FDF6E8;
+$eggshell:        #F2E8DA;
 $youtube:         #FF0033;
 
 // Override and add theme colors
 $primary: $peachfuzz;
 $primary-light: tint-color($primary, 50%); // makes it 40% lighter
 $primary-dark:  shade-color($primary, 25%); // makes it 20% lighter
-$secondary: $ivory;
+$secondary: $eggshell;
 $secondary-light: tint-color($secondary, 50%); // makes it 40% lighter
 $secondary-dark:  shade-color($secondary, 25%); // makes it 20% lighter
 $info: $blue;
@@ -93,7 +93,7 @@ $container-max-widths: (
 $grid-gutter-width: 1.5rem;
 
 // Body
-$body-color: $black;
+$body-color: $gray-900;
 $body-bg: $gray-100;
 
 // Components
@@ -209,7 +209,7 @@ $accordion-alt-button-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.or
 $accordion-alt-button-active-icon: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#{$accordion-icon-active-color}"><path d="M10.2 15.4h11.5v1.3H10.2v-1.3z"/></svg>');
 
 // Navs
-$nav-tabs-border-width: 0;
+$nav-tabs-border-color: $primary;
 
 $nav-link-color: $primary;
 $nav-link-hover-color: $black;

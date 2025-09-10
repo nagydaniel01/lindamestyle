@@ -51,7 +51,7 @@
         }
         
         if ( ! defined( 'PLACEHOLDER_IMAGE_ID' ) ) {
-            define( 'PLACEHOLDER_IMAGE_ID', $placeholder_image );
+            define( 'PLACEHOLDER_IMAGE_ID', $placeholder_image['ID'] );
         }
     }
 

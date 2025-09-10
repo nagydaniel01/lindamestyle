@@ -1,9 +1,9 @@
 <?php
-    // Get section values
-    $section_title = $section['oembed_section_title'] ?? '';
-    $section_slug  = sanitize_title($section_title);
-    $section_lead  = $section['oembed_section_lead'] ?? '';
-    $oembed        = $section['oembed'] ?? '';
+    $section_title      = $section['oembed_section_title'] ?? '';
+    $section_hide_title = $section['oembed_section_hide_title'] ?? false;
+    $section_slug       = sanitize_title($section_title);
+    $section_lead       = $section['oembed_section_lead'] ?? '';
+    $oembed             = $section['oembed'] ?? '';
 
     // Extract iframe src
     preg_match('/src="([^"]+)"/', $oembed, $matches);
@@ -36,7 +36,7 @@
             ];
 
             foreach ($map as $type => $domains) {
-                foreach ($domains as $domain) {
+                foreach ($domains as $key => $domain) {
                     if (strpos($host, $domain) !== false) {
                         return $type;
                     }
@@ -52,9 +52,11 @@
 <?php if (!empty($oembed)) : ?>
     <section id="<?php echo esc_attr($section_slug); ?>" class="section section--oembed section--<?php echo esc_attr($oembed_type); ?>">
         <div class="container">
-            <?php if ($section_title || $section_lead) : ?>
+            <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">
-                    <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php if ($section_hide_title !== true) : ?>
+                        <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                    <?php endif; ?>
                     <?php if (!empty($section_lead)) : ?>
                         <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
                     <?php endif; ?>

@@ -2,7 +2,7 @@
     $current_user = wp_get_current_user();
 ?>
 
-<form id="event_registration_form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
+<form id="event_registration_form" class="form form--event_registration" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
     <?php wp_nonce_field( 'event_registration_form_action', 'event_registration_form_nonce' ); ?>
     <input type="hidden" name="event_id" value="<?php echo esc_attr( get_the_ID() ); ?>">
 

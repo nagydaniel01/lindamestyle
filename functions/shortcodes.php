@@ -135,20 +135,31 @@
                 return '<p>' . esc_html__( 'Registration form not available.', 'woocommerce' ) . '</p>';
             }
 
+            libxml_use_internal_errors( true );
+
             $dom = new DOMDocument();
             $dom->encoding = 'utf-8';
-            $loaded = $dom->loadHTML( utf8_decode( $html ) );
+
+            $loaded = $dom->loadHTML(
+                '<?xml encoding="utf-8" ?>' . $html,
+                LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+            );
+
+            libxml_clear_errors();
 
             if ( ! $loaded ) {
                 return '<p>' . esc_html__( 'Error loading registration form.', 'woocommerce' ) . '</p>';
             }
 
             $xpath = new DOMXPath( $dom );
+            $form  = $xpath->query( '//form[contains(@class,"register")]' );
+            $form  = $form->item( 0 );
 
-            $form = $xpath->query( '//form[contains(@class,"register")]' );
-            $form = $form->item( 0 );
-
-            echo $dom->saveHTML( $form );
+            if ( $form ) {
+                echo $dom->saveHTML( $form );
+            } else {
+                echo '<p>' . esc_html__( 'Registration form not found.', 'woocommerce' ) . '</p>';
+            }
 
             return ob_get_clean();
         }

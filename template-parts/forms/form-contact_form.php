@@ -2,7 +2,7 @@
     $current_user = wp_get_current_user();
 ?>
 
-<form id="contact_form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
+<form id="contact_form" class="form form--contact" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
     <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
 
     <div class="mb-3">

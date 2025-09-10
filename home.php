@@ -67,7 +67,7 @@
                             <div class="col-md-4 mb-3">
                                 <?php $filter_label = __('Authors', TEXT_DOMAIN); ?>
                                 <select name="author[]" multiple="multiple" id="filter-author" class="form-select filter js-filter js-filter-default" data-filter="author" data-placeholder="<?php echo esc_attr(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))); ?>">
-                                    <?php foreach ($authors as $author) : ?>
+                                    <?php foreach ($authors as $key => $author) : ?>
                                         <option value="<?php echo esc_attr($author->ID); ?>" <?php selected(get_query_var('author_filter'), $author->ID); ?>>
                                             <?php echo esc_html($author->display_name); ?>
                                         </option>
@@ -81,7 +81,7 @@
                             $fields               = acf_get_fields($post_filter_group_id);
     
                             if (!empty($fields) && is_array($fields)) :
-                                foreach ($fields as $field) :
+                                foreach ($fields as $key => $field) :
                                     $filter_label   = $field['label'];
                                     $filter_name    = $field['name'];
                                     $filter_type    = $field['type'];

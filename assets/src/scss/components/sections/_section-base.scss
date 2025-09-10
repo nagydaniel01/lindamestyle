@@ -1,6 +1,6 @@
 .section {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
     &.section--page-title {
         background-color: $primary-light;
@@ -27,6 +27,10 @@
     .section__header {
         display: flex;
         flex-direction: column;
+        margin-bottom: 1.875rem;
+    }
+
+    .section__image-wrapper {
         margin-bottom: 1.875rem;
     }
 
@@ -127,7 +131,7 @@
 
 @include media-breakpoint-up(lg) {
     .section {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 }

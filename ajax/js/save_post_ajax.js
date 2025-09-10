@@ -13,6 +13,7 @@
             $button.html(buttonHtml);
         }
 
+        // Function to refresh the list of bookmarks displayed in the "My Account" section
         function updateBookmarksList() {
             $.ajax({
                 type: 'POST',
@@ -23,7 +24,7 @@
                 dataType: 'json',
                 success: function(response) {
                     if (response.success) {
-                        $('.woocommerce-MyAccount-content').html(response.data.html);
+                        $('#bookmark-list').html(response.data.html);
                     } else {
                         $('#error-container').html('<div class="error-message alert alert-danger" role="alert">'+response.data.message+'</div>');
                     }
@@ -47,6 +48,7 @@
             var loadingHtml = '<svg class="icon icon-loading"><use xlink:href="#icon-loading"></use></svg><span>Processing...</span>';
             $button.html(loadingHtml);
 
+            // Send AJAX request to save or remove bookmark
             $.ajax({
                 type: 'POST',
                 url: save_post_ajax_object.ajax_url,
@@ -59,7 +61,10 @@
                     if (!response.success) {
                         console.error("Error in response:", response);
                     } else {
+                        // Update the button UI to reflect new status
                         updateBookmarkStatus($button, newStatus);
+
+                        // Refresh the bookmarks list immediately (setTimeout 0 ensures async)
                         setTimeout(function() {
                             updateBookmarksList();
                         }, 0);

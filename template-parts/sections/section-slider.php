@@ -1,10 +1,15 @@
 <?php
-    $section_title     = $section['slider_section_title'] ?? '';
-    $section_slug      = sanitize_title($section_title);
-    $section_lead      = $section['slider_section_lead'] ?? '';
-    $slider_items      = $section['slider_items'] ?? [];
-    $slider_ratio      = $section['slider_ratio'] ?? '16x9'; // e.g. "16x9", "4x3"
-    $slider_text_align = $section['slider_text_align'] ?? 'center'; // left, center, right
+    $section_title      = $section['slider_section_title'] ?? '';
+    $section_hide_title = $section['slider_section_hide_title'] ?? false;
+    $section_slug       = sanitize_title($section_title);
+    $section_lead       = $section['slider_section_lead'] ?? '';
+    $slider_items       = $section['slider_items'] ?? [];
+    $slider_ratio       = $section['slider_ratio'] ?? '16x9'; // e.g. "16x9", "4x3"
+    $slider_text_align  = $section['slider_text_align'] ?? 'center'; // left, center, right
+
+    $cta_url    = $slide_cta['url'] ?? '';
+    $cta_title  = $slide_cta['title'] ?? esc_url($cta_url);
+    $cta_target = isset($slide_cta['target']) && $slide_cta['target'] !== '' ? $slide_cta['target'] : '_self';
 
     // Filter out empty items (image empty)
     $slider_items = array_filter($slider_items, function ($item) {
@@ -15,10 +20,12 @@
 ?>
 
 <?php if (!empty($slider_items)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--slider">
-        <?php if ($section_title || $section_lead) : ?>
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--slider pt-0 pb-0">
+        <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
             <div class="section__header">
-                <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                <?php if ($section_hide_title !== true) : ?>
+                    <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
+                <?php endif; ?>
                 <?php if (!empty($section_lead)) : ?>
                     <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
                 <?php endif; ?>
@@ -28,7 +35,7 @@
         <div class="section__content">
             <div class="slider slider--main" id="<?php echo esc_attr($section_slug); ?>-slider">
                 <div class="slider__list">
-                    <?php foreach ($slider_items as $index => $item) : 
+                    <?php foreach ($slider_items as $key => $item) : 
                         $slide_title       = $item['slide_title'] ?? '';
                         $slide_description = $item['slide_description'] ?? '';
                         $slide_image       = $item['slide_image'] ?? '';
@@ -57,11 +64,7 @@
                                             <div class="slider__caption-description"><?php echo wp_kses_post($slide_description); ?></div>
                                         <?php endif; ?>
     
-                                        <?php if ($slide_cta) : 
-                                            $cta_url    = $slide_cta['url'] ?? '#';
-                                            $cta_title  = $slide_cta['title'] ?? esc_url($cta_url);
-                                            $cta_target = $slide_cta['target'] ?? '_self';
-                                        ?>
+                                        <?php if ($cta_url) : ?>
                                             <a href="<?php echo esc_url($cta_url); ?>" target="<?php echo esc_attr($cta_target); ?>" class="slider-item__cta btn btn-primary"><?php echo esc_html($cta_title); ?></a>
                                         <?php endif; ?>
                                     </div>

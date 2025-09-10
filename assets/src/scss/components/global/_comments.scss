@@ -71,8 +71,9 @@
 
       .comment__footer {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
         margin-top: 0.75rem;
         font-size: 0.875rem;
         color: $gray-500;

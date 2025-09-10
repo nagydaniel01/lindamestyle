@@ -1,8 +1,9 @@
 import 'bootstrap/js/src/collapse';
 import 'bootstrap/js/src/dropdown';
+import 'bootstrap/js/src/modal';
 import 'bootstrap/js/src/offcanvas';
 import 'bootstrap/js/src/tab';
-import 'bootstrap/js/src/modal';
+import 'bootstrap/js/src/toast';
 
 /*
 import './add-to-calendar-button-init';
@@ -23,6 +24,7 @@ import './slick-init';
 import './select2-init';
 import './tourguide-init';
 import './validate-form';
+import './header';
+import './toast'; 
 import './youtube-player';
-import './minicart';
 import './quantity'; 
