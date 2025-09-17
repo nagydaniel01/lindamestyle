@@ -133,9 +133,9 @@
             E_WARNING           => 'Warning',
             E_NOTICE            => 'Notice',
             E_USER_WARNING      => 'User Warning',
-            E_USER_NOTICE       => 'User Notice',
-            E_DEPRECATED        => 'Deprecated',
-            E_USER_DEPRECATED   => 'User Deprecated',
+            //E_USER_NOTICE       => 'User Notice',
+            //E_DEPRECATED        => 'Deprecated',
+            //E_USER_DEPRECATED   => 'User Deprecated',
             E_STRICT            => 'Strict Notice',
             E_RECOVERABLE_ERROR => 'Recoverable Error',
         ];
@@ -225,7 +225,6 @@
     /**
      * Custom Exception Handler
      */
-    /*
     set_exception_handler(function ($exception) {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             echo '<div style="
@@ -248,4 +247,3 @@
             error_log("Exception: " . $exception->getMessage());
         }
     });
-    */

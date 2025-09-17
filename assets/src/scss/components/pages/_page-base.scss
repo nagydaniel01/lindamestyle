@@ -1,10 +1,6 @@
 .page {
+  padding-top: 76px;
   min-height: 100vh;
-
-  &.page--default {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
 
   .page__header {
     margin-bottom: 1.875rem;
@@ -20,11 +16,6 @@
 
 @include media-breakpoint-up(lg) {
   .page {
-    &.page--default {
-      padding-top: 4rem;
-      padding-bottom: 4rem;
-    }
-
     .page__title {
       font-size: 3.75rem;
     }

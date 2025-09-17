@@ -4,6 +4,7 @@
     <?php while (have_posts()) : the_post(); ?>
 
     <?php 
+        $post_id          = get_the_ID();
         $post_type        = get_post_type();
         $event_start_date = get_field('event_start_date', $post_id);
         $event_start_time = get_field('event_start_time', $post_id);
@@ -42,7 +43,7 @@
                             <div class="block block--event-data">
                                 <?php if ( $event_start_date ) : ?>
                                     <div class="block__inner">
-                                        <h2 class="block__title"><?php echo esc_html( 'Start:', TEXT_DOMAIN ); ?></h2>
+                                        <h2 class="block__title"><?php echo esc_html__( 'Start:', TEXT_DOMAIN ); ?></h2>
                                         <div class="block__content">
                                             <time datetime=""><?php echo wp_safe_format_date( $event_start_date, 'd/m/Y', 'Y. F d.' ); ?></time>
                                             <?php if ( $event_start_time ) : ?>
@@ -54,7 +55,7 @@
 
                                 <?php if ( $event_end_date ) : ?>
                                     <div class="block__inner">
-                                        <h2 class="block__title"><?php echo esc_html( 'End:', TEXT_DOMAIN ); ?></h2>
+                                        <h2 class="block__title"><?php echo esc_html__( 'End:', TEXT_DOMAIN ); ?></h2>
                                         <div class="block__content">
                                             <time datetime=""><?php echo wp_safe_format_date( $event_end_date, 'd/m/Y', 'Y. F d.' ); ?></time>
                                             <?php if ( $event_end_time ) : ?>
@@ -81,7 +82,7 @@
                     ?>
 
                     <div class="block block--event-registration">
-                        <h2 class="block__title"><?php echo esc_html( 'Registration', TEXT_DOMAIN ); ?></h2>
+                        <h2 class="block__title"><?php echo esc_html__( 'Registration', TEXT_DOMAIN ); ?></h2>
                         <?php 
                             get_template_part( 'template-parts/forms/form', 'event_registration' );
                         ?>

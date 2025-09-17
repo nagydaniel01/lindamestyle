@@ -3,7 +3,7 @@
     $szintipus_value = get_field('szintipus', 'user_' . $current_user_id);
 ?>
 
-<form id="beauty_profile_form" class="form" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
+<form id="beauty_profile_form" class="form" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
     <?php wp_nonce_field('beauty_profile_form_action', 'beauty_profile_form_nonce'); ?>
 
     <fieldset class="mb-3">
@@ -30,7 +30,7 @@
         </div>
     </fieldset>
     <div class="form__actions">
-        <button type="submit" class="btn btn-primary mb-3"><?php echo esc_html('Mentés', TEXT_DOMAIN); ?></button>
+        <button type="submit" class="btn btn-primary mb-3"><?php echo esc_html__('Mentés', TEXT_DOMAIN); ?></button>
         <div id="message" role="status" aria-live="polite"></div>
     </div>
 </form>

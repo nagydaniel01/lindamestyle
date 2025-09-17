@@ -52,6 +52,21 @@
                         wpautop( esc_html__( 'Welcome to the event! We’re excited to have you join us!', TEXT_DOMAIN ) )
                     );
 
+                    $google_url = get_add_to_calendar_url( $event_id );
+                    $ics_url    = get_add_to_calendar_ics( $event_id );
+
+                    if ( $google_url ) {
+                        $output .= '<p><a href="' . esc_url( $google_url ) . '" target="_blank" rel="noopener noreferrer" class="button add-to-calendar">';
+                        $output .= esc_html__( 'Add to Google Calendar', 'your-text-domain' );
+                        $output .= '</a></p>';
+                    }
+
+                    if ( $ics_url ) {
+                        $output .= '<p><a href="' . esc_url( $ics_url ) . '" download class="button add-to-calendar">';
+                        $output .= esc_html__( 'Add to Apple / Outlook Calendar', 'your-text-domain' );
+                        $output .= '</a></p>';
+                    }
+
                     return $output;
                 }
 

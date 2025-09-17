@@ -23,8 +23,8 @@
 ?>
 <?php get_header(); ?>
 
-<main class="page page--archive page--archive-<?php esc_attr_e($post_type); ?>">
-    <section class="section section--archive section--archive-<?php esc_attr_e($post_type); ?>" data-post-type="<?php esc_attr_e($post_type); ?>" data-posts-per-page="<?php esc_attr_e($posts_per_page); ?>">
+<main class="page page--archive page--archive-<?php echo esc_attr($post_type); ?>">
+    <section class="section section--archive section--archive-<?php echo esc_attr($post_type); ?>" data-post-type="<?php echo esc_attr($post_type); ?>" data-posts-per-page="<?php echo esc_attr($posts_per_page); ?>">
         <div class="container">
             <header class="section__header">
                 <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
@@ -105,10 +105,10 @@
                                     }
                                     ?>
 
-                                    <div class="filter-checkbox-group mb-3" id="filter-<?php echo esc_attr($tax_obj); ?>">
-                                        <p class="fw-bold mb-2">
+                                    <fieldset id="filter-<?php echo esc_attr($tax_obj); ?>">
+                                        <legend>
                                             <?php echo esc_html(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($label))); ?>
-                                        </p>
+                                        </legend>
 
                                         <?php foreach ($terms as $key => $term) : ?>
                                             <div class="form-check">
@@ -125,7 +125,7 @@
                                                 </label>
                                             </div>
                                         <?php endforeach; ?>
-                                    </div>
+                                    </fieldset>
 
                                     <?php
                                 endif;
@@ -167,7 +167,7 @@
                                         case 'checkbox':
                                         case 'radio':
                                             echo '<fieldset class="filter-' . esc_attr($filter_name) . ' mb-3">';
-                                            echo '<legend class="fw-bold mb-2">' . esc_html(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))) . '</legend>';
+                                            echo '<legend>' . esc_html(sprintf(__('Filter by %s', TEXT_DOMAIN), strtolower($filter_label))) . '</legend>';
     
                                             foreach ($filter_options as $value => $label) :
                                                 $input_type = ($filter_type === 'checkbox') ? 'checkbox' : 'radio';
@@ -210,16 +210,14 @@
                         <?php if ( is_user_logged_in() ) : ?>
                             <div class="col-md-4 mb-3">
                                 <fieldset id="filter-profile">
-                                    <legend class="fw-bold mb-2">
-                                        <?php _e('My Profile Filters', TEXT_DOMAIN); ?>
-                                    </legend>
+                                    <legend><?php echo esc_html__('My Profile Filters', TEXT_DOMAIN); ?></legend>
                                     <?php 
                                         $apply_profile_checked = !empty($_GET['apply_profile_filters']) && $_GET['apply_profile_filters'] == '1';
                                     ?>
                                     <div class="form-check">
                                         <input type="checkbox" name="apply_profile_filters" value="1" id="apply-profile-filters" class="form-check-input filter js-filter js-filter-default" data-filter="apply_profile_filters" <?php checked($apply_profile_checked); ?>>
                                         <label class="form-check-label" for="apply-profile-filters">
-                                            <?php _e('Apply my profile settings', TEXT_DOMAIN); ?>
+                                            <?php echo esc_html__('Apply my profile settings', TEXT_DOMAIN); ?>
                                         </label>
                                     </div>
                                 </fieldset>

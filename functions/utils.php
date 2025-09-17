@@ -175,7 +175,7 @@
 
                 // Check for parsing errors
                 $errors = DateTime::getLastErrors();
-                if ( $date === false || $errors['warning_count'] > 0 || $errors['error_count'] > 0 ) {
+                if ( $date === false || ( $errors && ($errors['warning_count'] > 0 || $errors['error_count'] > 0) ) ) {
                     return $fallback;
                 }
 
@@ -223,9 +223,11 @@
             try {
                 $time = DateTime::createFromFormat( $input_format, $time_str );
                 $errors = DateTime::getLastErrors();
-                if ( $time === false || $errors['warning_count'] > 0 || $errors['error_count'] > 0 ) {
+
+                if ( $time === false || ( $errors && ($errors['warning_count'] > 0 || $errors['error_count'] > 0) ) ) {
                     return $fallback;
                 }
+                
                 return date_i18n( $output_format, $time->getTimestamp() );
             } catch ( Exception $e ) {
                 return $fallback;
@@ -373,6 +375,187 @@
             }
 
             return null;
+        }
+    }
+
+    if ( ! function_exists( 'get_add_to_calendar_url' ) ) {
+        /**
+         * Generate a Google Calendar event URL from an Event post.
+         *
+         * @param int $event_id The event post ID.
+         * @return string Google Calendar URL or empty string if invalid.
+         */
+        function get_add_to_calendar_url( $event_id ) {
+            if ( ! $event_id || ! get_post( $event_id ) ) {
+                return '';
+            }
+
+            $summary     = get_the_title( $event_id );
+            $description = get_the_excerpt( $event_id );
+            $location    = get_field( 'event_location', $event_id )['event_location_address'] ?? '';
+
+            $timezone = wp_timezone_string();
+            $tz       = new DateTimeZone( $timezone );
+
+            // Start fields
+            $start_date_field = get_field_object( 'event_start_date', $event_id );
+            $start_time_field = get_field_object( 'event_start_time', $event_id );
+
+            // End fields
+            $end_date_field = get_field_object( 'event_end_date', $event_id );
+            $end_time_field = get_field_object( 'event_end_time', $event_id );
+
+            if ( empty( $start_date_field['value'] ) || empty( $start_time_field['value'] ) ) {
+                return '';
+            }
+
+            // Start DateTime
+            $start_date = DateTime::createFromFormat(
+                $start_date_field['return_format'] ?? 'Y-m-d',
+                $start_date_field['value'],
+                $tz
+            );
+            if ( ! $start_date ) {
+                return '';
+            }
+
+            [$hour, $minute] = explode( ':', $start_time_field['value'] );
+            $start_date->setTime( (int) $hour, (int) $minute );
+            $start = $start_date->format( 'Ymd\THis' );
+
+            // End DateTime
+            if ( ! empty( $end_date_field['value'] ) ) {
+                $end_date = DateTime::createFromFormat(
+                    $end_date_field['return_format'] ?? 'Y-m-d',
+                    $end_date_field['value'],
+                    $tz
+                );
+                if ( $end_date ) {
+                    if ( ! empty( $end_time_field['value'] ) ) {
+                        [$end_hour, $end_minute] = explode( ':', $end_time_field['value'] );
+                        $end_date->setTime( (int) $end_hour, (int) $end_minute );
+                    } else {
+                        $end_date->setTime( (int) $hour, (int) $minute );
+                    }
+                    $end = $end_date->format( 'Ymd\THis' );
+                }
+            }
+
+            // Default fallback (+1h)
+            if ( empty( $end ) ) {
+                $end = clone $start_date;
+                $end->modify( '+1 hour' );
+                $end = $end->format( 'Ymd\THis' );
+            }
+
+            $calendar_url  = 'https://www.google.com/calendar/render?action=TEMPLATE';
+            $calendar_url .= '&text=' . rawurlencode( $summary );
+            $calendar_url .= "&dates={$start}/{$end}";
+            $calendar_url .= '&details=' . rawurlencode( $description );
+            $calendar_url .= '&location=' . rawurlencode( $location );
+            $calendar_url .= '&ctz=' . rawurlencode( $timezone );
+
+            return esc_url( $calendar_url );
+        }
+    }
+
+    if ( ! function_exists( 'get_add_to_calendar_ics' ) ) {
+        /**
+         * Generate an ICS file content for Apple / Outlook Calendar.
+         *
+         * @param int $event_id The event post ID.
+         * @return string Download URL for the ICS file or empty string if invalid.
+         */
+        function get_add_to_calendar_ics( $event_id ) {
+            if ( ! $event_id || ! get_post( $event_id ) ) {
+                return '';
+            }
+
+            $summary     = get_the_title( $event_id );
+            $description = get_the_excerpt( $event_id );
+            $location    = get_field( 'event_location', $event_id )['event_location_address'] ?? '';
+
+            $timezone = wp_timezone_string();
+            $tz       = new DateTimeZone( $timezone );
+
+            // Start fields
+            $start_date_field = get_field_object( 'event_start_date', $event_id );
+            $start_time_field = get_field_object( 'event_start_time', $event_id );
+
+            // End fields
+            $end_date_field = get_field_object( 'event_end_date', $event_id );
+            $end_time_field = get_field_object( 'event_end_time', $event_id );
+
+            if ( empty( $start_date_field['value'] ) || empty( $start_time_field['value'] ) ) {
+                return '';
+            }
+
+            // Start DateTime
+            $start_date = DateTime::createFromFormat(
+                $start_date_field['return_format'] ?? 'Y-m-d',
+                $start_date_field['value'],
+                $tz
+            );
+            if ( ! $start_date ) {
+                return '';
+            }
+
+            [$hour, $minute] = explode( ':', $start_time_field['value'] );
+            $start_date->setTime( (int) $hour, (int) $minute );
+            $start = $start_date->format( 'Ymd\THis' );
+
+            // End DateTime
+            if ( ! empty( $end_date_field['value'] ) ) {
+                $end_date = DateTime::createFromFormat(
+                    $end_date_field['return_format'] ?? 'Y-m-d',
+                    $end_date_field['value'],
+                    $tz
+                );
+                if ( $end_date ) {
+                    if ( ! empty( $end_time_field['value'] ) ) {
+                        [$end_hour, $end_minute] = explode( ':', $end_time_field['value'] );
+                        $end_date->setTime( (int) $end_hour, (int) $end_minute );
+                    } else {
+                        $end_date->setTime( (int) $hour, (int) $minute );
+                    }
+                    $end = $end_date->format( 'Ymd\THis' );
+                }
+            }
+
+            // Default fallback (+1h)
+            if ( empty( $end ) ) {
+                $end = clone $start_date;
+                $end->modify( '+1 hour' );
+                $end = $end->format( 'Ymd\THis' );
+            }
+
+            // Build ICS content
+            $ics  = "BEGIN:VCALENDAR\r\n";
+            $ics .= "VERSION:2.0\r\n";
+            $ics .= "PRODID:-//YourSite//NONSGML v1.0//EN\r\n";
+            $ics .= "BEGIN:VEVENT\r\n";
+            $ics .= "UID:" . uniqid() . "@yoursite.com\r\n";
+            $ics .= "DTSTAMP:" . gmdate( 'Ymd\THis\Z' ) . "\r\n";
+            $ics .= "DTSTART;TZID={$timezone}:" . $start . "\r\n";
+            $ics .= "DTEND;TZID={$timezone}:" . $end . "\r\n";
+            $ics .= "SUMMARY:" . esc_html( $summary ) . "\r\n";
+            $ics .= "DESCRIPTION:" . esc_html( $description ) . "\r\n";
+            $ics .= "LOCATION:" . esc_html( $location ) . "\r\n";
+            $ics .= "END:VEVENT\r\n";
+            $ics .= "END:VCALENDAR\r\n";
+
+            // Save file in uploads/ics
+            $upload_dir = wp_upload_dir();
+            $ics_dir    = trailingslashit( $upload_dir['basedir'] ) . 'ics/';
+            $ics_url    = trailingslashit( $upload_dir['baseurl'] ) . 'ics/';
+            if ( ! file_exists( $ics_dir ) ) {
+                wp_mkdir_p( $ics_dir );
+            }
+
+            $file_name = 'event-' . $event_id . '.ics';
+            file_put_contents( $ics_dir . $file_name, $ics );
+
+            return esc_url( $ics_url . $file_name );
         }
     }
 

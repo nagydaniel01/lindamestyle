@@ -124,9 +124,10 @@
                     ),
                     'post_author' => $user_id,
                     'meta_input'  => [
-                        'event_id'       => $event_id,
-                        'attendee_name'  => $name,
-                        'attendee_email' => $email
+                        'event_id'                => $event_id,
+                        'attendee_name'           => $name,
+                        'attendee_email'          => $email,
+                        'attendee_privacy_policy' => $privacy,
                     ]
                 ]);
 

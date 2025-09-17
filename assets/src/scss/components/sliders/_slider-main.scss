@@ -14,13 +14,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: linear-gradient(to right, rgba($black, .75) 0%, rgba($black, 0) 100%);
         }
     }
 
     .slider__image {
         display: block;
         object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
 
     .slider__caption {
@@ -34,16 +36,34 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        color: $white;
         z-index: 1;
     }
 
-    .slider__caption-title {
-        font-size: 4rem;
+    .slider__caption-inner {
+        display: flex;
+        flex-direction: column;
+        max-width: 50%;
+        row-gap: 1.25rem;
+    }
+
+    .slider__title {
+        font-size: 3.5rem;
+        font-weight: 400;
+        line-height: 3.75rem;
         color: $primary;
     }
 
-    .slider__caption-description {
-        font-size: 1.5rem;
+    .slider__subtitle {
+        font-size: 1.625rem;
+    }
+
+    .slider__description {
+        font-size: 1rem;
+    }
+
+    .slider__button {
+        width: fit-content;
     }
 
     .slick-slide > div {

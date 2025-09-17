@@ -42,7 +42,7 @@
     }
 ?>
 
-<article class="card <?php esc_attr_e($extra_classes); ?>">
+<article class="card <?php echo esc_attr($extra_classes); ?>">
     <a href="<?php the_permalink(); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">
@@ -73,12 +73,12 @@
                         ?>
 
                         <?php if (!empty($primary_category)) : ?>
-                            <span class="card__category"><?php esc_html_e($primary_category); ?></span>
+                            <span class="card__category"><?php echo esc_html($primary_category); ?></span>
                         <?php endif; ?>
                     </span>
                 <?php endif; ?>
 
-                <time datetime="<?php esc_html_e(get_the_date('c')); ?>" class="card__date"><?php echo get_the_date(); ?></time>
+                <time datetime="<?php echo esc_html(get_the_date('c')); ?>" class="card__date"><?php echo get_the_date(); ?></time>
             </div>
 
             <span class="card__button">
@@ -87,11 +87,11 @@
         </div>
     </a>
     <?php if ( ! is_user_logged_in() ) : ?>
-        <a class="card__bookmark btn" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+        <a class="card__bookmark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
             <svg class="icon icon-bookmark-empty">
                 <use xlink:href="#icon-bookmark-empty"></use>
             </svg>
-            <span class="visually-hidden"><?php echo esc_html(__('Add to Bookmarks', TEXT_DOMAIN)); ?></span>
+            <span class="visually-hidden"><?php echo esc_html__('Add to Bookmarks', TEXT_DOMAIN); ?></span>
         </a>
     <?php else : ?>
         <?php
@@ -100,7 +100,7 @@
             $bookmark_icon = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
             $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', TEXT_DOMAIN) : __('Add to Bookmarks', TEXT_DOMAIN);
         ?>
-        <a id="btn-bookmark" class="card__bookmark btn" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
+        <a id="btn-bookmark" class="card__bookmark" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
             <svg class="icon icon-<?php echo esc_attr($bookmark_icon); ?>">
                 <use xlink:href="#icon-<?php echo esc_attr($bookmark_icon); ?>"></use>
             </svg>

@@ -274,6 +274,33 @@
                             "rows_per_page": 20,
                             "sub_fields": [
                                 {
+                                    "key": "field_68c432f86f29a",
+                                    "label": "Típus",
+                                    "name": "card_type",
+                                    "aria-label": "",
+                                    "type": "radio",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "image": "Kép",
+                                        "icon": "Ikon"
+                                    },
+                                    "default_value": "image",
+                                    "return_format": "value",
+                                    "allow_null": 0,
+                                    "other_choice": 0,
+                                    "allow_in_bindings": 0,
+                                    "layout": "vertical",
+                                    "save_other_choice": 0,
+                                    "parent_repeater": "field_68c161d3e5a55"
+                                },
+                                {
                                     "key": "field_68c16226e5a58",
                                     "label": "Kép",
                                     "name": "card_image",
@@ -281,7 +308,50 @@
                                     "type": "image",
                                     "instructions": "",
                                     "required": 0,
-                                    "conditional_logic": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_68c432f86f29a",
+                                                "operator": "==",
+                                                "value": "image"
+                                            }
+                                        ]
+                                    ],
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "library": "all",
+                                    "min_width": "",
+                                    "min_height": "",
+                                    "min_size": "",
+                                    "max_width": "",
+                                    "max_height": "",
+                                    "max_size": "",
+                                    "mime_types": "",
+                                    "allow_in_bindings": 0,
+                                    "preview_size": "medium",
+                                    "parent_repeater": "field_68c161d3e5a55"
+                                },
+                                {
+                                    "key": "field_68c4332f6f29b",
+                                    "label": "Ikon",
+                                    "name": "card_icon",
+                                    "aria-label": "",
+                                    "type": "image",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_68c432f86f29a",
+                                                "operator": "==",
+                                                "value": "icon"
+                                            }
+                                        ]
+                                    ],
                                     "wrapper": {
                                         "width": "",
                                         "class": "",
@@ -1908,6 +1978,29 @@
                             "prefix_name": 1
                         },
                         {
+                            "key": "field_68c41ba74fd61",
+                            "label": "Képmagasság",
+                            "name": "slider_height",
+                            "aria-label": "",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "min": "",
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
                             "key": "field_68a6e6baaf5bc",
                             "label": "Képarány",
                             "name": "slider_ratio",
@@ -1923,14 +2016,15 @@
                             },
                             "choices": {
                                 "16x9": "16x9",
-                                "21x9": "21x9"
+                                "21x9": "21x9",
+                                "2x1": "2x1"
                             },
                             "default_value": "16x9",
                             "return_format": "value",
                             "allow_null": 0,
                             "other_choice": 0,
                             "allow_in_bindings": 0,
-                            "layout": "vertical",
+                            "layout": "horizontal",
                             "save_other_choice": 0
                         },
                         {
@@ -1957,7 +2051,7 @@
                             "allow_null": 0,
                             "other_choice": 0,
                             "allow_in_bindings": 0,
-                            "layout": "vertical",
+                            "layout": "horizontal",
                             "save_other_choice": 0
                         },
                         {
@@ -2004,6 +2098,28 @@
                                     "parent_repeater": "field_68a5fed94ba5a"
                                 },
                                 {
+                                    "key": "field_68ca64323b3fb",
+                                    "label": "Alcím",
+                                    "name": "slide_subtitle",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "allow_in_bindings": 0,
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_68a5fed94ba5a"
+                                },
+                                {
                                     "key": "field_68a5fed94ba5c",
                                     "label": "Szöveg",
                                     "name": "slide_description",
@@ -2023,6 +2139,24 @@
                                     "rows": "",
                                     "placeholder": "",
                                     "new_lines": "wpautop",
+                                    "parent_repeater": "field_68a5fed94ba5a"
+                                },
+                                {
+                                    "key": "field_68a5ff5e4ba5e",
+                                    "label": "Call to Action gomb",
+                                    "name": "slide_call_to_action",
+                                    "aria-label": "",
+                                    "type": "link",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "allow_in_bindings": 0,
                                     "parent_repeater": "field_68a5fed94ba5a"
                                 },
                                 {
@@ -2050,24 +2184,6 @@
                                     "mime_types": "",
                                     "allow_in_bindings": 0,
                                     "preview_size": "medium",
-                                    "parent_repeater": "field_68a5fed94ba5a"
-                                },
-                                {
-                                    "key": "field_68a5ff5e4ba5e",
-                                    "label": "Call to Action gomb",
-                                    "name": "slide_call_to_action",
-                                    "aria-label": "",
-                                    "type": "link",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "return_format": "array",
-                                    "allow_in_bindings": 0,
                                     "parent_repeater": "field_68a5fed94ba5a"
                                 }
                             ]
@@ -2121,6 +2237,114 @@
                             "width": "",
                             "height": "",
                             "allow_in_bindings": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
+                "layout_68c43ce99c4ba": {
+                    "key": "layout_68c43ce99c4ba",
+                    "name": "media",
+                    "label": "Média",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68c43ce99c4bc",
+                            "label": "Section",
+                            "name": "media",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68c43ce99c4bd",
+                            "label": "Média",
+                            "name": "media",
+                            "aria-label": "",
+                            "type": "file",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_size": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "allow_in_bindings": 0
+                        },
+                        {
+                            "key": "field_68c7cf2aa2d78",
+                            "label": "Típus",
+                            "name": "media_type",
+                            "aria-label": "",
+                            "type": "true_false",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "",
+                            "default_value": 0,
+                            "allow_in_bindings": 0,
+                            "ui_on_text": "Video",
+                            "ui_off_text": "Audio",
+                            "ui": 1
+                        },
+                        {
+                            "key": "field_68c7cd926decf",
+                            "label": "Poster",
+                            "name": "media_poster",
+                            "aria-label": "",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68c7cf2aa2d78",
+                                        "operator": "!=",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "library": "all",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "",
+                            "allow_in_bindings": 0,
+                            "preview_size": "medium"
                         }
                     ],
                     "min": "",
@@ -2331,6 +2555,59 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_68caa367e8234": {
+                    "key": "layout_68caa367e8234",
+                    "name": "shortcode",
+                    "label": "Shortcode",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68caa367e8236",
+                            "label": "Section",
+                            "name": "shortcode",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68caa383e8237",
+                            "label": "Shortcode",
+                            "name": "shortcode",
+                            "aria-label": "",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "min": "",
@@ -2406,5 +2683,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1757524133
+    "modified": 1758110610
 }

@@ -273,6 +273,7 @@
     }
 
     if ( ! function_exists( 'show_template_column_with_tooltip' ) ) {
+
         /**
          * Populate the custom "Template" column with the readable template name
          * and show the template file path in the title attribute as a tooltip.
@@ -280,30 +281,80 @@
          * @param string $column_name The name of the column to display.
          * @param int    $post_id     The current post ID.
          */
-        function show_template_column_with_tooltip($column_name, $post_id) {
-            if ($column_name !== 'page_template' || !current_user_can('administrator')) {
+        function show_template_column_with_tooltip( $column_name, $post_id ) {
+            if ( $column_name !== 'page_template' || ! current_user_can( 'administrator' ) ) {
                 return;
             }
 
-            $template = get_post_meta($post_id, '_wp_page_template', true);
+            $template = get_post_meta( $post_id, '_wp_page_template', true );
 
-            if ($template === 'default') {
-                echo __('Default template');
+            if ( $template === 'default' ) {
+                echo __( 'Default template' );
             } else {
-                $template_path = locate_template($template);
+                $template_path = locate_template( $template );
                 $template_name = '';
 
-                if (file_exists($template_path)) {
-                    $template_data = get_file_data($template_path, array('name' => 'Template Name'));
-                    $template_name = $template_data['name'] ?: basename($template);
+                if ( file_exists( $template_path ) ) {
+                    $template_data = get_file_data( $template_path, array( 'name' => 'Template Name' ) );
+                    $template_name = $template_data['name'] ?: basename( $template );
                 } else {
-                    $template_name = basename($template);
+                    $template_name = basename( $template );
                 }
 
-                echo '<span title="' . esc_attr($template) . '">' . esc_html($template_name) . '</span>';
+                echo '<span title="' . esc_attr( $template ) . '">' . esc_html( $template_name ) . '</span>';
             }
         }
         add_action( 'manage_pages_custom_column', 'show_template_column_with_tooltip', 10, 2 );
+    }
+
+    // ============================================================
+    // POST COLUMNS: POST FORMAT
+    // ============================================================
+
+    if ( ! function_exists( 'add_post_format_column_with_tooltip' ) ) {
+        /**
+         * Add a "Format" column to the Posts admin list for administrators only.
+         *
+         * @param array $columns Existing column headers.
+         * @return array Modified column headers with the Format column.
+         */
+        function add_post_format_column_with_tooltip( $columns ) {
+            if ( current_user_can( 'administrator' ) ) {
+                $columns['post_format'] = __( 'Format' );
+            }
+            return $columns;
+        }
+        add_filter( 'manage_posts_columns', 'add_post_format_column_with_tooltip' );
+    }
+
+    if ( ! function_exists( 'show_post_format_column_with_tooltip' ) ) {
+        /**
+         * Populate the custom "Format" column with the localized post format
+         * name and show the raw format key in the title attribute as a tooltip.
+         *
+         * @param string $column_name The name of the column to display.
+         * @param int    $post_id     The current post ID.
+         */
+        function show_post_format_column_with_tooltip( $column_name, $post_id ) {
+            if ( $column_name !== 'post_format' || ! current_user_can( 'administrator' ) ) {
+                return;
+            }
+
+            $format = get_post_format( $post_id );
+
+            // Get localized post format names
+            $format_names = get_post_format_strings();
+
+            if ( ! $format ) {
+                echo '<span title="standard">' . esc_html( $format_names['standard'] ) . '</span>';
+            } elseif ( isset( $format_names[ $format ] ) ) {
+                echo '<span title="' . esc_attr( $format ) . '">' . esc_html( $format_names[ $format ] ) . '</span>';
+            } else {
+                // Fallback: display raw format
+                echo '<span title="' . esc_attr( $format ) . '">' . esc_html( ucfirst( $format ) ) . '</span>';
+            }
+        }
+        add_action( 'manage_posts_custom_column', 'show_post_format_column_with_tooltip', 10, 2 );
     }
 
     // ============================================================
@@ -532,8 +583,8 @@
          * @param array $columns Existing columns in the Users list table.
          * @return array Modified columns including the new custom columns.
          */
-        function add_custom_user_columns($columns) {
-            $columns['user_id'] = __('User ID');
+        function add_custom_user_columns( $columns ) {
+            $columns['user_id']                = __('User ID');
             $columns['user_registration_date'] = __('User Registration Date');
             return $columns;
         }
@@ -552,14 +603,14 @@
          * @param int    $user_id     The ID of the user for the current row.
          * @return string             The value to display in the custom column.
          */
-        function render_custom_user_columns($value, $column_name, $user_id) {
-            if ($column_name == 'user_id') {
+        function render_custom_user_columns( $value, $column_name, $user_id ) {
+            if ( $column_name == 'user_id' ) {
                 return $user_id;
             }
 
-            if ($column_name == 'user_registration_date') {
-                $user_info = get_userdata($user_id);
-                return date('Y-m-d H:i:s', strtotime($user_info->user_registered)); // Format date as 'Y-m-d H:i:s'
+            if ( $column_name == 'user_registration_date' ) {
+                $user_info = get_userdata( $user_id );
+                return date( 'Y-m-d H:i:s', strtotime( $user_info->user_registered ) ); // Format date as 'Y-m-d H:i:s'
             }
             return $value;
         }
@@ -592,30 +643,34 @@
         /**
          * Adds a "Switch To" link to each user row in the admin Users list for administrators.
          *
-         * @param array    $actions The list of row actions.
-         * @param WP_User  $user    The user object for the current row.
+         * @param array   $actions The list of row actions.
+         * @param WP_User $user    The user object for the current row.
          * @return array Modified list of row actions with 'Switch To' link added.
          */
-        function switch_to_user_account($actions, $user) {
+        function switch_to_user_account( $actions, $user ) {
             // Ensure only administrators can switch to other users
-            if (!current_user_can('administrator') || get_current_user_id() === $user->ID) {
+            if ( ! current_user_can( 'administrator' ) || get_current_user_id() === $user->ID ) {
                 return $actions; // Prevent switching to self
             }
 
             // Create a secure nonce for the URL
-            $nonce = wp_create_nonce('secure_user_switch');
-            $url = add_query_arg([
-                'switch_user' => $user->user_login,
-                'token'       => $nonce,
-            ], site_url());
+            $nonce = wp_create_nonce( 'secure_user_switch' );
+            $url   = add_query_arg(
+                array(
+                    'switch_user' => $user->user_login,
+                    'token'       => $nonce,
+                ),
+                site_url()
+            );
 
             // Add the 'Switch To' action link
-            $actions['switch_to'] = '<a href="' . esc_url($url) . '">' . esc_html__('Fiók váltás', TEXT_DOMAIN) . '</a>';
+            $actions['switch_to'] = '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Fiók váltás', TEXT_DOMAIN ) . '</a>';
+
             return $actions;
         }
-
         add_filter( 'user_row_actions', 'switch_to_user_account', 10, 2 );
     }
+
 
     if ( ! function_exists( 'handle_user_switching' ) ) {
         /**
@@ -626,28 +681,28 @@
          */
         function handle_user_switching() {
             // Ensure the user is logged in and has admin privileges
-            if (!is_user_logged_in() || !current_user_can('administrator')) {
+            if ( ! is_user_logged_in() || ! current_user_can( 'administrator' ) ) {
                 return;
             }
 
             // Check if the 'switch_user' and 'token' parameters exist in the URL
-            if (isset($_GET['switch_user'], $_GET['token'])) {
-                $user_login = sanitize_user($_GET['switch_user']);
-                $token = sanitize_text_field($_GET['token']);
+            if ( isset( $_GET['switch_user'], $_GET['token'] ) ) {
+                $user_login = sanitize_user( $_GET['switch_user'] );
+                $token      = sanitize_text_field( $_GET['token'] );
 
                 // Verify the nonce for security
-                if (wp_verify_nonce($token, 'secure_user_switch')) {
-                    $user = get_user_by('login', $user_login);
-                    if ($user && $user->ID !== get_current_user_id()) {
+                if ( wp_verify_nonce( $token, 'secure_user_switch' ) ) {
+                    $user = get_user_by( 'login', $user_login );
+
+                    if ( $user && $user->ID !== get_current_user_id() ) {
                         // Switch to the specified user
-                        wp_set_current_user($user->ID);
-                        wp_set_auth_cookie($user->ID);
-                        wp_redirect(admin_url()); // Redirect to the admin dashboard
+                        wp_set_current_user( $user->ID );
+                        wp_set_auth_cookie( $user->ID );
+                        wp_redirect( admin_url() ); // Redirect to the admin dashboard
                         exit;
                     }
                 }
             }
         }
-
         add_action( 'init', 'handle_user_switching' );
     }

@@ -31,8 +31,8 @@
 
             <div class="section__content">
                 <?php echo do_shortcode('[real3dflipbook id="1" pdf="' . esc_url($file_url) . '"]'); ?>
-                <a href="<?php echo esc_url($file_url); ?>" target="_self" aria-label="<?php esc_attr_e($aria_label); ?>" download class="section__button btn btn-primary">
-                    <span><?php esc_html_e('PDF letöltése', TEXT_DOMAIN); ?></span>
+                <a href="<?php echo esc_url($file_url); ?>" target="_self" aria-label="<?php echo esc_attr($aria_label); ?>" download class="section__button btn btn-primary">
+                    <span><?php echo esc_html__('PDF letöltése', TEXT_DOMAIN); ?></span>
                     <svg class="icon icon-download"><use xlink:href="#icon-download"></use></svg>
                 </a>
             </div>    

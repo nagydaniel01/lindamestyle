@@ -57,6 +57,27 @@
   margin-top: 1.5rem;
 }
 
+.back-to-top {
+  position: fixed;
+  right: calc($grid-gutter-width * 0.5);
+  bottom: calc($grid-gutter-width * 0.5);
+  width: 2rem;
+  height: 2rem;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: grid;
+  place-items: center;
+  background-color: rgba($white, 0.8);
+  border-radius: 2rem;
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
 @include media-breakpoint-up(xl) {
   .footer {
     .footer__top {

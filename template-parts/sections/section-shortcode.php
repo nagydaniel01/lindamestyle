@@ -1,13 +1,18 @@
 <?php
-    $section_title      = $section['wysiwyg_editor_section_title'] ?? '';
-    $section_hide_title = $section['wysiwyg_editor_section_hide_title'] ?? false;
+    $section_title      = $section['shortcode_section_title'] ?? '';
+    $section_hide_title = $section['shortcode_section_hide_title'] ?? false;
     $section_slug       = sanitize_title($section_title);
-    $section_lead       = $section['wysiwyg_editor_section_lead'] ?? '';
-    $wysiwyg_editor     = $section['wysiwyg_editor'] ?? '';
+    $section_lead       = $section['shortcode_section_lead'] ?? '';
+    $shortcode          = $section['shortcode'] ?? '';
+
+    $shortcode_tag = '';
+    if (preg_match('/\[([a-zA-Z0-9_-]+)/', $shortcode, $matches)) {
+        $shortcode_tag = $matches[1];
+    }
 ?>
 
-<?php if (!empty($wysiwyg_editor)) : ?>
-    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--wysiwyg_editor">
+<?php if (!empty($shortcode) && shortcode_exists($shortcode_tag)) : ?>
+    <section id="<?php echo esc_attr($section_slug); ?>" class="section section--shortcode">
         <div class="container">
             <div class="section__inner">
                 <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
@@ -22,7 +27,7 @@
                 <?php endif; ?>
                 
                 <div class="section__content">
-                    <?php echo wp_kses_post($wysiwyg_editor); ?>
+                    <?php echo do_shortcode($shortcode); ?>
                 </div>
             </div>
         </div>

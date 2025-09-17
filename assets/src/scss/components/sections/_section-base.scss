@@ -19,15 +19,15 @@
         max-width: 65rem;
 
         .section__content {
-        max-width: 40rem;
-        margin: 0 auto;
+            max-width: 40rem;
+            margin: 0 auto;
         }
     }
 
     .section__header {
         display: flex;
         flex-direction: column;
-        margin-bottom: 1.875rem;
+        margin-bottom: 1rem;
     }
 
     .section__image-wrapper {
@@ -44,7 +44,8 @@
     }
 
     .section__title {
-        font-weight: 800;
+        font-style: italic;
+        letter-spacing: -1px;
     }
 
     .section__lead {
@@ -75,9 +76,19 @@
                 background-color: $primary;
             }
         }
+    }
 
-        a {
-            margin-left: 1rem;
+    .section__bookmark {
+        display: inline-flex;
+        align-items: center;
+        margin-left: auto;
+        gap: .5rem;
+        text-decoration: none;
+        color: $body-color;
+
+        .icon {
+            width: 1.5rem;
+            height: 1.5rem;
         }
     }
 
@@ -126,6 +137,18 @@
             max-width: 768px;
             margin: 0 auto;
         }
+    }
+
+    .toc-list {
+        list-style: none;
+    }
+
+    .accordion-body ol {
+        padding-left: 1rem;
+    }
+
+    .accordion-body > ol {
+        padding-left: 0;
     }
 }
 

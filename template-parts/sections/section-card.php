@@ -44,6 +44,7 @@
                                         if (!empty($template)) {
                                             $template_args = array(
                                                 'card_image'       => $item['card_image'],
+                                                'card_icon'        => $item['card_icon'],
                                                 'card_title'       => $item['card_title'],
                                                 'card_description' => $item['card_description'],
                                                 'card_button'      => $item['card_button'],
@@ -65,6 +66,7 @@
                                 if (!empty($template)) {
                                     $template_args = array(
                                         'card_image'       => $item['card_image'],
+                                        'card_icon'        => $item['card_icon'],
                                         'card_title'       => $item['card_title'],
                                         'card_description' => $item['card_description'],
                                         'card_button'      => $item['card_button'],

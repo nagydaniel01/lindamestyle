@@ -9,21 +9,21 @@
         $label       = $object->labels->name;
     
     } elseif ( $object instanceof WP_Term ) {
-    
         // It's a taxonomy term object
         $taxonomy     = $object->taxonomy; // taxonomy slug (e.g. category, product_cat)
         $taxonomy_obj = get_taxonomy( $taxonomy );
         $post_types   = $taxonomy_obj->object_type;
         $post_type    = reset( $post_types );
-    
     } else {
         echo 'This is neither a post type nor a term.';
     }
+
+    $post_type_obj = get_post_type_object( $post_type );
 ?>
 <?php get_header(); ?>
 
-<main class="page page--archive page--archive-<?php esc_attr_e($post_type); ?>">
-    <section class="section section--archive section--archive-<?php esc_attr_e($post_type); ?>" data-post-type="<?php esc_attr_e($post_type); ?>" data-posts-per-page="<?php esc_attr_e($posts_per_page); ?>">
+<main class="page page--archive page--archive-<?php echo esc_attr($post_type); ?>">
+    <section class="section section--archive section--archive-<?php echo esc_attr($post_type); ?>" data-post-type="<?php echo esc_attr($post_type); ?>" data-posts-per-page="<?php echo esc_attr($posts_per_page); ?>">
         <div class="container">
             <header class="section__header">
                 <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
@@ -71,7 +71,6 @@
                             }
                         ?>
                     </h1>
-                    <input type="text" name="filter-search" id="filter-search" class="form-control filter filter--search js-filter-search" placeholder="<?php echo esc_attr(sprintf(__('Search for %s', TEXT_DOMAIN), strtolower($post_type_obj->labels->name))); ?>" >
                 </div>
                 
                 <?php
@@ -83,34 +82,6 @@
                         the_archive_description( '<div class="section__lead">', '</div>' );
                     }
                 ?>
-
-                <div class="section__toolbar">
-                    <div class="row"> <!-- Bootstrap row wrapper -->
-                        <div class="col-md-4 mb-3">
-                            <?php foreach ($taxonomies as $key => $tax_obj) :
-                                $terms = get_terms([
-                                    'taxonomy'   => $tax_obj,
-                                    'hide_empty' => false,
-                                ]);
-                                
-                                if (!empty($terms) && !is_wp_error($terms)) :
-                                    $taxonomy = get_taxonomy($tax_obj);
-                                    $label = !empty($taxonomy->label) ? $taxonomy->label : '';
-                                    ?>
-                                    <select id="filter-<?php echo esc_attr($tax_obj); ?>" name="<?php echo esc_attr($tax_obj); ?>[]" multiple="multiple" class="filter form-select js-filter js-filter-default" data-filter="<?php echo esc_attr($tax_obj); ?>" data-placeholder="<?php echo esc_attr(sprintf(__('Szűrés %s szerint', 'TEXT_DOMAIN'), strtolower($label))); ?>">
-                                        <?php foreach ($terms as $key => $term) : ?>
-                                            <option value="<?php echo esc_attr($term->slug); ?>" 
-                                                <?php selected(get_query_var($tax_obj . '_filter'), $term->slug); ?>>
-                                                <?php echo esc_html($term->name); ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <?php
-                                endif;
-                            endforeach; ?>
-                        </div>
-                    </div> <!-- end row -->
-                </div>
             </header>
 
             <div class="section__body">

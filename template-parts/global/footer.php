@@ -10,8 +10,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6">
-                    <h3 class="footer__title"><?php echo esc_html('Fedezd fel a titkos stílustrükkjeinket!', TEXT_DOMAIN); ?></h3>
-                    <p><?php echo esc_html('...egyenesen a postaládádba.', TEXT_DOMAIN); ?></p>
+                    <h3 class="footer__title"><?php echo esc_html__('Fedezd fel a titkos stílustrükkjeinket!', TEXT_DOMAIN); ?></h3>
+                    <p><?php echo esc_html__('...egyenesen a postaládádba.', TEXT_DOMAIN); ?></p>
                 </div>
                 <div class="col-lg-6">
                     <?php get_template_part('template-parts/forms/form', 'subscribe'); ?>
@@ -44,7 +44,7 @@
                 <div class="col-12 col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if (!empty($social) && is_array($social)) : ?>
-                            <h3 class="footer__title"><?php echo esc_html('Közösségi média', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Közösségi média', TEXT_DOMAIN); ?></h3>
                             <?php
                                 $custom_names = [
                                     'linkedin'     => 'LinkedIn',
@@ -68,7 +68,7 @@
                                         <?php if ($social_url) : ?>
                                             <li class="nav__item">
                                                 <a href="<?php echo esc_url($social_url); ?>" target="<?php echo esc_attr($social_target); ?>" class="nav__link">
-                                                    <svg class="icon icon-<?php esc_attr_e($base); ?>"><use xlink:href="#icon-<?php esc_attr_e($base); ?>"></use></svg>
+                                                    <svg class="icon icon-<?php echo esc_attr($base); ?>"><use xlink:href="#icon-<?php echo esc_attr($base); ?>"></use></svg>
                                                     <span><?php echo esc_html($social_name); ?></span>
                                                 </a>
                                             </li>
@@ -115,7 +115,7 @@
 
                     if (!empty($categories) && !is_wp_error($categories)) : ?>
                         <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html('Cikkeink', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Cikkeink', TEXT_DOMAIN); ?></h3>
                             <nav class="footer__nav nav nav--footer">
                                 <ul class="nav__list">
                                     <?php
@@ -142,7 +142,7 @@
 
                     if (!empty($categories) && !is_wp_error($categories)) : ?>
                         <div class="footer__block">
-                            <h3 class="footer__title"><?php echo esc_html('Tudástár', TEXT_DOMAIN); ?></h3>
+                            <h3 class="footer__title"><?php echo esc_html__('Tudástár', TEXT_DOMAIN); ?></h3>
                             <nav class="footer__nav nav nav--footer">
                                 <ul class="nav__list">
                                     <?php

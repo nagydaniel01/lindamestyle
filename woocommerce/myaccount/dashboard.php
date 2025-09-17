@@ -154,7 +154,7 @@ if ( ! function_exists('render_subscription_table') ) {
 
 // Last login display
 if ( $last_login ) {
-    echo wpautop( esc_html__('Your last login was on: ', TEXT_DOMAIN) . esc_html(date_i18n('Y. F d., H:i', strtotime($last_login))) );
+    echo wpautop( esc_html__('Your last login was on: ', TEXT_DOMAIN) . esc_html(date_i18n('Y. F d., l H:i', strtotime($last_login))) );
 }
 
 // Memberships notices
@@ -177,7 +177,7 @@ if ( class_exists('WC_Memberships') ) {
 
 // Display latest posts slider
 if ( $latest_post->have_posts() ) : 
-    $template_args = ['post_type' => esc_attr($post_type)];
+    $template_args = ['post_type' => esc_attr(get_post_type())];
     $template      = locate_template("template-parts/cards/card-related.php");
     ?>
     <div class="section__popular-posts">
@@ -204,7 +204,7 @@ if ( $latest_post->have_posts() ) :
 <?php
 // Display recently viewed posts slider
 if ( $recently_viewed_posts->have_posts() ) :
-    $template_args = ['post_type' => esc_attr($post_type)];
+    $template_args = ['post_type' => esc_attr(get_post_type())];
     $template      = locate_template("template-parts/cards/card-related.php");
     ?>
     <div class="section__recently-viewed-posts">

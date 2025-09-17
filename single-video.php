@@ -156,6 +156,28 @@
                                 ?>
                             </span>
                         <?php endif; ?>
+
+                        <?php if ( ! is_user_logged_in() ) : ?>
+                            <a class="section__bookmark" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">
+                                <svg class="icon icon-bookmark-empty">
+                                    <use xlink:href="#icon-bookmark-empty"></use>
+                                </svg>
+                                <span><?php echo esc_html__('Add to Bookmarks', TEXT_DOMAIN); ?></span>
+                            </a>
+                        <?php else : ?>
+                            <?php
+                                $bookmark_ids  = get_field('user_bookmarks', 'user_'.$current_user_id) ?: [];
+                                $is_bookmarked = in_array( get_the_ID(), $bookmark_ids, true );
+                                $bookmark_icon = $is_bookmarked ? 'bookmark' : 'bookmark-empty';
+                                $bookmark_text = $is_bookmarked ? __('Remove form bookmarks', TEXT_DOMAIN) : __('Add to Bookmarks', TEXT_DOMAIN);
+                            ?>
+                            <a id="btn-bookmark" class="section__bookmark" href="#" data-post-id="<?php echo esc_attr($post_id); ?>" data-bookmarked="<?php echo esc_attr($is_bookmarked ? 'true' : 'false'); ?>">
+                                <svg class="icon icon-<?php echo esc_attr($bookmark_icon); ?>">
+                                    <use xlink:href="#icon-<?php echo esc_attr($bookmark_icon); ?>"></use>
+                                </svg>
+                                <span><?php echo esc_html( $bookmark_text ); ?></span>
+                            </a>
+                        <?php endif; ?>
                     </div>
 
                     <?php if ( $post_oembed ) : ?>
@@ -170,6 +192,8 @@
                 
                 
                 <div class="section__content">
+                    <?php echo do_shortcode( '[table_of_contents]' ); ?>
+
                     <?php
                     // The main content
                     the_content();

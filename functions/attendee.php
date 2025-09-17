@@ -92,3 +92,113 @@
         }
         add_action( 'save_post', 'attendee_save_meta_box_data' );
     }
+
+    if ( ! function_exists( 'get_attendee_data' ) ) {
+        /**
+         * Retrieve attendee data from the database.
+         *
+         * @return array List of attendees with their details.
+         */
+        function get_attendee_data() {
+            $args = [
+                'post_type'      => 'attendee',
+                'posts_per_page' => -1,
+                'post_status'    => 'publish',
+            ];
+
+            $attendees = get_posts($args);
+            $data = [];
+
+            foreach ($attendees as $attendee) {
+                $data[] = [
+                    'id'              => $attendee->ID,
+                    'submission_date' => $attendee->post_date,
+                    'name'            => get_post_meta($attendee->ID, 'attendee_name', true),
+                    'email'           => get_post_meta($attendee->ID, 'attendee_email', true),
+                    'time_slot'       => get_post_meta($attendee->ID, 'attendee_time_slot', true),
+                    'persons'         => get_post_meta($attendee->ID, 'attendee_persons', true),
+                    'privacy_policy'  => get_post_meta($attendee->ID, 'attendee_privacy_policy', true),
+                ];
+            }
+
+            return $data;
+        }
+    }
+
+    if ( ! function_exists( 'export_attendees_to_csv' ) ) {
+        /**
+         * Export attendees as a CSV file.
+         *
+         * This function outputs a CSV with all attendee data
+         * and forces the browser to download it.
+         *
+         * @return void
+         */
+        function export_attendees_to_csv() {
+            $attendees = get_attendee_data();
+            $filename  = "attendees_" . date('Ymd') . ".csv";
+
+            // Headers for CSV download
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+
+            $fp = fopen('php://output', 'w');
+
+            // Column headers
+            fputcsv($fp, [
+                'Registration ID',
+                'Submission Date',
+                'Name',
+                'Email',
+                'Privacy policy'
+            ]);
+
+            // Rows
+            foreach ($attendees as $attendee) {
+                fputcsv($fp, [
+                    $attendee['id'],
+                    $attendee['submission_date'],
+                    $attendee['name'],
+                    $attendee['email'],
+                    $attendee['privacy_policy'],
+                ]);
+            }
+
+            fclose($fp);
+            exit;
+        }
+        add_action('admin_post_export_attendees', 'export_attendees_to_csv');
+    }
+
+    if ( ! function_exists( 'add_export_button_after_attendee_filters' ) ) {
+        /**
+         * Add "Export Attendees to CSV" button after the filter/search form
+         * on the attendee list page.
+         *
+         * Hooked into 'manage_posts_extra_tablenav'.
+         *
+         * @param string $which The location of the extra table nav ('top' or 'bottom').
+         *
+         * @return void
+         */
+        function add_export_button_after_attendee_filters( $which ) {
+            $screen = get_current_screen();
+
+            if ( $screen && $screen->post_type === 'attendee' && $which === 'top' ) {
+                // Only show the button if there are attendee posts
+                $attendee_count = wp_count_posts('attendee')->publish;
+
+                if ( $attendee_count > 0 ) {
+                    $export_url = add_query_arg(
+                        [ 'action' => 'export_attendees' ],
+                        admin_url('admin-post.php')
+                    );
+
+                    echo '<a href="' . esc_url($export_url) . '" class="button button-primary">' 
+                        . __('Résztvevők exportálása', 'text-domain') 
+                        . '</a>';
+                }
+            }
+        }
+        add_action( 'manage_posts_extra_tablenav', 'add_export_button_after_attendee_filters' );
+    }

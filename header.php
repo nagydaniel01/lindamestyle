@@ -1,6 +1,12 @@
 <?php
-    $favicon     = get_field('favicon', 'option');
-    $type        = wp_check_filetype($favicon['url'])['type'];
+    $favicon = get_field('favicon', 'option');
+    $type    = null;
+    
+    if ( $favicon && !empty($favicon['url']) ) {
+        $filetype = wp_check_filetype( $favicon['url'] );
+        $type     = isset($filetype['type']) ? $filetype['type'] : null;
+    }
+    
     $theme_color = get_field('theme_color', 'option');
 ?>
 
@@ -21,7 +27,7 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body id="top" <?php body_class(); ?>>
     <?php wp_body_open(); ?>
     
     <div class="symbols d-none">

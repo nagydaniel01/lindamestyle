@@ -40,7 +40,7 @@
     }
 ?>
 
-<article class="card card--related <?php esc_attr_e($extra_classes); ?>">
+<article class="card card--related <?php echo esc_attr($extra_classes); ?>">
     <a href="<?php the_permalink(); ?>" class="card__link">
         <?php if ($image_id) : ?>
             <div class="card__header">
@@ -69,12 +69,12 @@
                         ?>
 
                         <?php if (!empty($primary_category)) : ?>
-                            <span class="card__category"><?php esc_html_e($primary_category); ?></span>
+                            <span class="card__category"><?php echo esc_html($primary_category); ?></span>
                         <?php endif; ?>
                     </span>
                 <?php endif; ?>
 
-                <time datetime="<?php esc_html_e(get_the_date('c')); ?>" class="card__date"><?php echo get_the_date(); ?></time>
+                <time datetime="<?php echo esc_html(get_the_date('c')); ?>" class="card__date"><?php echo get_the_date(); ?></time>
             </div>
 
             <span class="card__button">

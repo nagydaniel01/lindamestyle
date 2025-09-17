@@ -163,7 +163,7 @@ $('.slider--post-query').each(function() {
                 {
                     breakpoint: 1199,
                     settings: {
-                        slidesToShow: 4,
+                        slidesToShow: 3,
                         slidesToScroll: 1
                     }
                 }

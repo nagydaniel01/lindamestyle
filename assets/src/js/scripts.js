@@ -19,12 +19,14 @@ import './navigation-home';
 */
 
 import './filter';
-//import './fancybox-init';
+import './fancybox-init';
 import './slick-init';
 import './select2-init';
 import './tourguide-init';
+import './imagetosvg';
 import './validate-form';
 import './header';
-import './toast'; 
+import './back-to-top';
+import './toast';
 import './youtube-player';
 import './quantity'; 

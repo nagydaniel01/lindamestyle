@@ -2,23 +2,23 @@
     $current_user = wp_get_current_user();
 ?>
 
-<form id="mc_form" class="form form--subscribe" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>" novalidate>
+<form id="mc_form" class="form form--subscribe" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
     <?php wp_nonce_field( 'mc_form_action', 'mc_form_nonce' ); ?>
     <input type="hidden" name="user_id" value="<?php echo esc_attr( $current_user->ID ); ?>">
 
     <div class="row">
         <div class="col-md-6 mb-3">
             <label class="form-label visually-hidden" for="mc_name">
-                <?php echo esc_html( 'Name', TEXT_DOMAIN ); ?> <span class="required">*</span>
+                <?php echo esc_html__( 'Name', TEXT_DOMAIN ); ?> <span class="required">*</span>
             </label>
-            <input type="text" class="form-control" id="mc_name" name="mc_name" value="" placeholder="<?php echo esc_attr('Enter your name', TEXT_DOMAIN ); ?>" required aria-required="true">
+            <input type="text" class="form-control" id="mc_name" name="mc_name" value="" placeholder="<?php echo esc_attr__( 'Enter your name', TEXT_DOMAIN ); ?>" required aria-required="true">
         </div>
     
         <div class="col-md-6 mb-3">
             <label class="form-label visually-hidden" for="mc_email">
-                <?php echo esc_html( 'E-mail', TEXT_DOMAIN ); ?> <span class="required">*</span>
+                <?php echo esc_html__( 'E-mail', TEXT_DOMAIN ); ?> <span class="required">*</span>
             </label>
-            <input type="email" class="form-control" id="mc_email" name="mc_email" value="" placeholder="<?php echo esc_attr('Enter your email address', TEXT_DOMAIN ); ?>" required aria-required="true">
+            <input type="email" class="form-control" id="mc_email" name="mc_email" value="" placeholder="<?php echo esc_attr__( 'Enter your email address', TEXT_DOMAIN ); ?>" required aria-required="true">
         </div>
     </div>
 
@@ -38,7 +38,7 @@
     </fieldset>
 
     <div class="form__actions">
-        <button type="submit" class="btn btn-primary mb-3"><?php echo esc_html( 'Subscribe', TEXT_DOMAIN ); ?></button>
+        <button type="submit" class="btn btn-primary mb-3"><?php echo esc_html__( 'Subscribe', TEXT_DOMAIN ); ?></button>
         <div id="mc_response" role="status" aria-live="polite"></div>
     </div>
 </form>

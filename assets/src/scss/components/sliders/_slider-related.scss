@@ -1,4 +1,4 @@
-.slider.slider--post-query {
+.slider.slider--related {
     .slick-list,
     .slick-track,
     .slick-slide,
@@ -7,7 +7,7 @@
     }
 
     .slick-list {
-        width: 90%;
+        width: 95%;
         flex: 1;
         margin-left: calc($grid-gutter-width * -0.5);
         margin-right: calc($grid-gutter-width * -0.5);
@@ -34,13 +34,13 @@
 
         &::after {
             display: block;
-            width: 10%;
+            width: 5%;
             height: 100%;
             position: absolute;
             top: 0;
             right: 0;
             content: "";
-            background: linear-gradient(to right, rgba($primary, 0) 0%, rgba($primary, 1) 100%);
+            background: linear-gradient(to right, rgba($body-bg, 0) 0%, rgba($body-bg, 1) 100%);
         }
     }
 

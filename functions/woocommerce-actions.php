@@ -29,9 +29,9 @@
          */
         function custom_woocommerce_output_content_wrapper() {
             if (is_shop() || is_product_category( ) ) {
-                echo '<main class="page page--default page--archive page--archive-product"><div class="container">';
+                echo '<main class="page page--default page--archive page--archive-product"><section class="section section--default"><div class="container">';
             } elseif (is_singular('product' ) ) {
-                echo '<main class="page page--default page--single page--single-product">';
+                echo '<main class="page page--default page--single page--single-product"><section class="section section--default">';
             }
         }
         add_action( 'woocommerce_before_main_content', 'custom_woocommerce_output_content_wrapper', 10 );
@@ -43,9 +43,9 @@
          */
         function custom_woocommerce_output_content_wrapper_end() {
             if (is_shop() || is_product_category( ) ) {
-                echo '</div></main>';
+                echo '</div></section></main>';
             } elseif (is_singular('product' ) ) {
-                echo '</main>';
+                echo '</section></main>';
             }
         }
         add_action( 'woocommerce_after_main_content', 'custom_woocommerce_output_content_wrapper_end', 10 );
@@ -480,8 +480,8 @@
                                 '<div class="alert alert-danger" role="alert">%s</div>',
                                 sprintf(
                                     __('A(z) <code>%s</code> szekció sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>', TEXT_DOMAIN),
-                                    esc_html($section_name),
-                                    esc_html($section_file)
+                                    esc_html( $section_name ),
+                                    esc_html( $section_file )
                                 )
                             );
                         }

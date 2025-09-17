@@ -20,12 +20,12 @@
             <div class="card__meta">
                 <address class="mb-0">
                     <p class="mb-1">
-                        <strong><?php _e('Email:', TEXT_DOMAIN); ?></strong> 
+                        <strong><?php echo esc_html( 'Email:', TEXT_DOMAIN ); ?></strong> 
                         <?php echo esc_html( get_the_author_meta('user_email', $author_id) ); ?>
                     </p>
     
                     <p class="mb-0">
-                        <strong><?php _e('Website:', TEXT_DOMAIN); ?></strong> 
+                        <strong><?php echo esc_html( 'Website:', TEXT_DOMAIN ); ?></strong> 
                         <a href="<?php echo esc_url( get_the_author_meta('user_url', $author_id) ); ?>" target="_blank">
                             <?php echo esc_html( get_the_author_meta('user_url', $author_id) ); ?>
                         </a>

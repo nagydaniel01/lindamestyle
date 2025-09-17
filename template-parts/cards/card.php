@@ -1,10 +1,12 @@
 <?php
     $card_image       = $args['card_image'] ?? [];
+    $card_icon        = $args['card_icon'] ?? [];
     $card_title       = $args['card_title'] ?? '';
     $card_description = $args['card_description'] ?? '';
     $card_button      = $args['card_button'] ?? [];
 
     $image_id      = $card_image['ID'] ?? '';
+    $icon_id       = $card_icon['ID'] ?? '';
     $button_url    = $card_button['url'] ?? '';
     $button_title  = $card_button['title'] ?? esc_url($button_url);
     $button_target = isset($card_button['target']) && $card_button['target'] !== '' ? $card_button['target'] : '_self';
@@ -14,6 +16,12 @@
     <?php if ($image_id) : ?>
         <div class="card__header">
             <?php echo wp_get_attachment_image($image_id, 'medium', false, ['alt' => esc_attr($alt_text), 'class' => 'card__image', 'loading' => 'lazy']); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($icon_id) : ?>
+        <div class="card__header">
+            <?php echo wp_get_attachment_image($icon_id, 'medium', false, ['class' => 'card__icon icon imgtosvg']); ?>
         </div>
     <?php endif; ?>
 

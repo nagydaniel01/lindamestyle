@@ -12,12 +12,12 @@
                             <ul class="nav nav-pills" id="wcLoginRegisterTabs" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">
-                                        <?php esc_html_e( 'Login', 'woocommerce' ); ?>
+                                        <?php echo esc_html__( 'Login', 'woocommerce' ); ?>
                                     </button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">
-                                        <?php esc_html_e( 'Register', 'woocommerce' ); ?>
+                                        <?php echo esc_html__( 'Register', 'woocommerce' ); ?>
                                     </button>
                                 </li>
                             </ul>

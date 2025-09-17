@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="contact_formModalLabel"><?php echo esc_html('Contact us', TEXT_DOMAIN); ?></h5>
+                <h5 class="modal-title" id="contact_formModalLabel"><?php echo esc_html__('Contact us', TEXT_DOMAIN); ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?php echo esc_attr('Close', TEXT_DOMAIN); ?>"></button>
             </div>
             <div class="modal-body">

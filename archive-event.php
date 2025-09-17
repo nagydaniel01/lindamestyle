@@ -23,8 +23,8 @@
 ?>
 <?php get_header(); ?>
 
-<main class="page page--archive page--archive-<?php esc_attr_e($post_type); ?>">
-    <section class="section section--archive section--archive-<?php esc_attr_e($post_type); ?>" data-post-type="<?php esc_attr_e($post_type); ?>" data-posts-per-page="<?php esc_attr_e($posts_per_page); ?>">
+<main class="page page--archive page--archive-<?php echo esc_attr($post_type); ?>">
+    <section class="section section--archive section--archive-<?php echo esc_attr($post_type); ?>" data-post-type="<?php echo esc_attr($post_type); ?>" data-posts-per-page="<?php echo esc_attr($posts_per_page); ?>">
         <div class="container">
             <header class="section__header">
                 <?php if ( function_exists('rank_math_the_breadcrumbs') ) rank_math_the_breadcrumbs(); ?>
@@ -82,7 +82,7 @@
                 <div class="section__toolbar">
                     <div class="row"> <!-- Bootstrap row wrapper -->
                         <div class="col-md-8 mb-3">
-                            <input type="text" name="filter-search" id="filter-search" placeholder="<?php esc_attr_e( sprintf( __( 'Search for %s', TEXT_DOMAIN ), $label ) ); ?>" class="filter filter--search form-control js-filter-search">
+                            <input type="text" name="filter-search" id="filter-search" placeholder="<?php echo esc_attr( sprintf( __( 'Search for %s', TEXT_DOMAIN ), $label ) ); ?>" class="filter filter--search form-control js-filter-search">
                         </div>
                         <div class="col-md-4 mb-3">
                             <?php foreach ($taxonomies as $key => $tax_obj) :

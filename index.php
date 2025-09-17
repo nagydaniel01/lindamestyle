@@ -32,14 +32,16 @@
 <?php get_header(); ?>
 
 <main class="page page--default<?php echo esc_attr($extra_classes); ?>">
-    <div class="container">
-        <header class="page__header">
-            <h1 class="page__title"><?php the_title(); ?></h1>
-        </header>
-        <div class="page__content">
-            <?php the_content(); ?>
+    <section class="section section--default">
+        <div class="container">
+            <header class="page__header">
+                <h1 class="page__title"><?php the_title(); ?></h1>
+            </header>
+            <div class="page__content">
+                <?php the_content(); ?>
+            </div>
         </div>
-    </div>
+    </section>
 </main>
 
 <?php get_footer(); ?>

@@ -45,8 +45,8 @@
                         '<div class="alert alert-danger" role="alert">%s</div>',
                         sprintf(
                             __('A(z) <code>%s</code> szekció sablonja hiányzik. Kérjük, hozza létre a fájlt: <code>%s</code>', TEXT_DOMAIN),
-                            esc_html($section_name),
-                            esc_html($section_file)
+                            esc_html( $section_name ),
+                            esc_html( $section_file )
                         )
                     );
                 }

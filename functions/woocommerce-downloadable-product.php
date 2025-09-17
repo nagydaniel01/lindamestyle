@@ -19,7 +19,8 @@
 
     if ( ! function_exists('replace_single_product_buttons') ) {
         /**
-         * Replace price and add-to-cart button on single product page if user already purchased.
+         * Replace price and add-to-cart button on single product page if user already purchased
+         * and the file is still available. Otherwise, keep Add to Cart.
          *
          * @return void
          */
@@ -29,9 +30,12 @@
             if ( ! $product instanceof WC_Product ) return;
 
             if ( is_user_logged_in() && function_exists('has_user_purchased_product') && has_user_purchased_product($product->get_id()) ) {
-                remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
-                remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
-                add_action('woocommerce_single_product_summary', 'output_download_button', 31);
+                // Only replace buttons if there’s a valid download
+                if ( function_exists('get_valid_download_url') && get_valid_download_url($product->get_id()) ) {
+                    remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_price', 10);
+                    remove_action('woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30);
+                    add_action('woocommerce_single_product_summary', 'output_download_button', 31);
+                }
             }
         }
 

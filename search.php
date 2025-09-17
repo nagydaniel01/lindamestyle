@@ -63,7 +63,7 @@
                     ?>
 
                     <?php if ( is_object($query) && $query->have_posts() ) : ?>
-                        <div class="block block--search block--search-<?php esc_attr_e($post_type_filter); ?>">
+                        <div class="block block--search block--search-<?php echo esc_attr($post_type_filter); ?>">
                             <div class="container">
                                 <header class="block__header">
                                     <h2 class="block__title fs-1">
@@ -71,7 +71,7 @@
                                             if ( isset( $post_type_filter ) ) {
                                                 $post_type_object = get_post_type_object( $post_type_filter );
                                                 if ( $post_type_object ) {
-                                                    esc_html_e( $post_type_object->labels->name );
+                                                    echo esc_html( $post_type_object->labels->name );
                                                 }
                                             }
                                         ?>
@@ -126,11 +126,11 @@
                         ?>
 
                         <?php if ( is_object($query) && $query->have_posts() ) : ?>
-                            <div class="block block--search block--<?php esc_attr_e($post_type->name); ?>">
+                            <div class="block block--search block--<?php echo esc_attr($post_type->name); ?>">
                                 <div class="container">
                                     <header class="block__header">
                                         <h2 class="block__title fs-1">
-                                            <?php esc_html_e( get_post_type_object( $post_type->name )->labels->name ); ?>
+                                            <?php echo esc_html( get_post_type_object( $post_type->name )->labels->name ); ?>
                                         </h2>
                                     </header>
                                     <div class="block__body">
@@ -172,7 +172,7 @@
                 <?php endif; ?>
             <?php else : ?>
                 <div class="container">
-                    <p class="text-center"><?php esc_html_e('Sajnáljuk, de nem találtunk találatot a keresési feltételek alapján. Kérjük, próbálkozzon újra más kulcsszavakkal.', TEXT_DOMAIN); ?></p>
+                    <p class="text-center"><?php echo esc_html__('Sajnáljuk, de nem találtunk találatot a keresési feltételek alapján. Kérjük, próbálkozzon újra más kulcsszavakkal.', TEXT_DOMAIN); ?></p>
                 </div>
             <?php endif; ?>
         </div>

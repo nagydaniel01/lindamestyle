@@ -325,5 +325,5 @@ $post_type_query = new WP_Query($post_type_args);
         </nav>
     </div>
 <?php else : ?>
-    <p class="no-result"><?php echo esc_html('Sorry, no posts matched your criteria.', TEXT_DOMAIN); ?></p>
+    <p class="no-result"><?php echo esc_html__('Sorry, no posts matched your criteria.', TEXT_DOMAIN); ?></p>
 <?php endif; ?>

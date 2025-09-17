@@ -46,50 +46,52 @@ wc_set_loop_prop( 'total_pages', $max_num_pages );
 <?php get_header( 'shop' ); ?>
 
 <main class="page page--default page--archive page--archive-product page--subscriptions">
-    <div class="container">
-        <div class="woocommerce-breadcrumb-wrapper">
-            <?php do_action( 'woocommerce_before_main_content' ); ?>
+    <section class="section section--archive section--archive-product">
+        <div class="container">
+            <div class="woocommerce-breadcrumb-wrapper">
+                <?php do_action( 'woocommerce_before_main_content' ); ?>
+            </div>
+
+            <header class="woocommerce-products-header">
+                <h1 class="woocommerce-products-header__title page-title"><?php the_title(); ?></h1>
+                <?php do_action( 'woocommerce_archive_description' ); ?>
+            </header>
+
+            <?php
+                if ( $products ) : 
+                    do_action( 'woocommerce_before_shop_loop' ); 
+
+                    woocommerce_product_loop_start();
+
+                    foreach ( $products as $product_id ) {
+                        $post_object = get_post( $product_id );
+                        setup_postdata( $GLOBALS['post'] =& $post_object );
+                        do_action( 'woocommerce_shop_loop' );
+                        wc_get_template_part( 'content', 'product' );
+                    }
+                    wp_reset_postdata();
+
+                    woocommerce_product_loop_end();
+
+                    do_action( 'woocommerce_after_shop_loop' ); // pagination
+                else :
+                    do_action( 'woocommerce_no_products_found' );
+                endif;
+            ?>
+
+            <!--
+            <h1 data-tg-tour="Welcome to the homepage! This is the main heading.">Hello WordPress</h1>
+
+            <p data-tg-tour="Here’s some text. You can highlight any element.">
+                This paragraph is part of the tour.
+            </p>
+            -->
+
+            <button id="start-tour">Start Tour</button>
+
+            <?php do_action( 'woocommerce_after_main_content' ); ?>
         </div>
-
-        <header class="woocommerce-products-header">
-            <h1 class="woocommerce-products-header__title page-title"><?php the_title(); ?></h1>
-            <?php do_action( 'woocommerce_archive_description' ); ?>
-        </header>
-
-        <?php
-            if ( $products ) : 
-                do_action( 'woocommerce_before_shop_loop' ); 
-
-                woocommerce_product_loop_start();
-
-                foreach ( $products as $product_id ) {
-                    $post_object = get_post( $product_id );
-                    setup_postdata( $GLOBALS['post'] =& $post_object );
-                    do_action( 'woocommerce_shop_loop' );
-                    wc_get_template_part( 'content', 'product' );
-                }
-                wp_reset_postdata();
-
-                woocommerce_product_loop_end();
-
-                do_action( 'woocommerce_after_shop_loop' ); // pagination
-            else :
-                do_action( 'woocommerce_no_products_found' );
-            endif;
-        ?>
-
-        <!--
-        <h1 data-tg-tour="Welcome to the homepage! This is the main heading.">Hello WordPress</h1>
-
-        <p data-tg-tour="Here’s some text. You can highlight any element.">
-            This paragraph is part of the tour.
-        </p>
-        -->
-
-        <button id="start-tour">Start Tour</button>
-
-        <?php do_action( 'woocommerce_after_main_content' ); ?>
-    </div>
+    </section>
 </main>
 
 <?php get_footer( 'shop' ); ?>
