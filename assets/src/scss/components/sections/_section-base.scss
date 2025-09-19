@@ -1,6 +1,6 @@
 .section {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 
     &.section--page-title {
         background-color: $primary-light;
@@ -50,15 +50,16 @@
 
     .section__lead {
         font-size: 1.125rem;
-        font-weight: 600;
     }
 
     .section__meta {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+        row-gap: .5rem;
         align-items: center;
         margin-bottom: 1rem;
+        font-size: .75rem;
 
         & > span:not(:first-child) {
             position: relative;
@@ -81,8 +82,7 @@
     .section__bookmark {
         display: inline-flex;
         align-items: center;
-        margin-left: auto;
-        gap: .5rem;
+        column-gap: .5rem;
         text-decoration: none;
         color: $body-color;
 
@@ -117,7 +117,7 @@
 
         a {
             display: block;
-            padding: 0 0.625rem;
+            padding: 0 .625rem;
             border-radius: 10px;
             font-weight: 600;
             text-decoration: none;
@@ -154,7 +154,11 @@
 
 @include media-breakpoint-up(lg) {
     .section {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .section__bookmark {
+        margin-left: auto;
     }
 }

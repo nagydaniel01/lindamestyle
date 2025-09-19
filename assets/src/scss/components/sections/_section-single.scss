@@ -1,0 +1,23 @@
+.section.section--single {
+    .section__title {
+        order: 3;
+    }
+
+    .section__image-wrapper {
+        order: 1;
+    }
+
+    .section__meta {
+        order: 2;
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .section.section--single {
+        .section__title,
+        .section__image-wrapper,
+        .section__meta {
+            order: unset;
+        }
+    }
+}

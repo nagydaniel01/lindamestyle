@@ -1,10 +1,10 @@
 <?php
     $current_user = wp_get_current_user();
-    $prefix = 'cf_';
+    $prefix = 'tf_';
 ?>
 
-<form id="contact_form" class="form form--contact" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
-    <?php wp_nonce_field('contact_form_action', 'contact_form_nonce'); ?>
+<form id="testimonial_form" class="form form--testimonial" method="post" action="<?php echo esc_url( admin_url('admin-ajax.php') ); ?>" novalidate>
+    <?php wp_nonce_field('testimonial_form_action', 'testimonial_form_nonce'); ?>
 
     <div class="mb-3">
         <label class="form-label" for="<?php echo esc_attr($prefix); ?>name">
@@ -18,20 +18,6 @@
             <?php echo esc_html__( 'E-mail', TEXT_DOMAIN ); ?> <span class="required">*</span>
         </label>
         <input type="email" class="form-control" id="<?php echo esc_attr($prefix); ?>email" name="<?php echo esc_attr($prefix); ?>email" value="<?php echo esc_attr($current_user->user_email); ?>" placeholder="<?php echo esc_attr__( 'Enter your email address', TEXT_DOMAIN ); ?>" required aria-required="true">
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label" for="<?php echo esc_attr($prefix); ?>phone">
-            <?php echo esc_html__( 'Phone', TEXT_DOMAIN ); ?>
-        </label>
-        <input type="tel" class="form-control" id="<?php echo esc_attr($prefix); ?>phone" name="<?php echo esc_attr($prefix); ?>phone" placeholder="<?php echo esc_attr__( 'Enter your phone number', TEXT_DOMAIN ); ?>">
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label" for="<?php echo esc_attr($prefix); ?>subject">
-            <?php echo esc_html__( 'Subject', TEXT_DOMAIN ); ?> <span class="required">*</span>
-        </label>
-        <input type="text" class="form-control" id="<?php echo esc_attr($prefix); ?>subject" name="<?php echo esc_attr($prefix); ?>subject" placeholder="<?php echo esc_attr__( 'Enter subject', TEXT_DOMAIN ); ?>" required aria-required="true">
     </div>
 
     <div class="mb-3">

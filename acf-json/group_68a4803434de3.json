@@ -22,7 +22,30 @@
                     "name": "main_content",
                     "label": "Fő tartalom",
                     "display": "block",
-                    "sub_fields": [],
+                    "sub_fields": [
+                        {
+                            "key": "field_68cbcadb28058",
+                            "label": "Section",
+                            "name": "main_content",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        }
+                    ],
                     "min": "",
                     "max": ""
                 },
@@ -541,8 +564,10 @@
                             },
                             "choices": {
                                 "post": "Hírek",
+                                "knowledge_base": "Tudásbázis",
                                 "event": "Események",
-                                "service": "Szolgáltatások"
+                                "service": "Szolgáltatások",
+                                "testimonial": "Vélemények"
                             },
                             "default_value": "post",
                             "return_format": "value",
@@ -708,6 +733,51 @@
                             "bidirectional_target": []
                         },
                         {
+                            "key": "field_68cbb465f935e",
+                            "label": "Tudásbázis",
+                            "name": "knowledge_base",
+                            "aria-label": "",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "knowledge_base"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "knowledge_base"
+                            ],
+                            "post_status": [
+                                "publish"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "object",
+                            "min": "",
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "elements": "",
+                            "bidirectional": 0,
+                            "bidirectional_target": []
+                        },
+                        {
                             "key": "field_68af081e14a3c",
                             "label": "Események",
                             "name": "event",
@@ -798,6 +868,51 @@
                             "bidirectional_target": []
                         },
                         {
+                            "key": "field_68cbb4a3f935f",
+                            "label": "Vélemények",
+                            "name": "testimonial",
+                            "aria-label": "",
+                            "type": "relationship",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "testimonial"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "testimonial"
+                            ],
+                            "post_status": [
+                                "publish"
+                            ],
+                            "taxonomy": "",
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "object",
+                            "min": "",
+                            "max": "",
+                            "allow_in_bindings": 0,
+                            "elements": "",
+                            "bidirectional": 0,
+                            "bidirectional_target": []
+                        },
+                        {
                             "key": "field_68af077c14a39",
                             "label": "Automatikus kiválasztás",
                             "name": "",
@@ -863,9 +978,9 @@
                             "bidirectional_target": []
                         },
                         {
-                            "key": "field_68af0cd8e49a0",
-                            "label": "Esemény kategóriák",
-                            "name": "event_cat",
+                            "key": "field_68cbb4f9f9360",
+                            "label": "Tudásbázis kategóriák",
+                            "name": "knowledge_base_cat",
                             "aria-label": "",
                             "type": "taxonomy",
                             "instructions": "",
@@ -880,7 +995,7 @@
                                     {
                                         "field": "field_68af060f14a37",
                                         "operator": "==",
-                                        "value": "event"
+                                        "value": "knowledge_base"
                                     }
                                 ]
                             ],
@@ -889,7 +1004,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "taxonomy": "event_cat",
+                            "taxonomy": "knowledge_base_cat",
                             "add_term": 0,
                             "save_terms": 0,
                             "load_terms": 0,
@@ -929,6 +1044,45 @@
                                 "id": ""
                             },
                             "taxonomy": "service_cat",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "field_type": "checkbox",
+                            "allow_in_bindings": 0,
+                            "bidirectional": 0,
+                            "multiple": 0,
+                            "allow_null": 0,
+                            "bidirectional_target": []
+                        },
+                        {
+                            "key": "field_68af0cd8e49a0",
+                            "label": "Esemény kategóriák",
+                            "name": "event_cat",
+                            "aria-label": "",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_68af075014a38",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    },
+                                    {
+                                        "field": "field_68af060f14a37",
+                                        "operator": "==",
+                                        "value": "event"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "event_cat",
                             "add_term": 0,
                             "save_terms": 0,
                             "load_terms": 0,
@@ -2410,6 +2564,127 @@
                     "min": "",
                     "max": ""
                 },
+                "layout_68cbcb1e28059": {
+                    "key": "layout_68cbcb1e28059",
+                    "name": "download",
+                    "label": "Letöltések",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_68cbcb482805c",
+                            "label": "Section",
+                            "name": "download",
+                            "aria-label": "",
+                            "type": "clone",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "clone": [
+                                "group_68a48de5a7f72"
+                            ],
+                            "display": "seamless",
+                            "layout": "block",
+                            "prefix_label": 0,
+                            "prefix_name": 1
+                        },
+                        {
+                            "key": "field_68cbcb5d2805d",
+                            "label": "Letöltések",
+                            "name": "download_items",
+                            "aria-label": "",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "layout": "table",
+                            "min": 0,
+                            "max": 0,
+                            "collapsed": "",
+                            "button_label": "Sor hozzáadása",
+                            "rows_per_page": 20,
+                            "sub_fields": [
+                                {
+                                    "key": "field_68cbcbad2805f",
+                                    "label": "Cím",
+                                    "name": "download_title",
+                                    "aria-label": "",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "allow_in_bindings": 0,
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "parent_repeater": "field_68cbcb5d2805d"
+                                },
+                                {
+                                    "key": "field_68cbcbe528060",
+                                    "label": "Leírás",
+                                    "name": "download_description",
+                                    "aria-label": "",
+                                    "type": "textarea",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "maxlength": "",
+                                    "allow_in_bindings": 0,
+                                    "rows": "",
+                                    "placeholder": "",
+                                    "new_lines": "wpautop",
+                                    "parent_repeater": "field_68cbcb5d2805d"
+                                },
+                                {
+                                    "key": "field_68cbcb922805e",
+                                    "label": "Fájl",
+                                    "name": "download_file",
+                                    "aria-label": "",
+                                    "type": "file",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "return_format": "array",
+                                    "library": "all",
+                                    "min_size": "",
+                                    "max_size": "",
+                                    "mime_types": "",
+                                    "allow_in_bindings": 0,
+                                    "parent_repeater": "field_68cbcb5d2805d"
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                },
                 "layout_68ad9c910daf9": {
                     "key": "layout_68ad9c910daf9",
                     "name": "gravity_forms",
@@ -2683,5 +2958,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1758110610
+    "modified": 1758186508
 }

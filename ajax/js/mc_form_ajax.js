@@ -3,7 +3,7 @@
 
     $(document).ready(function(){
 
-        $('#mc_form').on('submit', function(e){
+        $('#subscribe_form').on('submit', function(e){
             e.preventDefault();
 
             // Check if privacy checkbox is checked
@@ -11,6 +11,8 @@
                 $('#mc_response').html('<div class="alert alert-danger">'+mc_form_ajax_object.msg_privacy_required+'</div>');
                 return; // stop submission
             }
+
+            var $submitBtn = $(this).find('button[type="submit"]');
 
             var data = {
                 action: 'mc_form_handler', // WP AJAX action hook
@@ -26,6 +28,7 @@
 
                 // Before sending, show a loading indicator
                 beforeSend: function() {
+                    $submitBtn.prop('disabled', true).addClass('disabled');
                     $('#mc_response').html('<div class="alert alert-info">'+mc_form_ajax_object.msg_sending+'</div>');
                 },
 
@@ -56,6 +59,7 @@
                 complete: function() {
                     // Optional cleanup
                     // Example: console.log('Mailchimp AJAX completed');
+                    $submitBtn.prop('disabled', false).removeClass('disabled');
                 }
             });
         });

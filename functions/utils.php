@@ -235,6 +235,21 @@
         }
     }
 
+    if ( ! function_exists( 'wp_format_file_size' ) ) {
+        /**
+         * Format bytes into a human-readable file size string.
+         *
+         * @param int $bytes    The file size in bytes.
+         * @param int $decimals The number of decimal places to include (default is 0).
+         * @return string       The formatted file size string (e.g., "2 MB").
+         */
+        function wp_format_file_size($bytes, $decimals = 0) {
+            $size = ['B','KB','MB','GB','TB'];
+            $factor = floor((strlen($bytes) - 1) / 3);
+            return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . ' ' . $size[$factor];
+        }
+    }
+
     if ( ! function_exists( 'is_external_url' ) ) {
         /**
          * Check if a given URL is external.

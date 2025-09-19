@@ -188,6 +188,30 @@
     }
     */
 
+    if ( ! function_exists( 'force_lazyload_wp_block_images' ) ) {
+        /**
+         * Force lazy loading on all <img> tags inside wp-block-image blocks in post content.
+         *
+         * This function scans the post content and ensures that every <img> tag within
+         * `wp-block-image` blocks has the `loading="lazy"` attribute. If the attribute
+         * is missing, it will be added.
+         *
+         * @param string $content The post content.
+         *
+         * @return string Modified post content with enforced lazy loading on images.
+         */
+        function force_lazyload_wp_block_images( $content ) {
+            // Add lazyload to <img> inside wp-block-image if missing
+            $content = preg_replace(
+                '/(<img[^>]+)(?<!loading=["\']lazy["\'])/',
+                '$1 loading="lazy"',
+                $content
+            );
+            return $content;
+        }
+        add_filter( 'the_content', 'force_lazyload_wp_block_images' );
+    }
+
     if ( ! function_exists( 'theme_body_classes' ) ) {
         /**
          * Modifies the body_class output to remove unwanted classes.

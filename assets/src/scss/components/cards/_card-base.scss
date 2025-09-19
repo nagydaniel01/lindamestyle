@@ -14,11 +14,19 @@
 		height: 100%;
 		color: $black;
 		text-decoration: none;
+
+		&:hover {
+			.card__image {
+				transform: scale(1.2);
+			}
+		}
 	}
 
 	.card__header {
 		flex: 0 0 auto;
 		position: relative;
+		overflow: hidden;
+		border-radius: $border-radius-xl;
 	}
 
 	.card__content {
@@ -34,7 +42,6 @@
 		height: 100%;
 		aspect-ratio: 3 / 2;
 		object-fit: cover;
-		border-radius: 20px;
 		transition: $transition-base;
 	}
 
@@ -50,7 +57,6 @@
 
 	.card__title {
 		font-size: 1.5rem;
-		line-height: 1.2;
 		font-weight: 600;
 
 		&:has(.icon) {
@@ -68,9 +74,10 @@
 	}
 
 	.card__lead {
-		margin-top: 0.875rem;
+		margin-top: .875rem;
+		margin-bottom: .75rem;
 		font-size: 1rem;
-		color: $black;
+        color: rgba($black, .5);
 
 		&.card__lead--no-trim {
 			p {
@@ -83,14 +90,12 @@
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
             overflow: hidden;
-            color: rgba($black, .5);
-			margin-bottom: 0.75rem;
 		}
 	}
 
 	.card__button {
 		position: absolute;
-		inset: auto 0.75rem 0.875rem auto;
+		inset: auto .75rem .875rem auto;
 
 		.icon {
 			width: 1.5rem;
@@ -101,23 +106,25 @@
 	.card__meta {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: .5rem;
 		margin-top: auto;
-		padding-top: 0.875rem;
-		padding-right: 2rem;
+		padding-top: .625rem;
+		padding-right: 1.5rem;
+		font-size: .875rem;
+		color: rgba($black, .5);
 	}
 
 	.card__categories {
 		display: flex;
 		align-items: center;
-		gap: 0.25rem;
+		gap: .25rem;
 	}
 
 	.card__category {
 		display: block;
-		padding: 0 0.625rem;
+		padding: 0 .625rem;
 		border-radius: 10px;
-		font-size: 0.875rem;
+		font-size: .875rem;
 		line-height: 1.25rem;
 		background-color: $primary;
 		color: $white;
@@ -125,7 +132,7 @@
 
 	.card__date-wrapper {
 		color: rgba($black, .4);
-		font-size: 0.875rem;
+		font-size: .875rem;
 		line-height: 1;
 	}
 
@@ -135,7 +142,7 @@
 		left: 0;
 		display: block;
         width: 180px;
-        padding: 0.5rem 3rem 0.5rem 1.75rem;
+        padding: .5rem 3rem .5rem 1.75rem;
         background-color: $primary;
         color: $white;
         font-size: 1rem;
@@ -154,7 +161,7 @@
 		height: 2rem;
 		display: grid;
 		place-items: center;
-		background-color: rgba($white, 0.8);
+		background-color: rgba($white, .8);
 		border-radius: 2rem;
 
 		.icon {

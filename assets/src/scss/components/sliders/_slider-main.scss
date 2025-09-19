@@ -43,23 +43,24 @@
     .slider__caption-inner {
         display: flex;
         flex-direction: column;
-        max-width: 50%;
-        row-gap: 1.25rem;
+        row-gap: .5rem;
     }
 
     .slider__title {
-        font-size: 3.5rem;
+        font-size: 1.5rem;
         font-weight: 400;
-        line-height: 3.75rem;
+        line-height: 1.75rem;
+        margin-bottom: 1.25rem;
         color: $primary;
     }
 
     .slider__subtitle {
-        font-size: 1.625rem;
+        font-size: 1.125rem;
+        margin: 0;
     }
 
     .slider__description {
-        font-size: 1rem;
+        font-size: .875rem;
     }
 
     .slider__button {
@@ -71,12 +72,12 @@
     }
 
     .slick-dots {
-        margin-top: 0.75rem;
+        margin-top: .75rem;
 
         li {
-            width: 0.625rem;
-            height: 0.625rem;
-            margin: 0 0.375rem;
+            width: .625rem;
+            height: .625rem;
+            margin: 0 .375rem;
 
             button {
                 border: none;
@@ -96,6 +97,27 @@
                     background-color: $gray-500;
                 }
             }
+        }
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .slider.slider--main {
+        .slider__caption-inner {
+            max-width: 50%;
+        }
+
+        .slider__title {
+            font-size: 3.5rem;
+            line-height: 3.75rem;
+        }
+
+        .slider__subtitle {
+            font-size: 1.625rem;
+        }
+
+        .slider__description {
+            font-size: 1rem;
         }
     }
 }

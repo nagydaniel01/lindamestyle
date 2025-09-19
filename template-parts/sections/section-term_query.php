@@ -61,6 +61,14 @@ $term_query = new WP_Term_Query($query_args);
                     <?php if ($section_hide_title !== true) : ?>
                         <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
                     <?php endif; ?>
+
+                    <?php if (!empty($url)) : ?>
+                        <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" <?php echo $is_external ? 'rel="noopener noreferrer"' : ''; ?> class="btn btn-link section__link">
+                            <span><?php esc_html_e($title, TEXT_DOMAIN); ?></span>
+                            <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
+                        </a>
+                    <?php endif; ?>
+
                     <?php if (!empty($section_lead)) : ?>
                         <div class="section__lead"><?php echo wp_kses_post($section_lead); ?></div>
                     <?php endif; ?>
@@ -68,13 +76,6 @@ $term_query = new WP_Term_Query($query_args);
             <?php endif; ?>
 
             <div class="section__content">
-                <?php if (!empty($url)) : ?>
-                    <a href="<?php echo esc_url($url); ?>" target="<?php echo esc_attr($target); ?>" <?php echo $is_external ? 'rel="noopener noreferrer"' : ''; ?> class="btn btn-link section__link">
-                        <span><?php esc_html_e($title, TEXT_DOMAIN); ?></span>
-                        <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
-                    </a>
-                <?php endif; ?>
-
                 <?php if ($slider != false) : ?>
                     <div class="slider slider--term-query">
                         <div class="slider__list">

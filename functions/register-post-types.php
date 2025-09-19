@@ -390,3 +390,73 @@
         }
         add_action( 'init', 'register_faq_post_type', 0 );
     }
+
+    if ( ! function_exists( 'register_testimonial_post_type' ) ) {
+        /**
+         * Registers the "Vélemények" custom post type.
+         *
+         * Slug: testimonial
+         * Icon: dashicons-format-quote
+         *
+         * This post type is used for client testimonials.
+         * It is private (not publicly queryable), but available in the admin UI.
+         *
+         * @return void
+         */
+        function register_testimonial_post_type() {
+            $labels = array(
+                'name'                  => _x( 'Vélemények', 'Post Type General Name', TEXT_DOMAIN ),
+                'singular_name'         => _x( 'Vélemény', 'Post Type Singular Name', TEXT_DOMAIN ),
+                'menu_name'             => __( 'Vélemények', TEXT_DOMAIN ),
+                'name_admin_bar'        => __( 'Vélemény', TEXT_DOMAIN ),
+                'archives'              => __( 'Vélemények', TEXT_DOMAIN ),
+                'attributes'            => __( 'Vélemény attribútumok', TEXT_DOMAIN ),
+                'parent_item_colon'     => __( 'Szülő vélemény:', TEXT_DOMAIN ),
+                'all_items'             => __( 'Összes vélemény', TEXT_DOMAIN ),
+                'add_new_item'          => __( 'Új vélemény hozzáadása', TEXT_DOMAIN ),
+                'add_new'               => __( 'Új vélemény', TEXT_DOMAIN ),
+                'new_item'              => __( 'Új vélemény', TEXT_DOMAIN ),
+                'edit_item'             => __( 'Vélemény szerkesztése', TEXT_DOMAIN ),
+                'update_item'           => __( 'Vélemény frissítése', TEXT_DOMAIN ),
+                'view_item'             => __( 'Vélemény megtekintése', TEXT_DOMAIN ),
+                'view_items'            => __( 'Vélemények megtekintése', TEXT_DOMAIN ),
+                'search_items'          => __( 'Vélemények keresése', TEXT_DOMAIN ),
+                'not_found'             => __( 'Nincs vélemény találat', TEXT_DOMAIN ),
+                'not_found_in_trash'    => __( 'Nincs vélemény a kukában', TEXT_DOMAIN ),
+                'featured_image'        => __( 'Kiemelt kép', TEXT_DOMAIN ),
+                'set_featured_image'    => __( 'Kiemelt kép beállítása', TEXT_DOMAIN ),
+                'remove_featured_image' => __( 'Kiemelt kép eltávolítása', TEXT_DOMAIN ),
+                'use_featured_image'    => __( 'Kiemelt képként használ', TEXT_DOMAIN ),
+                'insert_into_item'      => __( 'Beszúrás a véleménybe', TEXT_DOMAIN ),
+                'uploaded_to_this_item' => __( 'Feltöltve ehhez a véleményhez', TEXT_DOMAIN ),
+                'items_list'            => __( 'Vélemények listája', TEXT_DOMAIN ),
+                'items_list_navigation' => __( 'Vélemények lista navigáció', TEXT_DOMAIN ),
+                'filter_items_list'     => __( 'Vélemények lista szűrése', TEXT_DOMAIN ),
+            );
+
+            $args = array(
+                'label'                 => __( 'Vélemény', TEXT_DOMAIN ),
+                'description'           => __( 'Ügyfélvélemények és visszajelzések', TEXT_DOMAIN ),
+                'labels'                => $labels,
+                'supports'              => array( 'title', 'editor', 'thumbnail' ),
+                'taxonomies'            => array(),
+                'hierarchical'          => false,
+                'public'                => false,
+                'show_ui'               => true,
+                'show_in_menu'          => true,
+                'menu_position'         => 15,
+                'show_in_admin_bar'     => true,
+                'show_in_nav_menus'     => true,
+                'can_export'            => true,
+                'has_archive'           => false,
+                'exclude_from_search'   => true,
+                'publicly_queryable'    => false,
+                'capability_type'       => 'post',
+                'rewrite'               => array(),
+                'menu_icon'             => 'dashicons-format-quote',
+            );
+
+            register_post_type( 'testimonial', $args );
+        }
+        add_action( 'init', 'register_testimonial_post_type', 0 );
+    }

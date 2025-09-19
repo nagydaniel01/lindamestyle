@@ -38,8 +38,8 @@
                 }
 
                 // Nonce verification for security
-                if ( ! isset($form['mc_form_nonce']) ||
-                    ! wp_verify_nonce($form['mc_form_nonce'], 'mc_form_action') ) {
+                if ( ! isset($form['subscribe_form_nonce']) ||
+                    ! wp_verify_nonce($form['subscribe_form_nonce'], 'subscribe_form_action') ) {
                     wp_send_json_error([
                         'message' => __('Invalid security token.', TEXT_DOMAIN)
                     ], 403);

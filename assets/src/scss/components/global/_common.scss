@@ -364,8 +364,7 @@ figure {
 
 figcaption {
   font-size: 0.875rem;
-  color: $gray-600;
-  text-align: center;
+  text-align: left;
   margin-top: 0.5rem;
 }
 
@@ -379,7 +378,6 @@ address {
   p {
     margin: 0.5rem 0 0;
     font-size: 0.9rem;
-    color: $gray-700;
   }
 }
 

@@ -84,7 +84,7 @@
                     return wpautop( esc_html__( 'Error: Missing or invalid message ID.', TEXT_DOMAIN ) );
                 }
 
-                $data = get_transient( 'contact_form_' . $message_id );
+                $data = get_transient( $message_id );
 
                 if ( ! $data || ! is_array( $data ) ) {
                     return wpautop( esc_html__( 'Invalid or expired link.', TEXT_DOMAIN ) );

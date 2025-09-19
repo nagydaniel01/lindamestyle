@@ -12,7 +12,7 @@
     }
 }
 
- @include media-breakpoint-up(md) {
+@include media-breakpoint-up(md) {
     .section.section--archive {
         .section__title-wrapper {
             flex-direction: row;

@@ -1,9 +1,9 @@
 <?php
-    if ( ! function_exists('contact_form_handler') ) {
+    if ( ! function_exists('testimonial_form_handler') ) {
         /**
-         * Handles AJAX submissions for the contact form.
+         * Handles AJAX submissions for the testimonial form.
          *
-         * This function processes POST requests submitted via AJAX for the contact form.
+         * This function processes POST requests submitted via AJAX for the testimonial form.
          * It performs the following steps:
          *   1. Validates the request method and presence of form data.
          *   2. Parses and sanitizes form inputs.
@@ -15,7 +15,7 @@
          *
          * @return void Outputs a JSON response and terminates execution.
          */
-        function contact_form_handler() {
+        function testimonial_form_handler() {
             try {
                 // Ensure the request method is POST
                 if ( $_SERVER['REQUEST_METHOD'] !== 'POST' ) {
@@ -38,23 +38,21 @@
                 }
 
                 // Nonce verification for security
-                if ( ! isset($form['contact_form_nonce']) ||
-                    ! wp_verify_nonce($form['contact_form_nonce'], 'contact_form_action') ) {
+                if ( ! isset($form['testimonial_form_nonce']) ||
+                    ! wp_verify_nonce($form['testimonial_form_nonce'], 'testimonial_form_action') ) {
                     wp_send_json_error([
                         'message' => __('Invalid security token.', TEXT_DOMAIN)
                     ], 403);
                 }
 
                 // Extract and sanitize form fields
-                $name    = isset($form['cf_name']) ? sanitize_text_field($form['cf_name']) : '';
-                $email   = isset($form['cf_email']) ? sanitize_email($form['cf_email']) : '';
-                $phone   = isset($form['cf_phone']) ? sanitize_text_field($form['cf_phone']) : '';
-                $subject = isset($form['cf_subject']) ? sanitize_text_field($form['cf_subject']) : '';
-                $message = isset($form['cf_message']) ? sanitize_textarea_field($form['cf_message']) : '';
-                $privacy = isset($form['cf_privacy_policy']) ? sanitize_text_field($form['cf_privacy_policy']) : '';
+                $name    = isset($form['tf_name']) ? sanitize_text_field($form['tf_name']) : '';
+                $email   = isset($form['tf_email']) ? sanitize_email($form['tf_email']) : '';
+                $message = isset($form['tf_message']) ? sanitize_textarea_field($form['tf_message']) : '';
+                $privacy = isset($form['tf_privacy_policy']) ? sanitize_text_field($form['tf_privacy_policy']) : '';
 
                 // Validate required fields
-                if ( empty($name) || empty($email) || empty($subject) || empty($message) ) {
+                if ( empty($name) || empty($email) || empty($message) ) {
                     wp_send_json_error([
                         'message' => __('All required fields must be filled out.', TEXT_DOMAIN)
                     ], 422);
@@ -74,58 +72,52 @@
                     ], 422);
                 }
 
-                // Get admin email and validate
-                $admin_email = get_option('admin_email');
-                if ( ! $admin_email || ! is_email($admin_email) ) {
+                // Prevent duplicate testimonial
+                $existing = get_posts([
+                    'post_type'  => 'testimonial',
+                    'post_status'=> 'publish',
+                    'meta_query' => [
+                        'relation' => 'AND',
+                        [
+                            'key'   => 'testimonial_email',
+                            'value' => $email
+                        ]
+                    ]
+                ]);
+
+                if ( $existing ) {
                     wp_send_json_error([
-                        'message' => __('Admin email is not configured properly.', TEXT_DOMAIN)
+                        'message' => __('You are already wrote a review.', TEXT_DOMAIN)
+                    ], 409);
+                }
+
+                // Create testimonial post
+                $testimonial_id = wp_insert_post([
+                    'post_type'   => 'testimonial',
+                    'post_status' => 'publish',
+                    'post_title'  => sprintf(
+                        __('%s (%s)', TEXT_DOMAIN),
+                        $name,
+                        $email
+                    ),
+                    'post_content' => wp_kses_post($message),
+                    'meta_input'  => [
+                        'testimonial_name'           => $name,
+                        'testimonial_email'          => $email,
+                        'testimonial_privacy_policy' => $privacy,
+                    ]
+                ]);
+
+                // Handle insertion errors
+                if ( is_wp_error($testimonial_id) ) {
+                    wp_send_json_error([
+                        'message' => sprintf(__('Submission failed: %s', TEXT_DOMAIN), $testimonial_id->get_error_message())
                     ], 500);
                 }
 
-                // Prepare email headers
-                $headers = [
-                    'From: ' . get_bloginfo('name') . ' <' . $admin_email . '>',
-                    'Reply-To: ' . $name . ' <' . $email . '>',
-                    'Content-Type: text/html; charset=UTF-8'
-                ];
-
-                // Prepare email subject with site name
-                $mail_subject = sprintf(
-                    __('[%s] New message: %s', TEXT_DOMAIN),
-                    get_bloginfo('name'),
-                    $subject
-                );
-
-                // Format message lines into HTML paragraphs
-                $message_lines = array_filter(preg_split("/\r\n|\n|\r/", $message), function($line) {
-                    return trim($line) !== '';
-                });
-
-                $formatted_message = implode('', array_map(function($line) {
-                    return '<p>' . esc_html($line) . '</p>';
-                }, $message_lines));
-
-                // Prepare email message
-                $mail_message = sprintf(
-                    '<strong>Name:</strong> %s<br/>
-                    <strong>Email:</strong> %s<br/>
-                    <strong>Phone:</strong> %s<br/>
-                    <strong>Subject:</strong> %s<br/>
-                    %s',
-                    esc_html($name),
-                    esc_html($email),
-                    esc_html($phone),
-                    esc_html($subject),
-                    $formatted_message
-                );
-
-                // Send the email
-                $sent = wp_mail($admin_email, $mail_subject, $mail_message, $headers);
-
-                // Handle email sending errors
-                if ( ! $sent ) {
+                if ( $testimonial_id === false ) {
                     wp_send_json_error([
-                        'message' => __('Message could not be sent. Please try again later.', TEXT_DOMAIN)
+                        'message' => __('Submission failed, please try again.', TEXT_DOMAIN)
                     ], 500);
                 }
 
@@ -135,14 +127,12 @@
                 set_transient( $message_id, [
                     'name'    => $name,
                     'email'   => $email,
-                    'phone'   => $phone,
-                    'subject' => $subject,
                     'message' => $message,
                 ], 15 * MINUTE_IN_SECONDS ); // expires after 15 mins
                 
                 // Success response
                 wp_send_json_success([
-                    'message'      => __('Your message has been sent successfully!', TEXT_DOMAIN),
+                    'message'      => __('Your review has been sent successfully!', TEXT_DOMAIN),
                     'redirect_url' => esc_url( trailingslashit( home_url('/thank-you') ) ),
                     'message_id'   => $message_id
                 ], 200);
@@ -156,6 +146,6 @@
         }
 
         // Register AJAX handlers for logged-in and non-logged-in users
-        add_action('wp_ajax_contact_form_handler', 'contact_form_handler');
-        add_action('wp_ajax_nopriv_contact_form_handler', 'contact_form_handler');
+        add_action('wp_ajax_testimonial_form_handler', 'testimonial_form_handler');
+        add_action('wp_ajax_nopriv_testimonial_form_handler', 'testimonial_form_handler');
     }

@@ -8,9 +8,11 @@
 
             // Check if privacy checkbox is checked
             if( !$('#reg_privacy_policy').is(':checked') ){
-                $('#event_response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_privacy_required+'</div>');
+                $('#reg_response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_privacy_required+'</div>');
                 return; // stop submission
             }
+
+            var $submitBtn = $(this).find('button[type="submit"]');
 
             var data = {
                 action: 'event_registration_form_handler',
@@ -26,14 +28,15 @@
 
                 // Before sending, show a loading indicator
                 beforeSend: function() {
-                    $('#event_response').html('<div class="alert alert-info">'+event_registration_form_ajax_object.msg_registering+'</div>');
+                    $submitBtn.prop('disabled', true).addClass('disabled');
+                    $('#reg_response').html('<div class="alert alert-info">'+event_registration_form_ajax_object.msg_registering+'</div>');
                 },
 
                 success: function(response){
                     if(response && typeof response === 'object'){
                         if(response.success){
                             var message = response.data && response.data.message ? response.data.message : event_registration_form_ajax_object.msg_success;
-                            $('#event_response').html('<div class="alert alert-success">'+message+'</div>');
+                            $('#reg_response').html('<div class="alert alert-success">'+message+'</div>');
 
                             if(response.data.redirect_url){
                                 // Grab values from response
@@ -48,10 +51,10 @@
                             }
                         } else {
                             var message = response.data && response.data.message ? response.data.message : event_registration_form_ajax_object.msg_error_sending;
-                            $('#event_response').html('<div class="alert alert-danger">'+message+'</div>');
+                            $('#reg_response').html('<div class="alert alert-danger">'+message+'</div>');
                         }
                     } else {
-                        $('#event_response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_unexpected+'</div>');
+                        $('#reg_response').html('<div class="alert alert-danger">'+event_registration_form_ajax_object.msg_unexpected+'</div>');
                     }
                 },
 
@@ -62,12 +65,13 @@
                     } else if(error){
                         errMsg += ' (' + error + ')';
                     }
-                    $('#event_response').html('<div class="alert alert-danger">'+errMsg+'</div>');
+                    $('#reg_response').html('<div class="alert alert-danger">'+errMsg+'</div>');
                 },
 
                 complete: function() {
                     // Optional: remove loading spinner or do other cleanup
                     // Example: console.log('AJAX request completed');
+                    $submitBtn.prop('disabled', false).removeClass('disabled');
                 }
             });
         });
