@@ -16,7 +16,7 @@
             <!-- Brand -->
             <a class="navbar-brand logo logo--header" href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>">
                 <?php if ($logo) : ?>
-                    <?php echo wp_get_attachment_image($logo['ID'], array($logo['width'], $logo['height']), false, array('class' => 'logo__image', 'alt' => esc_attr($logo['alt'] ?: get_bloginfo('name')))); ?>
+                    <?php echo wp_get_attachment_image($logo['ID'], [$logo['width'], $logo['height']], false, ['class' => 'logo__image', 'alt' => esc_attr($logo['alt'] ?: get_bloginfo('name'))]); ?>
                 <?php else : ?>
                     <?php bloginfo('name'); ?>
                 <?php endif; ?>

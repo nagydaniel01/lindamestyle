@@ -85,7 +85,6 @@ $post_query = new WP_Query($query_args);
         <div class="container">
             <?php if (($section_title && $section_hide_title !== true) || $section_lead) : ?>
                 <div class="section__header">
-                    
                     <?php if ($section_hide_title !== true) : ?>
                         <h1 class="section__title"><?php echo esc_html($section_title); ?></h1>
                     <?php endif; ?>
@@ -140,7 +139,7 @@ $post_query = new WP_Query($query_args);
                                 $template = locate_template("template-parts/cards/card-{$post_type}.php");
                             ?>
 
-                            <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="col-lg-6 col-xl-4">
                                 <?php
                                     if (!empty($template)) {
                                         // File exists, include it

@@ -105,7 +105,7 @@ $term_query = new WP_Term_Query($query_args);
                                 $template_args = ['term' => $term];
                                 $template = locate_template("template-parts/cards/card-term-{$taxonomy}.php");
                             ?>
-                            <div class="col-12 col-lg-6 col-xl-4">
+                            <div class="col-lg-6 col-xl-4">
                                 <?php
                                     if (!empty($template)) {
                                         get_template_part('template-parts/cards/card-term', $taxonomy, $template_args);

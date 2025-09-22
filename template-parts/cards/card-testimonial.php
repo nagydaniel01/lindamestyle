@@ -29,7 +29,7 @@
 <article class="card <?php echo esc_attr($extra_classes); ?>">
     <?php if ($image_id) : ?>
         <div class="card__header">
-            <?php echo wp_get_attachment_image($image_id, 'medium', false, ['alt' => esc_attr($alt_text), 'class' => 'card__image', 'loading' => 'lazy']); ?>
+            <?php echo wp_get_attachment_image($image_id, 'medium', false, ['class' => 'card__image', 'alt' => esc_attr($alt_text), 'loading' => 'lazy']); ?>
         </div>
     <?php endif; ?>
 

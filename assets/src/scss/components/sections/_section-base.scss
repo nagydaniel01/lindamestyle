@@ -15,6 +15,18 @@
         }
     }
 
+    &.section--right {
+        .row {
+            flex-direction: row-reverse;
+        }
+    }
+
+    &.section--alternately {
+        .row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+    }
+
     .container--narrow {
         max-width: 65rem;
 
@@ -35,10 +47,7 @@
     }
 
     .section__image {
-        display: block;
         width: 100%;
-        aspect-ratio: 21 / 9;
-        object-fit: cover;
         border-radius: $border-radius-xl;
         box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
     }

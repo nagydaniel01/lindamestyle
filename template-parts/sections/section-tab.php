@@ -1,31 +1,31 @@
 <?php
-$section_title      = $section['tab_section_title'] ?? '';
-$section_hide_title = $section['tab_section_hide_title'] ?? false;
-$section_slug       = sanitize_title($section_title);
-$section_lead       = $section['tab_section_lead'] ?? '';
-$tab_items          = $section['tab_items'] ?? [];
-$tab_style          = $section['tab_style'] ?? 'tabs';
-$tab_layout         = $section['tab_layout'] ?? 'horizontal';
+    $section_title      = $section['tab_section_title'] ?? '';
+    $section_hide_title = $section['tab_section_hide_title'] ?? false;
+    $section_slug       = sanitize_title($section_title);
+    $section_lead       = $section['tab_section_lead'] ?? '';
+    $tab_items          = $section['tab_items'] ?? [];
+    $tab_style          = $section['tab_style'] ?? 'tabs';
+    $tab_layout         = $section['tab_layout'] ?? 'horizontal';
 
-// Filter out empty rows
-$tab_items = array_filter($tab_items, function ($item) {
-    $title       = trim($item['tab_title'] ?? '');
-    $description = trim($item['tab_description'] ?? '');
-    return $title !== '' || $description !== '';
-});
+    // Filter out empty rows
+    $tab_items = array_filter($tab_items, function ($item) {
+        $title       = trim($item['tab_title'] ?? '');
+        $description = trim($item['tab_description'] ?? '');
+        return $title !== '' || $description !== '';
+    });
 
-// Determine nav class
-$nav_class    = $tab_style === 'pills' ? 'nav-pills' : 'nav-tabs';
-$is_vertical  = $tab_layout === 'vertical';
+    // Determine nav class
+    $nav_class    = $tab_style === 'pills' ? 'nav-pills' : 'nav-tabs';
+    $is_vertical  = $tab_layout === 'vertical';
 
-$extra_classes = '';
-if ($tab_style) {
-    $extra_classes .= ' section--' . $tab_style;
-}
+    $extra_classes = '';
+    if ($tab_style) {
+        $extra_classes .= ' section--' . $tab_style;
+    }
 
-if ($tab_layout) {
-    $extra_classes .= ' section--' . $tab_layout;
-}
+    if ($tab_layout) {
+        $extra_classes .= ' section--' . $tab_layout;
+    }
 ?>
 
 <?php if (!empty($tab_items)) : ?>
@@ -65,10 +65,12 @@ if ($tab_layout) {
                         $title       = $item['tab_title'] ?? '';
                         $description = $item['tab_description'] ?? '';
                     ?>
-                        <div class="tab-pane fade<?php echo $is_first ? ' show active' : ''; ?>" id="<?php echo esc_attr($item_id); ?>" role="tabpanel" aria-labelledby="<?php echo esc_attr($item_id); ?>-tab">
-                            <h2><?php echo esc_html($title); ?></h2>
-                            <?php echo wp_kses_post($description); ?>
-                        </div>
+
+                    <div class="tab-pane fade<?php echo $is_first ? ' show active' : ''; ?>" id="<?php echo esc_attr($item_id); ?>" role="tabpanel" aria-labelledby="<?php echo esc_attr($item_id); ?>-tab">
+                        <h2><?php echo esc_html($title); ?></h2>
+                        <?php echo wp_kses_post($description); ?>
+                    </div>
+                    
                     <?php endforeach; ?>
                 </div>
             </div>

@@ -75,18 +75,20 @@
                             $aria_expanded
                         );
                     ?>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="heading-<?php echo esc_attr($item_id); ?>">
-                                <button class="accordion-button <?php echo ($aria_expanded === 'false' ? 'collapsed' : ''); ?>" type="button" <?php echo $button_attrs; ?>>
-                                    <?php echo esc_html($title); ?>
-                                </button>
-                            </h2>
-                            <div id="collapse-<?php echo esc_attr($item_id); ?>" class="<?php echo esc_attr($collapse_classes . $show_class); ?>" aria-labelledby="heading-<?php echo esc_attr($item_id); ?>" <?php echo $collapse_attrs; ?>>
-                                <div class="accordion-body">
-                                    <?php echo wp_kses_post($description); ?>
-                                </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-<?php echo esc_attr($item_id); ?>">
+                            <button class="accordion-button <?php echo ($aria_expanded === 'false' ? 'collapsed' : ''); ?>" type="button" <?php echo $button_attrs; ?>>
+                                <?php echo esc_html($title); ?>
+                            </button>
+                        </h2>
+                        <div id="collapse-<?php echo esc_attr($item_id); ?>" class="<?php echo esc_attr($collapse_classes . $show_class); ?>" aria-labelledby="heading-<?php echo esc_attr($item_id); ?>" <?php echo $collapse_attrs; ?>>
+                            <div class="accordion-body">
+                                <?php echo wp_kses_post($description); ?>
                             </div>
                         </div>
+                    </div>
+                    
                     <?php endforeach; ?>
                 </div>
             </div>    

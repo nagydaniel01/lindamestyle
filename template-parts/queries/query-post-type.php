@@ -203,7 +203,7 @@ $post_type_query = new WP_Query($post_type_args);
                     default:
                         ?>
 
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-lg-6 col-xl-4">
                             <?php
                                 if (!empty($template)) {
                                     // File exists, include it

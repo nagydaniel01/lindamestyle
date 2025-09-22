@@ -61,7 +61,7 @@
                     </div>
                 <?php else : ?>
                     <?php foreach ($card_items as $key => $item) : ?>
-                        <div class="col-12 col-lg-6 col-xl-4">
+                        <div class="col-lg-6 col-xl-4">
                             <?php
                                 if (!empty($template)) {
                                     $template_args = array(

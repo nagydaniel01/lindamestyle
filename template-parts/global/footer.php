@@ -14,7 +14,7 @@
                     <p><?php echo esc_html__('...egyenesen a postaládádba.', TEXT_DOMAIN); ?></p>
                 </div>
                 <div class="col-lg-6">
-                    <?php get_template_part('template-parts/forms/form', 'subscribe'); ?>
+                    <?php get_template_part('template-parts/forms/form', 'subscribe_form'); ?>
                 </div>
             </div>
         </div>
@@ -22,26 +22,19 @@
     <div class="footer__bottom">
         <div class="container">
             <div class="row">
-                <div class="col-12 col-md-6 col-xl">
+                <div class="col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if ($footer_logo) : ?>
                             <div class="logo logo--footer">
                                 <a href="<?php echo esc_url( trailingslashit( home_url() ) ); ?>" class="logo__link">
-                                    <?php
-                                        $logo_args = array(
-                                            'class'     => 'logo__image',
-                                            'alt'       => get_bloginfo('name'),
-                                        );
-                                        
-                                        echo wp_get_attachment_image($footer_logo['ID'], array($footer_logo['width'], $footer_logo['height']), false, $logo_args);
-                                    ?>
+                                    <?php echo wp_get_attachment_image($footer_logo['ID'], [$footer_logo['width'], $footer_logo['height']], false, ['class' => 'logo__image', 'alt' => esc_attr($footer_logo['alt'] ?: get_bloginfo('name'))]); ?>
                                 </a>
                             </div>
                         <?php endif; ?>
                     </div>
                 </div>
         
-                <div class="col-12 col-md-6 col-xl">
+                <div class="col-md-6 col-xl">
                     <div class="footer__block">
                         <?php if (!empty($social) && is_array($social)) : ?>
                             <h3 class="footer__title"><?php echo esc_html__('Közösségi média', TEXT_DOMAIN); ?></h3>
@@ -80,7 +73,7 @@
                     </div>
                 </div>
         
-                <div class="col-12 col-md-6 col-xl">
+                <div class="col-md-6 col-xl">
                     <div class="footer__block">
                         <?php 
                         $theme_location = 'footer_menu_1';
@@ -106,7 +99,7 @@
                     </div>
                 </div>
         
-                <div class="col-12 col-md-6 col-xl">
+                <div class="col-md-6 col-xl">
                     <?php
                     $categories = get_terms(array(
                         'taxonomy'   => 'category',
@@ -133,7 +126,7 @@
                     <?php endif; ?>
                 </div>
 
-                <div class="col-12 col-md-6 col-xl">
+                <div class="col-md-6 col-xl">
                     <?php
                     $categories = get_terms(array(
                         'taxonomy'   => 'knowledge_base_cat',
